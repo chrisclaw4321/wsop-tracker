@@ -119,7 +119,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
           </select>
         </div>
 
-        <p className="text-xs text-gray-400">
+        <p className="text-sm text-gray-400">
           Showing {sorted.length} of {tournaments.length} tournaments
         </p>
       </div>
@@ -137,18 +137,18 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
               className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition"
             >
               <div className="flex-1 text-left min-w-0">
-                <div className="flex items-center gap-3 mb-1">
-                  <span className="text-sm font-bold text-yellow-400 min-w-[40px]">#{tournament.eventNum}</span>
-                  <h3 className="text-sm font-semibold text-white truncate flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-base font-bold text-yellow-400 min-w-[50px]">#{tournament.eventNum}</span>
+                  <h3 className="text-base font-semibold text-white truncate flex-1">
                     {tournament.name}
                   </h3>
-                  <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${getFormatBadgeColor(tournament.format)}`}>
+                  <span className={`px-2 py-1 rounded text-sm font-medium whitespace-nowrap ${getFormatBadgeColor(tournament.format)}`}>
                     {getFormatLabel(tournament.format)}
                   </span>
                 </div>
 
                 {/* Quick Info - 2 lines max */}
-                <div className="grid grid-cols-4 gap-2 text-xs text-gray-300">
+                <div className="grid grid-cols-4 gap-2 text-sm text-gray-300">
                   <div>
                     <span className="text-gray-500">Buy-in:</span> {formatCurrency(tournament.buyIn)}
                   </div>
@@ -175,7 +175,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
 
             {/* Expanded Details */}
             {expandedId === tournament.id && (
-              <div className="px-4 py-3 bg-white/5 border-t border-purple-500/20 space-y-2 text-sm">
+              <div className="px-4 py-3 bg-white/5 border-t border-purple-500/20 space-y-3 text-base">
                 {/* Flights & Times */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>

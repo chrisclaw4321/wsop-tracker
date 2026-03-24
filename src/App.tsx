@@ -15,6 +15,16 @@ function App() {
   useEffect(() => {
     // Load tournaments data
     loadTournaments();
+    
+    // Restore user session from localStorage
+    const savedUser = localStorage.getItem('wsop_user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error('Failed to restore user session:', e);
+      }
+    }
   }, []);
 
   const loadTournaments = () => {
@@ -263,11 +273,14 @@ function App() {
       const decoded = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
       
       if (decoded.email === AUTHORIZED_EMAIL) {
-        setUser({
+        const userData = {
           email: decoded.email,
           name: decoded.name,
           picture: decoded.picture
-        });
+        };
+        setUser(userData);
+        // Save user session to localStorage (expires on browser close)
+        localStorage.setItem('wsop_user', JSON.stringify(userData));
       } else {
         alert(`Access denied. Only ${AUTHORIZED_EMAIL} can access this site.`);
       }
@@ -279,6 +292,8 @@ function App() {
 
   const handleLogout = () => {
     setUser(null);
+    // Clear user session from localStorage
+    localStorage.removeItem('wsop_user');
   };
 
   if (!user) {
