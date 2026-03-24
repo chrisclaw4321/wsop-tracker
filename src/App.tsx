@@ -358,9 +358,21 @@ function App() {
             <Calendar className="w-5 h-5" />
             <span>March 31 - April 12, 2026</span>
           </div>
-          <p className="text-gray-400 text-lg">
-            Explore all {tournaments.length} tournaments at King's Casino, Prague. Filter, sort, and track your favorite events.
+          <p className="text-gray-400 text-lg mb-4">
+            Explore all {tournaments.length} WSOP bracelet tournaments at King's Casino, Prague. Filter, sort, and track your favorite events.
           </p>
+          
+          {/* Info Box: Satellites & Side Events */}
+          <div className="bg-gradient-to-r from-amber-900/30 to-orange-900/30 border border-amber-500/30 rounded-lg p-4 mb-6">
+            <p className="text-amber-200 text-sm">
+              <strong>📌 Note:</strong> This tracker shows the <strong>15 official WSOP bracelet events</strong>. 
+              For <strong>50+ side events and satellite tournaments</strong> (€50-€1,000+ buy-ins), 
+              check the <strong>WSOP+ app</strong> or ask at the tournament desk. 
+              <a href="https://www.wsop.com" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-100 underline ml-1">
+                Learn more →
+              </a>
+            </p>
+          </div>
         </div>
 
         <TournamentList tournaments={tournaments} />
