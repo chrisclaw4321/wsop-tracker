@@ -4,7 +4,7 @@ import TournamentList from './components/TournamentList';
 import { Tournament, User } from './types';
 import { Calendar, Trophy, LogOut } from 'lucide-react';
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '152840809437-f5g8e4st3hae8obeafinge3g233os3fb.apps.googleusercontent.com';
 const AUTHORIZED_EMAIL = 'sazan4321@gmail.com';
 
 function App() {
