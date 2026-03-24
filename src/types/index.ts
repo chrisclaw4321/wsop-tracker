@@ -1,15 +1,22 @@
 export interface Tournament {
   id: number;
-  number: string;
+  eventNum: string;
   name: string;
-  buyIn: number;
+  format: string; // NLH, PLO, Mixed, Bounty, etc.
+  buyIn: number; // in euros
+  rakeFee: number; // in euros
   currency: string;
-  startDate: string;
-  location: string;
-  maxPlayers: number;
-  bracketType: string;
-  guaranteedPrizepool: number;
+  startDates: string[]; // e.g., ["Mar 31", "Apr 1", "Apr 2"]
+  startTimes: string[]; // e.g., ["12:00 PM", "6:00 PM"]
+  flights: number;
+  gtd?: number; // guaranteed prize pool in euros
+  startingStack?: number; // chip stack
+  blindLevels?: string; // e.g., "10-minute" or "40-minute"
+  isMultiday?: boolean;
+  isBounty?: boolean;
+  isTurbo?: boolean;
   description: string;
+  location: string;
 }
 
 export interface User {

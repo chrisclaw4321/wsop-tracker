@@ -1,127 +1,252 @@
 import React, { useState } from 'react';
 import { Tournament } from '../types';
-import TournamentCard from './TournamentCard';
-import { Filter, SortAsc } from 'lucide-react';
+import { ChevronDown, Filter, Search } from 'lucide-react';
 
-interface Props {
+interface TournamentListProps {
   tournaments: Tournament[];
 }
 
-type SortBy = 'date' | 'buyIn' | 'prize' | 'name';
-type FilterBy = 'all' | 'low' | 'medium' | 'high';
+type FilterFormat = 'all' | 'nlh' | 'plo' | 'mixed' | 'bounty' | 'turbo' | 'highroller';
+type SortBy = 'event' | 'buyIn' | 'date' | 'gtd';
 
-export default function TournamentList({ tournaments }: Props) {
-  const [sortBy, setSortBy] = useState<SortBy>('date');
-  const [filterBy, setFilterBy] = useState<FilterBy>('all');
+export default function TournamentList({ tournaments }: TournamentListProps) {
+  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterFormat, setFilterFormat] = useState<FilterFormat>('all');
+  const [sortBy, setSortBy] = useState<SortBy>('event');
+
+  const getFormatLabel = (format: string) => {
+    if (format.includes('NLH')) return 'NLHE';
+    if (format.includes('PLO')) return 'PLO';
+    if (format.includes('Mixed')) return 'Mixed';
+    return format;
+  };
+
+  const getFormatBadgeColor = (format: string) => {
+    if (format.includes('NLH')) return 'bg-blue-600/30 text-blue-300';
+    if (format.includes('PLO')) return 'bg-purple-600/30 text-purple-300';
+    if (format.includes('Mixed')) return 'bg-green-600/30 text-green-300';
+    if (format.includes('Bounty')) return 'bg-red-600/30 text-red-300';
+    return 'bg-gray-600/30 text-gray-300';
+  };
+
+  const getFormatFilter = (format: string): FilterFormat => {
+    if (format.includes('High Roller') || format.includes('Super High Roller')) return 'highroller';
+    if (format.includes('Bounty')) return 'bounty';
+    if (format.includes('Turbo')) return 'turbo';
+    if (format.includes('PLO')) return 'plo';
+    if (format.includes('Mixed')) return 'mixed';
+    if (format.includes('NLH')) return 'nlh';
+    return 'all';
+  };
 
   const filtered = tournaments.filter(t => {
-    const matchesSearch = t.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = 
-      filterBy === 'all' ? true :
-      filterBy === 'low' ? t.buyIn < 2000 :
-      filterBy === 'medium' ? t.buyIn >= 2000 && t.buyIn < 5000 :
-      filterBy === 'high' ? t.buyIn >= 5000 : true;
+    const matchesSearch = 
+      t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t.eventNum.includes(searchTerm) ||
+      t.format.toLowerCase().includes(searchTerm.toLowerCase());
     
-    return matchesSearch && matchesFilter;
+    if (filterFormat === 'all') return matchesSearch;
+    return matchesSearch && getFormatFilter(t.format) === filterFormat;
   });
 
   const sorted = [...filtered].sort((a, b) => {
     switch (sortBy) {
-      case 'date':
-        return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
       case 'buyIn':
         return a.buyIn - b.buyIn;
-      case 'prize':
-        return b.guaranteedPrizepool - a.guaranteedPrizepool;
-      case 'name':
-        return a.name.localeCompare(b.name);
+      case 'date':
+        return new Date(a.startDates[0]).getTime() - new Date(b.startDates[0]).getTime();
+      case 'gtd':
+        return (b.gtd || 0) - (a.gtd || 0);
+      case 'event':
       default:
-        return 0;
+        return parseInt(a.eventNum) - parseInt(b.eventNum);
     }
   });
 
+  const formatCurrency = (amount: number) => {
+    return `€${amount.toLocaleString()}`;
+  };
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr + ' 2026');
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
   return (
-    <div>
-      {/* Filters and Controls */}
-      <div className="bg-white/5 backdrop-blur-md rounded-lg border border-purple-500/20 p-6 mb-8">
-        {/* Search */}
-        <div className="mb-6">
+    <div className="space-y-6">
+      {/* Search and Filter Bar */}
+      <div className="space-y-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
             placeholder="Search tournaments..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-purple-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+            className="w-full pl-10 pr-4 py-3 bg-white/5 border border-purple-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/60"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Filter */}
-          <div>
-            <label className="flex items-center space-x-2 text-gray-300 mb-3">
-              <Filter className="w-4 h-4" />
-              <span>Filter by Buy-In</span>
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { value: 'all' as FilterBy, label: 'All' },
-                { value: 'low' as FilterBy, label: 'Under €2K' },
-                { value: 'medium' as FilterBy, label: '€2K-€5K' },
-                { value: 'high' as FilterBy, label: 'Over €5K' }
-              ].map(option => (
-                <button
-                  key={option.value}
-                  onClick={() => setFilterBy(option.value)}
-                  className={`px-3 py-1 rounded-full text-sm transition ${
-                    filterBy === option.value
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
+        <div className="flex flex-wrap gap-2 items-center">
+          <Filter className="w-4 h-4 text-gray-400" />
+          
+          {/* Format Filter */}
+          <select
+            value={filterFormat}
+            onChange={(e) => setFilterFormat(e.target.value as FilterFormat)}
+            className="px-3 py-2 bg-purple-600/20 border border-purple-500/30 rounded text-sm text-purple-200 focus:outline-none focus:border-purple-500/60"
+          >
+            <option value="all">All Formats</option>
+            <option value="nlh">No-Limit Hold'em</option>
+            <option value="plo">PLO</option>
+            <option value="mixed">Mixed Games</option>
+            <option value="bounty">Bounty Events</option>
+            <option value="turbo">Turbo Events</option>
+            <option value="highroller">High Rollers</option>
+          </select>
 
-          {/* Sort */}
-          <div>
-            <label className="flex items-center space-x-2 text-gray-300 mb-3">
-              <SortAsc className="w-4 h-4" />
-              <span>Sort by</span>
-            </label>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortBy)}
-              className="w-full px-3 py-2 bg-white/10 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:border-purple-500"
-            >
-              <option value="date">Start Date</option>
-              <option value="buyIn">Buy-In (Low to High)</option>
-              <option value="prize">Prize Pool (High to Low)</option>
-              <option value="name">Tournament Name</option>
-            </select>
-          </div>
+          {/* Sort By */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as SortBy)}
+            className="px-3 py-2 bg-purple-600/20 border border-purple-500/30 rounded text-sm text-purple-200 focus:outline-none focus:border-purple-500/60 ml-auto"
+          >
+            <option value="event">Event #</option>
+            <option value="buyIn">Buy-in (Low to High)</option>
+            <option value="date">Start Date</option>
+            <option value="gtd">Guarantee (High to Low)</option>
+          </select>
         </div>
 
-        {/* Results count */}
-        <div className="mt-4 text-sm text-gray-400">
+        <p className="text-xs text-gray-400">
           Showing {sorted.length} of {tournaments.length} tournaments
-        </div>
+        </p>
       </div>
 
-      {/* Tournament Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sorted.map(tournament => (
-          <TournamentCard key={tournament.id} tournament={tournament} />
+      {/* Tournament List */}
+      <div className="space-y-2">
+        {sorted.map((tournament) => (
+          <div
+            key={tournament.id}
+            className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 border border-purple-500/20 rounded-lg overflow-hidden transition hover:border-purple-500/40 hover:from-purple-900/30 hover:to-blue-900/30"
+          >
+            {/* Main Row - Compact view */}
+            <button
+              onClick={() => setExpandedId(expandedId === tournament.id ? null : tournament.id)}
+              className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition"
+            >
+              <div className="flex-1 text-left min-w-0">
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-sm font-bold text-yellow-400 min-w-[40px]">#{tournament.eventNum}</span>
+                  <h3 className="text-sm font-semibold text-white truncate flex-1">
+                    {tournament.name}
+                  </h3>
+                  <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${getFormatBadgeColor(tournament.format)}`}>
+                    {getFormatLabel(tournament.format)}
+                  </span>
+                </div>
+
+                {/* Quick Info - 2 lines max */}
+                <div className="grid grid-cols-4 gap-2 text-xs text-gray-300">
+                  <div>
+                    <span className="text-gray-500">Buy-in:</span> {formatCurrency(tournament.buyIn)}
+                  </div>
+                  <div>
+                    <span className="text-gray-500">+Rake:</span> {formatCurrency(tournament.rakeFee)}
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Starts:</span> {formatDate(tournament.startDates[0])}
+                  </div>
+                  {tournament.gtd && (
+                    <div>
+                      <span className="text-gray-500">GTD:</span> <span className="text-green-400">{formatCurrency(tournament.gtd)}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <ChevronDown
+                className={`w-5 h-5 text-purple-400 transition transform ml-2 flex-shrink-0 ${
+                  expandedId === tournament.id ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+
+            {/* Expanded Details */}
+            {expandedId === tournament.id && (
+              <div className="px-4 py-3 bg-white/5 border-t border-purple-500/20 space-y-2 text-sm">
+                {/* Flights & Times */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <span className="text-gray-400">Flights:</span>
+                    <p className="text-white font-semibold">{tournament.flights} flight{tournament.flights !== 1 ? 's' : ''}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-400">Start Times:</span>
+                    <p className="text-white font-semibold">{tournament.startTimes.join(', ')}</p>
+                  </div>
+                </div>
+
+                {/* Structure Details */}
+                {(tournament.startingStack || tournament.blindLevels) && (
+                  <div className="grid grid-cols-2 gap-3 bg-white/5 p-2 rounded">
+                    {tournament.startingStack && (
+                      <div>
+                        <span className="text-gray-400">Starting Stack:</span>
+                        <p className="text-white font-semibold">{tournament.startingStack.toLocaleString()} chips</p>
+                      </div>
+                    )}
+                    {tournament.blindLevels && (
+                      <div>
+                        <span className="text-gray-400">Blind Levels:</span>
+                        <p className="text-white font-semibold">{tournament.blindLevels}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Special Features */}
+                <div className="flex flex-wrap gap-2">
+                  {tournament.isBounty && (
+                    <span className="px-2 py-1 bg-red-600/30 text-red-300 rounded text-xs font-medium">
+                      🎯 Bounty Event
+                    </span>
+                  )}
+                  {tournament.isTurbo && (
+                    <span className="px-2 py-1 bg-orange-600/30 text-orange-300 rounded text-xs font-medium">
+                      ⚡ Turbo Format
+                    </span>
+                  )}
+                  {tournament.isMultiday && (
+                    <span className="px-2 py-1 bg-blue-600/30 text-blue-300 rounded text-xs font-medium">
+                      📅 Multi-Day
+                    </span>
+                  )}
+                  {tournament.eventNum === '5' && (
+                    <span className="px-2 py-1 bg-yellow-600/30 text-yellow-300 rounded text-xs font-medium">
+                      👑 Main Event - €10M GTD
+                    </span>
+                  )}
+                </div>
+
+                {/* Total Cost */}
+                <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 p-2 rounded border border-green-500/30">
+                  <span className="text-gray-300">Total Cost (Buy-in + Rake):</span>
+                  <p className="text-lg font-bold text-green-300">{formatCurrency(tournament.buyIn + tournament.rakeFee)}</p>
+                </div>
+
+                {/* Description */}
+                {tournament.description && (
+                  <p className="text-gray-300 text-xs leading-relaxed pt-1">
+                    {tournament.description}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         ))}
       </div>
-
-      {sorted.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg">No tournaments match your criteria</p>
-        </div>
-      )}
     </div>
   );
 }
