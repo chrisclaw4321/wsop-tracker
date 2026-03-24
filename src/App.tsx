@@ -28,8 +28,10 @@ function App() {
   }, []);
 
   const loadTournaments = () => {
-    // WSOP Europe Prague 2026 - Complete 15 bracelet events + satellites
+    // WSOP Europe Prague 2026 - Complete tournament schedule
+    // 15 Bracelet Events + Satellites + Side Events (all happening at King's Casino Prague)
     const data: Tournament[] = [
+      // ===== BRACELET EVENTS (15) =====
       {
         id: 1,
         eventNum: '1',
@@ -265,7 +267,213 @@ function App() {
         description: 'Final bracelet event of the series (Presented by GGPoker). Fast turbo + bounty hunting. Ending on a high note.'
       }
     ];
-    setTournaments(data);
+
+    // ===== SATELLITE TOURNAMENTS (Running throughout series) =====
+    const satellites: Tournament[] = [
+      {
+        id: 101,
+        eventNum: 'SAT-1',
+        name: 'Direct Satellite to Main Event',
+        format: 'NLH Satellite',
+        buyIn: 350,
+        rakeFee: 70,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
+        startTimes: ['10:00 AM', '2:00 PM', '6:00 PM', '10:00 PM'],
+        flights: 40,
+        location: 'King\'s Casino, Prague',
+        description: '€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Running multiple times daily throughout series.'
+      },
+      {
+        id: 102,
+        eventNum: 'SAT-2',
+        name: 'Mega Satellite to Main Event',
+        format: 'NLH Mega Sat',
+        buyIn: 500,
+        rakeFee: 100,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
+        startTimes: ['12:00 PM', '4:00 PM', '8:00 PM'],
+        flights: 30,
+        location: 'King\'s Casino, Prague',
+        description: 'Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Running 3x daily.'
+      },
+      {
+        id: 103,
+        eventNum: 'SAT-3',
+        name: 'Super Satellite',
+        format: 'NLH Super Sat',
+        buyIn: 100,
+        rakeFee: 20,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
+        startTimes: ['9:00 AM', '1:00 PM', '5:00 PM', '9:00 PM'],
+        flights: 50,
+        location: 'King\'s Casino, Prague',
+        description: 'Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players.'
+      },
+    ];
+
+    // ===== SIDE EVENTS (Expected throughout series) =====
+    const sideEvents: Tournament[] = [
+      {
+        id: 201,
+        eventNum: 'SIDE-1',
+        name: 'Micro NLHE',
+        format: 'NLH',
+        buyIn: 25,
+        rakeFee: 5,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['6:00 AM', '10:00 AM', '2:00 PM', '6:00 PM', '10:00 PM'],
+        flights: 100,
+        gtd: 2000,
+        location: 'King\'s Casino, Prague',
+        description: 'Budget-friendly no-limit hold\'em. €2,000 GTD. Perfect for recreational players and bankroll builders.'
+      },
+      {
+        id: 202,
+        eventNum: 'SIDE-2',
+        name: 'Low Buy-in NLHE',
+        format: 'NLH',
+        buyIn: 50,
+        rakeFee: 10,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['7:00 AM', '11:00 AM', '3:00 PM', '7:00 PM', '11:00 PM'],
+        flights: 80,
+        gtd: 5000,
+        location: 'King\'s Casino, Prague',
+        description: '€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players.'
+      },
+      {
+        id: 203,
+        eventNum: 'SIDE-3',
+        name: 'Mid Buy-in NLHE',
+        format: 'NLH',
+        buyIn: 100,
+        rakeFee: 20,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['8:00 AM', '12:00 PM', '4:00 PM', '8:00 PM', '12:00 AM'],
+        flights: 60,
+        gtd: 10000,
+        location: 'King\'s Casino, Prague',
+        description: '€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players.'
+      },
+      {
+        id: 204,
+        eventNum: 'SIDE-4',
+        name: 'High Buy-in NLHE',
+        format: 'NLH',
+        buyIn: 250,
+        rakeFee: 50,
+        currency: '€',
+        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['2:00 PM', '6:00 PM', '10:00 PM'],
+        flights: 40,
+        gtd: 20000,
+        location: 'King\'s Casino, Prague',
+        description: '€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. 3 flights per day.'
+      },
+      {
+        id: 205,
+        eventNum: 'SIDE-5',
+        name: 'Low Buy-in PLO',
+        format: 'PLO',
+        buyIn: 100,
+        rakeFee: 20,
+        currency: '€',
+        startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['11:00 AM', '3:00 PM', '8:00 PM'],
+        flights: 50,
+        gtd: 5000,
+        location: 'King\'s Casino, Prague',
+        description: 'Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts.'
+      },
+      {
+        id: 206,
+        eventNum: 'SIDE-6',
+        name: 'High Roller Tournament',
+        format: 'NLH High Roller',
+        buyIn: 1000,
+        rakeFee: 200,
+        currency: '€',
+        startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['7:00 PM', '10:00 PM'],
+        flights: 20,
+        gtd: 50000,
+        location: 'King\'s Casino, Prague',
+        description: '€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. 2 flights daily.'
+      },
+      {
+        id: 207,
+        eventNum: 'SIDE-7',
+        name: 'Heads-Up Tournament',
+        format: 'NLH Heads-Up',
+        buyIn: 200,
+        rakeFee: 40,
+        currency: '€',
+        startDates: ['Apr 2', 'Apr 4', 'Apr 6', 'Apr 8', 'Apr 10', 'Apr 12'],
+        startTimes: ['6:00 PM'],
+        flights: 15,
+        gtd: 5000,
+        location: 'King\'s Casino, Prague',
+        description: '€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week.'
+      },
+      {
+        id: 208,
+        eventNum: 'SIDE-8',
+        name: 'Bounty NLHE',
+        format: 'NLH + Bounty',
+        buyIn: 150,
+        rakeFee: 30,
+        currency: '€',
+        startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['5:00 PM', '9:00 PM'],
+        flights: 50,
+        gtd: 8000,
+        isBounty: true,
+        location: 'King\'s Castle, Prague',
+        description: '€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. 2 flights daily. Recreational friendly.'
+      },
+      {
+        id: 209,
+        eventNum: 'SIDE-9',
+        name: 'Deepstack Tournament',
+        format: 'NLH Deepstack',
+        buyIn: 200,
+        rakeFee: 40,
+        currency: '€',
+        startDates: ['Apr 2', 'Apr 5', 'Apr 8', 'Apr 11'],
+        startTimes: ['2:00 PM'],
+        flights: 30,
+        startingStack: 50000,
+        blindLevels: '30-minute',
+        gtd: 15000,
+        location: 'King\'s Casino, Prague',
+        description: '€200 buy-in with 50,000 chip starting stack. 30-minute blinds. €15,000 GTD. Deep, strategic poker. 4 events during series.'
+      },
+      {
+        id: 210,
+        eventNum: 'SIDE-10',
+        name: 'Turbo Tournament',
+        format: 'NLH Turbo',
+        buyIn: 100,
+        rakeFee: 20,
+        currency: '€',
+        startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
+        startTimes: ['11:00 PM', '1:00 AM'],
+        flights: 60,
+        isTurbo: true,
+        gtd: 6000,
+        location: 'King\'s Casino, Prague',
+        description: 'Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x daily. Quick sessions.'
+      },
+    ];
+
+    const allEvents = [...data, ...satellites, ...sideEvents];
+    setTournaments(allEvents);
   };
 
   const handleGoogleLogin = (credentialResponse: any) => {

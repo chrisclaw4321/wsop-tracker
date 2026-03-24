@@ -8,12 +8,20 @@ interface TournamentListProps {
 
 type FilterFormat = 'all' | 'nlh' | 'plo' | 'mixed' | 'bounty' | 'turbo' | 'highroller';
 type SortBy = 'event' | 'buyIn' | 'date' | 'gtd';
+type FilterType = 'all' | 'bracelet' | 'satellite' | 'side';
 
 export default function TournamentList({ tournaments }: TournamentListProps) {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterFormat, setFilterFormat] = useState<FilterFormat>('all');
+  const [filterType, setFilterType] = useState<FilterType>('all');
   const [sortBy, setSortBy] = useState<SortBy>('event');
+
+  const getEventType = (eventNum: string): FilterType => {
+    if (eventNum.startsWith('SAT')) return 'satellite';
+    if (eventNum.startsWith('SIDE')) return 'side';
+    return 'bracelet';
+  };
 
   const getFormatLabel = (format: string) => {
     if (format.includes('NLH')) return 'NLHE';
@@ -46,8 +54,17 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
       t.eventNum.includes(searchTerm) ||
       t.format.toLowerCase().includes(searchTerm.toLowerCase());
     
-    if (filterFormat === 'all') return matchesSearch;
-    return matchesSearch && getFormatFilter(t.format) === filterFormat;
+    let matchesType = true;
+    if (filterType !== 'all') {
+      matchesType = getEventType(t.eventNum) === filterType;
+    }
+    
+    let matchesFormat = true;
+    if (filterFormat !== 'all') {
+      matchesFormat = getFormatFilter(t.format) === filterFormat;
+    }
+    
+    return matchesSearch && matchesType && matchesFormat;
   });
 
   const sorted = [...filtered].sort((a, b) => {
@@ -91,6 +108,18 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
         <div className="flex flex-wrap gap-2 items-center">
           <Filter className="w-4 h-4 text-gray-400" />
           
+          {/* Event Type Filter */}
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value as FilterType)}
+            className="px-3 py-2 bg-blue-600/20 border border-blue-500/30 rounded text-sm text-blue-200 focus:outline-none focus:border-blue-500/60"
+          >
+            <option value="all">All Events ({tournaments.length})</option>
+            <option value="bracelet">Bracelet Events (15)</option>
+            <option value="satellite">Satellites (3)</option>
+            <option value="side">Side Events (10)</option>
+          </select>
+
           {/* Format Filter */}
           <select
             value={filterFormat}
