@@ -1,6 +1,7 @@
 export interface Tournament {
   id: number;
-  eventNum: string;
+  eventType: 'bracelet' | 'satellite' | 'side';
+  eventNum?: string; // Only for bracelet events (official #1-#15)
   name: string;
   format: string; // NLH, PLO, Mixed, Bounty, etc.
   buyIn: number; // in euros

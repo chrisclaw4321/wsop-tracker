@@ -9,8 +9,7 @@ export interface BraceletFlight {
 }
 
 export interface BraceletEvent {
-  id: number;
-  eventNum: string;
+  eventNum?: string;
   name: string;
   format: string;
   buyIn: number;
@@ -42,7 +41,6 @@ export interface SatelliteInstance {
 }
 
 export interface SatelliteEvent {
-  id: number;
   name: string;
   format: string;
   buyIn: number;
@@ -65,7 +63,6 @@ export interface SideEventInstance {
 }
 
 export interface SideEvent {
-  id: number;
   name: string;
   format: string;
   buyIn: number;
@@ -89,7 +86,7 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
   const tournaments: Tournament[] = [];
 
   // Load bracelet events with flights expanded
-  tournamentsData.braceletEvents.forEach((bracelet: any) => {
+  tournamentsData.braceletEvents.forEach((bracelet: any, braceletIndex: number) => {
     // Collect continuation days
     const continuationDays: { day: number; date: string; time: string }[] = [];
     for (let d = 2; d <= 6; d++) {
@@ -106,8 +103,9 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
     bracelet.flights.forEach((flight: any, flightIndex: number) => {
       const totalBuyIn = bracelet.buyIn + (bracelet.rake || 0);
       tournaments.push({
-        id: bracelet.id + flightIndex / 1000,
-        eventNum: bracelet.eventNum,
+        id: (braceletIndex + 1) + flightIndex / 1000,
+        eventType: 'bracelet',
+        ...(bracelet.eventNum ? { eventNum: bracelet.eventNum } : {}),
         name: bracelet.flights.length > 1
           ? `${bracelet.name} - Day ${flight.label}`
           : bracelet.name,
@@ -136,11 +134,11 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
   });
 
   // Load satellite events - expand instances
-  tournamentsData.satellites.forEach((satellite: any) => {
+  tournamentsData.satellites.forEach((satellite: any, satIndex: number) => {
     satellite.instances.forEach((instance: any, idx: number) => {
       tournaments.push({
-        id: satellite.id + idx / 1000,
-        eventNum: `SAT-${satellite.id - 100}`,
+        id: 100 + satIndex + idx / 1000,
+        eventType: 'satellite',
         name: `${satellite.name}${instance.seatsGtd ? ` (${instance.seatsGtd} seats GTD)` : ''}`,
         format: satellite.format,
         buyIn: satellite.buyIn + (satellite.rake || 0),
@@ -160,12 +158,12 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
   });
 
   // Load side events - expand instances
-  tournamentsData.sideEvents.forEach((side: any) => {
+  tournamentsData.sideEvents.forEach((side: any, sideIndex: number) => {
     side.instances.forEach((instance: any, idx: number) => {
       const totalBuyIn = side.buyIn + (side.rake || 0);
       tournaments.push({
-        id: side.id + idx / 1000,
-        eventNum: `SIDE-${side.id - 200}`,
+        id: 200 + sideIndex + idx / 1000,
+        eventType: 'side',
         name: instance.note ? `${side.name} - ${instance.note}` : side.name,
         format: side.format,
         buyIn: totalBuyIn,

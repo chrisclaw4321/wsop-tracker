@@ -12,7 +12,6 @@
   },
   "braceletEvents": [
     {
-      "id": 1,
       "eventNum": "1",
       "name": "The Opener - Mystery Bounty",
       "format": "NLH Mystery Bounty",
@@ -25,18 +24,46 @@
         "startingBlinds": "100/100"
       },
       "flights": [
-        { "num": 1, "label": "1A", "date": "2026-03-31", "time": "12:00 PM" },
-        { "num": 2, "label": "1A", "date": "2026-03-31", "time": "4:00 PM" },
-        { "num": 3, "label": "1C", "date": "2026-04-01", "time": "12:00 PM" },
-        { "num": 4, "label": "1D", "date": "2026-04-01", "time": "6:00 PM" }
+        {
+          "num": 1,
+          "label": "1A",
+          "date": "2026-03-31",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 2,
+          "label": "1A",
+          "date": "2026-03-31",
+          "time": "4:00 PM"
+        },
+        {
+          "num": 3,
+          "label": "1C",
+          "date": "2026-04-01",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 4,
+          "label": "1D",
+          "date": "2026-04-01",
+          "time": "6:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-02", "time": "12:00 PM" },
-      "features": ["bounty", "mystery-bounty", "multiday"],
+      "day2": {
+        "date": "2026-04-02",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "bounty",
+        "mystery-bounty",
+        "multiday"
+      ],
       "description": "Four-flight opening tournament with mystery bounty component. €500 to Mystery Bounty pool.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 2,
       "eventNum": "2",
       "name": "Mixed PLO / PLO8 / Big O",
       "format": "Mixed PLO",
@@ -48,15 +75,26 @@
         "startingBlinds": "100/100"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-03-31", "time": "2:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-03-31",
+          "time": "2:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-01", "time": "2:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-01",
+        "time": "2:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "Mixed format: PLO, PLO 8, Big O. 25,000 chips, 40-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 3,
       "eventNum": "3",
       "name": "Colossus",
       "format": "NLH",
@@ -68,17 +106,36 @@
         "startingBlinds": "100/100"
       },
       "flights": [
-        { "num": 1, "label": "1A", "date": "2026-04-02", "time": "12:00 PM" },
-        { "num": 2, "label": "1B", "date": "2026-04-02", "time": "6:00 PM" }
+        {
+          "num": 1,
+          "label": "1A",
+          "date": "2026-04-02",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 2,
+          "label": "1B",
+          "date": "2026-04-02",
+          "time": "6:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-03", "time": "12:00 PM" },
-      "day3": { "date": "2026-04-04", "time": "12:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-03",
+        "time": "12:00 PM"
+      },
+      "day3": {
+        "date": "2026-04-04",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "Low buy-in bracelet event. 50,000 chips, 40-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 4,
       "eventNum": "4",
       "name": "PLOssus Bounty",
       "format": "PLO Bounty",
@@ -91,16 +148,33 @@
         "startingBlinds": "100/100"
       },
       "flights": [
-        { "num": 1, "label": "1A", "date": "2026-04-03", "time": "12:00 PM" },
-        { "num": 2, "label": "1B", "date": "2026-04-03", "time": "6:00 PM" }
+        {
+          "num": 1,
+          "label": "1A",
+          "date": "2026-04-03",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 2,
+          "label": "1B",
+          "date": "2026-04-03",
+          "time": "6:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-04", "time": "12:00 PM" },
-      "features": ["bounty", "multiday"],
+      "day2": {
+        "date": "2026-04-04",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "bounty",
+        "multiday"
+      ],
       "description": "PLO with €200 bounties. 50,000 chips, 40-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 5,
       "eventNum": "5",
       "name": "WSOP Europe Main Event",
       "format": "NLH",
@@ -114,21 +188,54 @@
       },
       "gtd": 10000000,
       "flights": [
-        { "num": 1, "label": "1A", "date": "2026-04-03", "time": "12:00 PM" },
-        { "num": 2, "label": "1B", "date": "2026-04-04", "time": "12:00 PM" },
-        { "num": 3, "label": "1C", "date": "2026-04-05", "time": "12:00 PM" }
+        {
+          "num": 1,
+          "label": "1A",
+          "date": "2026-04-03",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 2,
+          "label": "1B",
+          "date": "2026-04-04",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 3,
+          "label": "1C",
+          "date": "2026-04-05",
+          "time": "12:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-06", "time": "12:00 PM" },
-      "day3": { "date": "2026-04-07", "time": "11:00 AM" },
-      "day4": { "date": "2026-04-08", "time": "12:00 PM" },
-      "day5": { "date": "2026-04-09", "time": "12:00 PM" },
-      "day6": { "date": "2026-04-10", "time": "12:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-06",
+        "time": "12:00 PM"
+      },
+      "day3": {
+        "date": "2026-04-07",
+        "time": "11:00 AM"
+      },
+      "day4": {
+        "date": "2026-04-08",
+        "time": "12:00 PM"
+      },
+      "day5": {
+        "date": "2026-04-09",
+        "time": "12:00 PM"
+      },
+      "day6": {
+        "date": "2026-04-10",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "€10,000,000 Guaranteed Prize Pool. 60,000 chips, 60/90-minute levels, 1 re-entry/flight, late registration open through Level 12 on Day 2.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 6,
       "eventNum": "6",
       "name": "Ladies Championship",
       "format": "NLH",
@@ -140,15 +247,27 @@
         "startingBlinds": "50/100"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-04", "time": "12:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-04",
+          "time": "12:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-05", "time": "12:00 PM" },
-      "features": ["ladies", "multiday"],
+      "day2": {
+        "date": "2026-04-05",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "ladies",
+        "multiday"
+      ],
       "description": "Entry restricted. 20,000 chips, 30-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 7,
       "eventNum": "7",
       "name": "Turbo Bounty",
       "format": "NLH Turbo Bounty",
@@ -161,14 +280,23 @@
         "startingBlinds": "50/100"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-05", "time": "2:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-05",
+          "time": "2:00 PM"
+        }
       ],
-      "features": ["turbo", "bounty"],
+      "features": [
+        "turbo",
+        "bounty"
+      ],
       "description": "€1,000 bounties, 25,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 8,
       "eventNum": "8",
       "name": "Monster Stack",
       "format": "NLH",
@@ -180,15 +308,26 @@
         "startingBlinds": "100/200"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-06", "time": "2:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-06",
+          "time": "2:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-07", "time": "2:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-07",
+        "time": "2:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "50,000 chips, 60-minute levels, late registration open for 12 levels (16:00 on April 7).",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 9,
       "eventNum": "9",
       "name": "PLO European Championship",
       "format": "PLO",
@@ -200,16 +339,30 @@
         "startingBlinds": "100/200"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-06", "time": "4:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-06",
+          "time": "4:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-07", "time": "12:00 PM" },
-      "day3": { "date": "2026-04-08", "time": "2:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-07",
+        "time": "12:00 PM"
+      },
+      "day3": {
+        "date": "2026-04-08",
+        "time": "2:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "60,000 chips, 60-minute levels, registration open through Level 12 (16:15 on April 7).",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 10,
       "eventNum": "10",
       "name": "Rounder Cup (EU v Rest of World)",
       "format": "NLH",
@@ -221,18 +374,33 @@
         "startingBlinds": "50/100"
       },
       "flights": [
-        { "num": 1, "label": "1A", "date": "2026-04-07", "time": "12:00 PM" },
-        { "num": 2, "label": "1B", "date": "2026-04-07", "time": "6:00 PM" }
+        {
+          "num": 1,
+          "label": "1A",
+          "date": "2026-04-07",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 2,
+          "label": "1B",
+          "date": "2026-04-07",
+          "time": "6:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-08", "time": "12:00 PM" },
+      "day2": {
+        "date": "2026-04-08",
+        "time": "12:00 PM"
+      },
       "flightNotes": "Day 1B listed as €1,750 on Hendon Mob (may be discounted late entry or data error)",
-      "features": ["multiday"],
+      "features": [
+        "multiday"
+      ],
       "description": "EU vs Rest of World format. 25,000 chips, 30-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 11,
-      "eventNum": "10b",
       "name": "PLO Monster Stack",
       "format": "PLO",
       "buyIn": 1650,
@@ -243,14 +411,20 @@
         "startingBlinds": "50/100"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-08", "time": "12:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-08",
+          "time": "12:00 PM"
+        }
       ],
       "features": [],
-      "description": "PLO Monster Stack. 50,000 chips, 20-minute levels. Listed as Bracelet Event #10 on Hendon Mob.",
-      "sources": ["thehendonmob.com"]
+      "description": "PLO Monster Stack. 50,000 chips, 20-minute levels.",
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 12,
       "eventNum": "11",
       "name": "Super High Roller 8-Max",
       "format": "NLH 8-Max",
@@ -262,15 +436,27 @@
         "startingBlinds": "500/1000"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-08", "time": "2:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-08",
+          "time": "2:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-09", "time": "2:00 PM" },
-      "features": ["high-roller", "multiday"],
+      "day2": {
+        "date": "2026-04-09",
+        "time": "2:00 PM"
+      },
+      "features": [
+        "high-roller",
+        "multiday"
+      ],
       "description": "150,000 chips, 60-minute levels, registration open through Level 12 (16:15) on April 9.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 13,
       "eventNum": "12",
       "name": "European Circuit Championship",
       "format": "NLH",
@@ -283,18 +469,42 @@
       },
       "gtd": 1500000,
       "flights": [
-        { "num": 1, "label": "1B", "date": "2026-04-08", "time": "6:00 PM" },
-        { "num": 2, "label": "1A", "date": "2026-04-09", "time": "12:00 PM" },
-        { "num": 3, "label": "1A", "date": "2026-04-09", "time": "6:00 PM" }
+        {
+          "num": 1,
+          "label": "1B",
+          "date": "2026-04-08",
+          "time": "6:00 PM"
+        },
+        {
+          "num": 2,
+          "label": "1A",
+          "date": "2026-04-09",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 3,
+          "label": "1A",
+          "date": "2026-04-09",
+          "time": "6:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-10", "time": "12:00 PM" },
-      "day3": { "date": "2026-04-11", "time": "12:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-10",
+        "time": "12:00 PM"
+      },
+      "day3": {
+        "date": "2026-04-11",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "€1,500,000 Guaranteed Prize Pool. 50,000 chips, 40-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 14,
       "eventNum": "13",
       "name": "GGMillion$ High Roller",
       "format": "NLH",
@@ -306,16 +516,31 @@
         "startingBlinds": "250/500"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-09", "time": "2:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-09",
+          "time": "2:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-10", "time": "2:00 PM" },
-      "day3": { "date": "2026-04-11", "time": "2:00 PM" },
-      "features": ["high-roller", "multiday"],
+      "day2": {
+        "date": "2026-04-10",
+        "time": "2:00 PM"
+      },
+      "day3": {
+        "date": "2026-04-11",
+        "time": "2:00 PM"
+      },
+      "features": [
+        "high-roller",
+        "multiday"
+      ],
       "description": "100,000 chips, 60-minute levels, registration open for 12 levels (16:15) on April 10.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 15,
       "eventNum": "14",
       "name": "PLO Double Board Bomb Pot",
       "format": "PLO",
@@ -327,15 +552,26 @@
         "startingBlinds": "50/100"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-10", "time": "12:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-10",
+          "time": "12:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-11", "time": "12:00 PM" },
-      "features": ["multiday"],
+      "day2": {
+        "date": "2026-04-11",
+        "time": "12:00 PM"
+      },
+      "features": [
+        "multiday"
+      ],
       "description": "25,000 chips, 60-minute levels. Double board bomb pot format.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 16,
       "eventNum": "15",
       "name": "The Closer Turbo Bounty",
       "format": "NLH Turbo Bounty",
@@ -348,17 +584,30 @@
         "startingBlinds": "50/100"
       },
       "flights": [
-        { "num": 1, "label": "1", "date": "2026-04-10", "time": "2:00 PM" }
+        {
+          "num": 1,
+          "label": "1",
+          "date": "2026-04-10",
+          "time": "2:00 PM"
+        }
       ],
-      "day2": { "date": "2026-04-11", "time": "2:00 PM" },
-      "features": ["turbo", "bounty", "multiday"],
+      "day2": {
+        "date": "2026-04-11",
+        "time": "2:00 PM"
+      },
+      "features": [
+        "turbo",
+        "bounty",
+        "multiday"
+      ],
       "description": "€1,000 bounties, 25,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     }
   ],
   "satellites": [
     {
-      "id": 101,
       "name": "€600 Main Event Satellite",
       "format": "NLH Satellite",
       "buyIn": 600,
@@ -370,23 +619,68 @@
       },
       "feedsTo": "Event #5 - WSOP Europe Main Event (€5,300)",
       "instances": [
-        { "date": "2026-03-31", "time": "6:00 PM", "seatsGtd": 2 },
-        { "date": "2026-04-01", "time": "11:00 AM", "seatsGtd": 2 },
-        { "date": "2026-04-01", "time": "6:00 PM", "seatsGtd": 3 },
-        { "date": "2026-04-02", "time": "11:00 AM", "seatsGtd": 2 },
-        { "date": "2026-04-02", "time": "6:00 PM", "seatsGtd": 15 },
-        { "date": "2026-04-03", "time": "11:00 AM", "seatsGtd": 2 },
-        { "date": "2026-04-03", "time": "7:00 PM", "seatsGtd": 10 },
-        { "date": "2026-04-04", "time": "11:00 AM", "seatsGtd": 2 },
-        { "date": "2026-04-04", "time": "6:00 PM", "seatsGtd": 10 },
-        { "date": "2026-04-05", "time": "11:00 AM", "seatsGtd": 2 },
-        { "date": "2026-04-05", "time": "6:00 PM", "seatsGtd": 10 }
+        {
+          "date": "2026-03-31",
+          "time": "6:00 PM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-01",
+          "time": "11:00 AM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-01",
+          "time": "6:00 PM",
+          "seatsGtd": 3
+        },
+        {
+          "date": "2026-04-02",
+          "time": "11:00 AM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-02",
+          "time": "6:00 PM",
+          "seatsGtd": 15
+        },
+        {
+          "date": "2026-04-03",
+          "time": "11:00 AM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-03",
+          "time": "7:00 PM",
+          "seatsGtd": 10
+        },
+        {
+          "date": "2026-04-04",
+          "time": "11:00 AM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-04",
+          "time": "6:00 PM",
+          "seatsGtd": 10
+        },
+        {
+          "date": "2026-04-05",
+          "time": "11:00 AM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-05",
+          "time": "6:00 PM",
+          "seatsGtd": 10
+        }
       ],
       "description": "€600 satellite to Main Event. 15,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 102,
       "name": "€600 Main Event Last Chance Satellite",
       "format": "NLH Satellite",
       "buyIn": 600,
@@ -398,13 +692,18 @@
       },
       "feedsTo": "Event #5 - WSOP Europe Main Event (€5,300)",
       "instances": [
-        { "date": "2026-04-06", "time": "11:00 AM", "seatsGtd": 3 }
+        {
+          "date": "2026-04-06",
+          "time": "11:00 AM",
+          "seatsGtd": 3
+        }
       ],
       "description": "Last chance satellite to Main Event. 15,000 chips, 15-minute levels, 3 seats GTD.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 103,
       "name": "€600 PLO Satellite",
       "format": "PLO Satellite",
       "buyIn": 600,
@@ -416,14 +715,23 @@
       },
       "feedsTo": "Event #9 - PLO European Championship (€5,300)",
       "instances": [
-        { "date": "2026-04-06", "time": "2:00 PM", "seatsGtd": 2 },
-        { "date": "2026-04-06", "time": "6:00 PM", "seatsGtd": 2 }
+        {
+          "date": "2026-04-06",
+          "time": "2:00 PM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-06",
+          "time": "6:00 PM",
+          "seatsGtd": 2
+        }
       ],
       "description": "PLO satellite. 10,000 chips, 15-minute levels, 2 seats GTD.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 104,
       "name": "€2,400 Super High Roller Satellite",
       "format": "NLH Satellite",
       "buyIn": 2400,
@@ -435,13 +743,18 @@
       },
       "feedsTo": "Event #11 - Super High Roller (€20,800)",
       "instances": [
-        { "date": "2026-04-07", "time": "6:00 PM", "seatsGtd": 2 }
+        {
+          "date": "2026-04-07",
+          "time": "6:00 PM",
+          "seatsGtd": 2
+        }
       ],
       "description": "Super High Roller satellite. 20,000 chips, 20-minute levels, 2 seats GTD.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 105,
       "name": "€1,000 GGMillion$ Satellite",
       "format": "NLH Satellite",
       "buyIn": 1000,
@@ -453,14 +766,23 @@
       },
       "feedsTo": "Event #13 - GGMillion$ High Roller (€8,400)",
       "instances": [
-        { "date": "2026-04-08", "time": "6:00 PM", "seatsGtd": 2 },
-        { "date": "2026-04-09", "time": "6:00 PM", "seatsGtd": 2 }
+        {
+          "date": "2026-04-08",
+          "time": "6:00 PM",
+          "seatsGtd": 2
+        },
+        {
+          "date": "2026-04-09",
+          "time": "6:00 PM",
+          "seatsGtd": 2
+        }
       ],
       "description": "GGMillion$ satellite. 20,000 chips, 20-minute levels, 2 seats GTD.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 106,
       "name": "€350 The Closer Satellite",
       "format": "NLH Satellite",
       "buyIn": 350,
@@ -472,15 +794,20 @@
       },
       "feedsTo": "Event #15 - The Closer Turbo Bounty (€2,750)",
       "instances": [
-        { "date": "2026-04-10", "time": "11:00 AM", "seatsGtd": 3 }
+        {
+          "date": "2026-04-10",
+          "time": "11:00 AM",
+          "seatsGtd": 3
+        }
       ],
       "description": "The Closer satellite. 15,000 chips, 15-minute levels, 3 seats GTD.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     }
   ],
   "sideEvents": [
     {
-      "id": 201,
       "name": "NLH Deepstack",
       "format": "NLH Deepstack",
       "buyIn": 0,
@@ -492,14 +819,20 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-03-31", "time": "3:00 PM" }
+        {
+          "date": "2026-03-31",
+          "time": "3:00 PM"
+        }
       ],
-      "features": ["deepstack"],
+      "features": [
+        "deepstack"
+      ],
       "description": "No Limit Hold'em Deepstack. 20,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 202,
       "name": "€5,000 NLH High Roller",
       "format": "NLH High Roller",
       "buyIn": 5000,
@@ -511,15 +844,27 @@
         "startingBlinds": "100/200"
       },
       "instances": [
-        { "date": "2026-04-01", "time": "3:00 PM", "note": "Day 1" },
-        { "date": "2026-04-02", "time": "1:00 PM", "note": "Day 2" }
+        {
+          "date": "2026-04-01",
+          "time": "3:00 PM",
+          "note": "Day 1"
+        },
+        {
+          "date": "2026-04-02",
+          "time": "1:00 PM",
+          "note": "Day 2"
+        }
       ],
-      "features": ["high-roller", "multiday"],
+      "features": [
+        "high-roller",
+        "multiday"
+      ],
       "description": "30,000 chips, 40/30-minute levels, registration open through the start of Day 2.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 203,
       "name": "€600 PLO Turbo",
       "format": "PLO Turbo",
       "buyIn": 600,
@@ -530,14 +875,20 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-01", "time": "7:00 PM" }
+        {
+          "date": "2026-04-01",
+          "time": "7:00 PM"
+        }
       ],
-      "features": ["turbo"],
+      "features": [
+        "turbo"
+      ],
       "description": "PLO Turbo. 15,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 204,
       "name": "€1,500 NLH 8-Handed",
       "format": "NLH 8-Handed",
       "buyIn": 1500,
@@ -548,14 +899,18 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-02", "time": "3:00 PM" }
+        {
+          "date": "2026-04-02",
+          "time": "3:00 PM"
+        }
       ],
       "features": [],
       "description": "8-Handed NLH. 30,000 chips, 30-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 205,
       "name": "€300 + €200 NLH Bounty Hyper Turbo",
       "format": "NLH Bounty Hyper Turbo",
       "buyIn": 300,
@@ -567,14 +922,21 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-03", "time": "8:00 PM" }
+        {
+          "date": "2026-04-03",
+          "time": "8:00 PM"
+        }
       ],
-      "features": ["bounty", "hyper-turbo"],
+      "features": [
+        "bounty",
+        "hyper-turbo"
+      ],
       "description": "€200 bounties, 10,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 206,
       "name": "€300 NLH Classic",
       "format": "NLH",
       "buyIn": 300,
@@ -585,14 +947,18 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-04", "time": "1:00 PM" }
+        {
+          "date": "2026-04-04",
+          "time": "1:00 PM"
+        }
       ],
       "features": [],
       "description": "NLH Classic. 15,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 207,
       "name": "€10,000 PLO High Roller",
       "format": "PLO High Roller",
       "buyIn": 10000,
@@ -604,15 +970,27 @@
         "startingBlinds": "100/200"
       },
       "instances": [
-        { "date": "2026-04-04", "time": "3:00 PM", "note": "Day 1" },
-        { "date": "2026-04-05", "time": "12:00 PM", "note": "Day 2" }
+        {
+          "date": "2026-04-04",
+          "time": "3:00 PM",
+          "note": "Day 1"
+        },
+        {
+          "date": "2026-04-05",
+          "time": "12:00 PM",
+          "note": "Day 2"
+        }
       ],
-      "features": ["high-roller", "multiday"],
+      "features": [
+        "high-roller",
+        "multiday"
+      ],
       "description": "30,000 chips, 40/20-minute levels, registration open through the start of Day 2.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 208,
       "name": "€1,000 NLH Deepstack Hyper Turbo",
       "format": "NLH Deepstack Hyper Turbo",
       "buyIn": 1000,
@@ -623,14 +1001,21 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-05", "time": "8:00 PM" }
+        {
+          "date": "2026-04-05",
+          "time": "8:00 PM"
+        }
       ],
-      "features": ["deepstack", "hyper-turbo"],
+      "features": [
+        "deepstack",
+        "hyper-turbo"
+      ],
       "description": "Deepstack Hyper Turbo. 20,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 209,
       "name": "€500 NLH Turbo",
       "format": "NLH Turbo",
       "buyIn": 500,
@@ -641,14 +1026,20 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-06", "time": "7:00 PM" }
+        {
+          "date": "2026-04-06",
+          "time": "7:00 PM"
+        }
       ],
-      "features": ["turbo"],
+      "features": [
+        "turbo"
+      ],
       "description": "NLH Turbo. 15,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 210,
       "name": "€600 + €200 NLH Bounty",
       "format": "NLH Bounty",
       "buyIn": 600,
@@ -660,14 +1051,20 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-07", "time": "3:00 PM" }
+        {
+          "date": "2026-04-07",
+          "time": "3:00 PM"
+        }
       ],
-      "features": ["bounty"],
+      "features": [
+        "bounty"
+      ],
       "description": "€200 bounties, 25,000 chips, 30-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 211,
       "name": "€300 PLO Turbo",
       "format": "PLO Turbo",
       "buyIn": 300,
@@ -678,14 +1075,20 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-07", "time": "7:00 PM" }
+        {
+          "date": "2026-04-07",
+          "time": "7:00 PM"
+        }
       ],
-      "features": ["turbo"],
+      "features": [
+        "turbo"
+      ],
       "description": "PLO Turbo. 15,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 212,
       "name": "€1,500 PLO Deepstack",
       "format": "PLO Deepstack",
       "buyIn": 1500,
@@ -696,14 +1099,20 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-08", "time": "3:00 PM" }
+        {
+          "date": "2026-04-08",
+          "time": "3:00 PM"
+        }
       ],
-      "features": ["deepstack"],
+      "features": [
+        "deepstack"
+      ],
       "description": "PLO Deepstack. 20,000 chips, 30-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 213,
       "name": "€250 NLH Hyper Turbo",
       "format": "NLH Hyper Turbo",
       "buyIn": 250,
@@ -714,14 +1123,20 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-08", "time": "8:00 PM" }
+        {
+          "date": "2026-04-08",
+          "time": "8:00 PM"
+        }
       ],
-      "features": ["hyper-turbo"],
+      "features": [
+        "hyper-turbo"
+      ],
       "description": "NLH Hyper Turbo. 10,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 214,
       "name": "€1,000 NLH Classic",
       "format": "NLH",
       "buyIn": 1000,
@@ -732,14 +1147,18 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-09", "time": "3:00 PM" }
+        {
+          "date": "2026-04-09",
+          "time": "3:00 PM"
+        }
       ],
       "features": [],
       "description": "NLH Classic. 15,000 chips, 30-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 215,
       "name": "€300 + €100 NLH Hyper Turbo Bounty",
       "format": "NLH Hyper Turbo Bounty",
       "buyIn": 300,
@@ -751,14 +1170,21 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-09", "time": "8:00 PM" }
+        {
+          "date": "2026-04-09",
+          "time": "8:00 PM"
+        }
       ],
-      "features": ["bounty", "hyper-turbo"],
+      "features": [
+        "bounty",
+        "hyper-turbo"
+      ],
       "description": "€100 bounties, 10,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 216,
       "name": "€300 + €200 PLO Bounty",
       "format": "PLO Bounty",
       "buyIn": 300,
@@ -770,14 +1196,20 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-10", "time": "3:00 PM" }
+        {
+          "date": "2026-04-10",
+          "time": "3:00 PM"
+        }
       ],
-      "features": ["bounty"],
+      "features": [
+        "bounty"
+      ],
       "description": "€200 bounties, 20,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 217,
       "name": "€5,000 NLH High Roller Turbo",
       "format": "NLH High Roller Turbo",
       "buyIn": 5000,
@@ -788,14 +1220,21 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-10", "time": "7:00 PM" }
+        {
+          "date": "2026-04-10",
+          "time": "7:00 PM"
+        }
       ],
-      "features": ["high-roller", "turbo"],
+      "features": [
+        "high-roller",
+        "turbo"
+      ],
       "description": "High Roller Turbo. 20,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 218,
       "name": "€300 NLH 6-Handed",
       "format": "NLH 6-Handed",
       "buyIn": 300,
@@ -806,14 +1245,18 @@
         "startingBlinds": "25/50"
       },
       "instances": [
-        { "date": "2026-04-11", "time": "1:00 PM" }
+        {
+          "date": "2026-04-11",
+          "time": "1:00 PM"
+        }
       ],
       "features": [],
       "description": "6-Handed NLH. 15,000 chips, 20-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 219,
       "name": "€1,500 NLH Deepstack Turbo",
       "format": "NLH Deepstack Turbo",
       "buyIn": 1500,
@@ -824,14 +1267,21 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-11", "time": "3:00 PM" }
+        {
+          "date": "2026-04-11",
+          "time": "3:00 PM"
+        }
       ],
-      "features": ["deepstack", "turbo"],
+      "features": [
+        "deepstack",
+        "turbo"
+      ],
       "description": "Deepstack Turbo. 25,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     },
     {
-      "id": 220,
       "name": "€800 NLH Farewell Hyper Turbo",
       "format": "NLH Hyper Turbo",
       "buyIn": 800,
@@ -842,11 +1292,18 @@
         "startingBlinds": "50/100"
       },
       "instances": [
-        { "date": "2026-04-11", "time": "6:00 PM" }
+        {
+          "date": "2026-04-11",
+          "time": "6:00 PM"
+        }
       ],
-      "features": ["hyper-turbo"],
+      "features": [
+        "hyper-turbo"
+      ],
       "description": "Farewell Hyper Turbo - last side event of the series. 25,000 chips, 15-minute levels.",
-      "sources": ["thehendonmob.com"]
+      "sources": [
+        "thehendonmob.com"
+      ]
     }
   ]
 }

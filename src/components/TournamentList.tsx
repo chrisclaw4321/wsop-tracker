@@ -17,21 +17,10 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
   const [filterType, setFilterType] = useState<FilterType>('all');
   const [sortBy, setSortBy] = useState<SortBy>('startTime');
 
-  const getEventType = (eventNum: string): FilterType => {
-    if (eventNum.startsWith('SAT')) return 'satellite';
-    if (eventNum.startsWith('SIDE')) return 'side';
-    return 'bracelet';
-  };
-
-  // Extract clean event number (remove "Flight X" suffix)
-  const getCleanEventNum = (eventNum: string): string => {
-    return eventNum.replace(/\s*-\s*Flight\s*\d+\s*$/i, '').trim();
-  };
-
-  // Count flights for an event
-  const getFlightCount = (eventNum: string, allTournaments: Tournament[]): number => {
-    const cleanNum = getCleanEventNum(eventNum);
-    return allTournaments.filter(t => getCleanEventNum(t.eventNum) === cleanNum).length;
+  // Count flights for a bracelet event by eventNum
+  const getFlightCount = (eventNum: string | undefined, allTournaments: Tournament[]): number => {
+    if (!eventNum) return 1;
+    return allTournaments.filter(t => t.eventNum === eventNum).length;
   };
 
   const getFormatLabel = (format: string) => {
@@ -106,12 +95,12 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
     return tournaments.filter(t => {
       const matchesSearch = 
         t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        t.eventNum.includes(searchTerm) ||
+        (t.eventNum || '').includes(searchTerm) ||
         t.format.toLowerCase().includes(searchTerm.toLowerCase());
       
       let matchesType = true;
       if (filterType !== 'all') {
-        matchesType = getEventType(t.eventNum) === filterType;
+        matchesType = t.eventType === filterType;
       }
       
       let matchesFormat = true;
@@ -131,7 +120,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
         case 'gtd':
           return (b.gtd || 0) - (a.gtd || 0);
         case 'event':
-          return parseInt(a.eventNum.replace(/\D/g, '') || '0') - parseInt(b.eventNum.replace(/\D/g, '') || '0');
+          return parseInt((a.eventNum || '999').replace(/\D/g, '') || '0') - parseInt((b.eventNum || '999').replace(/\D/g, '') || '0');
         case 'startTime':
         default: {
           // Sort by actual start time across all tournaments
@@ -238,14 +227,22 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
             >
               <div className="flex-1 text-left min-w-0">
                 <div className="flex items-center gap-4 mb-3 flex-wrap">
-                  <span className="text-3xl font-bold text-yellow-600 min-w-fit drop-shadow">#{getCleanEventNum(tournament.eventNum)}</span>
+                  {tournament.eventNum && (
+                    <span className="text-3xl font-bold text-yellow-600 min-w-fit drop-shadow">#{tournament.eventNum}</span>
+                  )}
+                  {tournament.eventType === 'satellite' && (
+                    <span className="px-3 py-1 bg-amber-200 text-amber-900 rounded-lg text-sm font-bold border-2 border-amber-400 shadow-sm">SAT</span>
+                  )}
+                  {tournament.eventType === 'side' && (
+                    <span className="px-3 py-1 bg-teal-200 text-teal-900 rounded-lg text-sm font-bold border-2 border-teal-400 shadow-sm">SIDE</span>
+                  )}
                   <h3 className="text-xl font-bold text-blue-900 truncate flex-1 drop-shadow-sm">
                     {tournament.name}
                   </h3>
                   <span className={`px-4 py-2 rounded-lg text-base font-bold whitespace-nowrap shadow-md ${getFormatBadgeColor(tournament.format)}`}>
                     {getFormatLabel(tournament.format)}
                   </span>
-                  {getFlightCount(tournament.eventNum, tournaments) > 1 && (
+                  {tournament.eventNum && getFlightCount(tournament.eventNum, tournaments) > 1 && (
                     <span className="px-3 py-2 bg-indigo-200 text-indigo-900 rounded-lg text-base font-bold border-2 border-indigo-400 shadow-md whitespace-nowrap">
                       ✈️ {getFlightCount(tournament.eventNum, tournaments)} Flights
                     </span>
@@ -322,7 +319,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                       📅 Multi-Day
                     </span>
                   )}
-                  {tournament.eventNum === '5' && (
+                  {tournament.eventType === 'bracelet' && tournament.eventNum === '5' && (
                     <span className="px-4 py-3 bg-yellow-200 text-yellow-900 rounded-lg text-base font-bold border-2 border-yellow-400 shadow-md">
                       👑 Main Event - €10M GTD
                     </span>
