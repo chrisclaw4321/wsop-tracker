@@ -9,6 +9,8 @@ interface MyScheduleProps {
 
 export default function MySchedule({ selectedTournaments, onRemove }: MyScheduleProps) {
   const [selectedTournamentDetail, setSelectedTournamentDetail] = useState<Tournament | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = React.useState(0);
 
   // Parse time string "12:00 PM" to minutes since midnight
   const timeToMinutes = (timeStr: string): number => {
@@ -167,6 +169,18 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return `€${amount.toLocaleString()}`;
   };
 
+  // Measure header height on mount
+  React.useEffect(() => {
+    if (containerRef.current) {
+      const headerDiv = containerRef.current.querySelector('.flex.gap-0.relative');
+      if (headerDiv) {
+        const rect = headerDiv.getBoundingClientRect();
+        setHeaderHeight(rect.height);
+        console.log(`[Calendar] Header height measured: ${rect.height}px`);
+      }
+    }
+  }, [allDays.length]);
+
   if (selectedTournaments.length === 0) {
     return (
       <div className="space-y-8">
@@ -197,7 +211,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       </div>
 
       {/* Gantt-style Schedule with absolute positioning */}
-      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto relative">
+      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto relative" ref={containerRef}>
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Gantt Chart)</h2>
         
         <div className="flex flex-col gap-0 relative">
@@ -264,7 +278,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                   onClick={() => setSelectedTournamentDetail(event.tournament)}
                   className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl transition cursor-pointer z-10"
                   style={{
-                    top: `${topOffset}px`,
+                    top: `${topOffset + headerHeight}px`,
                     left: `${leftPercent + 10.7}%`,
                     width: `calc(${widthPercent}% - 2px)`,
                     height: `${height}px`,
