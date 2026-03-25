@@ -129,6 +129,7 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
         isMultiday: bracelet.features.includes('multiday'),
         description: bracelet.description,
         continuationDays: continuationDays.length > 0 ? continuationDays : undefined,
+        sources: bracelet.sources,
       });
     });
   });
@@ -153,6 +154,7 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
         startingStack: satellite.startingStack,
         blindLevels: `${satellite.blindLevels.duration}-minute, starting at ${satellite.blindLevels.startingBlinds}`,
         description: satellite.description,
+        sources: satellite.sources,
       });
     });
   });
@@ -184,6 +186,7 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
         isBounty: side.features?.includes('bounty') || false,
         isTurbo: side.features?.includes('turbo') || side.features?.includes('hyper-turbo') || false,
         description: side.description,
+        sources: side.sources,
       });
     });
   });

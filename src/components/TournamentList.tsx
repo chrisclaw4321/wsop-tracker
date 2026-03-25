@@ -353,36 +353,23 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                   </div>
                 )}
 
-                {/* Sources - Clickable Links with Cloudflare CSP headers */}
-                <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
-                  <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources:</p>
-                  <div className="space-y-1">
-                    <div className="text-sm">
-                      <span className="text-gray-600">🌐 WSOP.com: </span>
-                      <a href="https://www.wsop.com/tournaments/results.asp?grid=1234&tour=2026&series=83" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
-                        Official Tournament Schedule
-                      </a>
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-gray-600">🎰 King's Casino: </span>
-                      <a href="https://www.kingscasino.cz/en/poker" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
-                        Prague Poker Schedule
-                      </a>
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-gray-600">📰 PokerNews: </span>
-                      <a href="https://www.pokernews.com/tours/wsop-europe-prague-2026/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
-                        WSOP Europe Coverage
-                      </a>
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-gray-600">📊 Hendon Mob: </span>
-                      <a href="https://www.hendonmob.com/festival.php?festival=2026%20WSOP%20Europe" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
-                        Results Database
-                      </a>
+                {/* Sources - Copyable URLs (workaround for Cloudflare firewall) */}
+                {tournament.description && (
+                  <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
+                    <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources (copy & paste):</p>
+                    <div className="space-y-2 text-xs">
+                      <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
+                        thehendonmob.com/festival.php?a=r&n=65393
+                      </div>
+                      <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
+                        wsop.com/tournaments/2026-wsop-europe/
+                      </div>
+                      <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
+                        kingscasino.cz/en/poker
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
           </div>
