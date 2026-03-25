@@ -252,41 +252,39 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                   )}
                 </div>
 
-                {/* Buy-in Info Row */}
+                {/* Buy-in Info Row - Always show all 4 boxes */}
                 <div className="grid grid-cols-4 gap-3 text-base font-bold text-gray-900 mb-2">
                   <div className="bg-green-100 px-3 py-2 rounded-lg border-2 border-green-400 shadow-sm">
                     <span className="text-sm text-green-700">💰 Buy-in:</span>
-                    <p className="text-base text-green-900">{formatCurrency(tournament.buyIn)}</p>
+                    <p className="text-base text-green-900">{tournament.buyIn ? formatCurrency(tournament.buyIn) : '—'}</p>
                   </div>
                   <div className="bg-cyan-100 px-3 py-2 rounded-lg border-2 border-cyan-400 shadow-sm">
                     <span className="text-sm text-cyan-700">+ Rake:</span>
-                    <p className="text-base text-cyan-900">{formatCurrency(tournament.rakeFee)}</p>
+                    <p className="text-base text-cyan-900">{tournament.rakeFee ? formatCurrency(tournament.rakeFee) : '—'}</p>
                   </div>
                   <div className="bg-red-100 px-3 py-2 rounded-lg border-2 border-red-400 shadow-sm">
                     <span className="text-sm text-red-700">= Total:</span>
-                    <p className="text-lg font-black text-red-900">{formatCurrency(tournament.buyIn + tournament.rakeFee)}</p>
+                    <p className="text-lg font-black text-red-900">{tournament.buyIn ? formatCurrency(tournament.buyIn + (tournament.rakeFee || 0)) : '—'}</p>
                   </div>
-                  {tournament.gtd && (
-                    <div className="bg-purple-100 px-3 py-2 rounded-lg border-2 border-purple-400 shadow-sm">
-                      <span className="text-sm text-purple-700">🏆 GTD:</span>
-                      <p className="text-base text-purple-900">{formatCurrency(tournament.gtd)}</p>
-                    </div>
-                  )}
+                  <div className="bg-purple-100 px-3 py-2 rounded-lg border-2 border-purple-400 shadow-sm">
+                    <span className="text-sm text-purple-700">🏆 GTD:</span>
+                    <p className="text-base text-purple-900">{tournament.gtd ? formatCurrency(tournament.gtd) : '—'}</p>
+                  </div>
                 </div>
 
-                {/* Tournament Structure - 3 Standard Boxes: Level Length, Starting Blinds, Starting Stack */}
+                {/* Tournament Structure - 3 Standard Boxes: Always show all */}
                 <div className="grid grid-cols-3 gap-3 text-base font-bold text-gray-900 mb-2">
                   <div className="bg-indigo-50 px-3 py-2 rounded-lg border-2 border-indigo-300 shadow-sm">
                     <span className="text-sm text-indigo-600">⏱️ Level:</span>
-                    <p className="text-base text-indigo-900">{parseLevelLength(tournament.blindLevels)}</p>
+                    <p className="text-base text-indigo-900">{tournament.blindLevels ? parseLevelLength(tournament.blindLevels) : '—'}</p>
                   </div>
                   <div className="bg-orange-50 px-3 py-2 rounded-lg border-2 border-orange-300 shadow-sm">
                     <span className="text-sm text-orange-600">🎰 Blinds:</span>
-                    <p className="text-base text-orange-900">{parseStartingBlinds(tournament.blindLevels)}</p>
+                    <p className="text-base text-orange-900">{tournament.blindLevels ? parseStartingBlinds(tournament.blindLevels) : '—'}</p>
                   </div>
                   <div className="bg-emerald-50 px-3 py-2 rounded-lg border-2 border-emerald-300 shadow-sm">
                     <span className="text-sm text-emerald-600">💎 Stack:</span>
-                    <p className="text-base text-emerald-900">{formatStack(tournament.startingStack)}</p>
+                    <p className="text-base text-emerald-900">{tournament.startingStack ? formatStack(tournament.startingStack) : '—'}</p>
                   </div>
                 </div>
               </div>
