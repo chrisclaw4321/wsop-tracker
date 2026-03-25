@@ -152,16 +152,23 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
   const getEventForSlot = (dateStr: string, hour: number): ScheduleEvent | null => {
     return scheduleEvents.find(event => {
       if (event.startDate !== dateStr) return false;
-      const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
-      const eventEndHour = Math.ceil(timeToMinutes(event.endTime) / 60);
-      return hour >= eventStartHour && hour < eventEndHour;
+      const eventStartMin = timeToMinutes(event.startTime);
+      const eventEndMin = eventStartMin + 360; // 6 hours = 360 minutes
+      
+      const hourStartMin = hour * 60;
+      const hourEndMin = (hour + 1) * 60;
+      
+      // Check if event overlaps with this hour
+      return eventStartMin < hourEndMin && eventEndMin > hourStartMin;
     }) || null;
   };
 
   // Check if this is the first hour of an event (to avoid duplicate blocks)
   const isFirstHourOfEvent = (dateStr: string, hour: number, event: ScheduleEvent): boolean => {
-    const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
-    return hour === eventStartHour;
+    const eventStartMin = timeToMinutes(event.startTime);
+    const hourStartMin = hour * 60;
+    // First hour is when event starts in this hour slot
+    return eventStartMin >= hourStartMin && eventStartMin < (hourStartMin + 60);
   };
 
   if (selectedTournaments.length === 0) {
