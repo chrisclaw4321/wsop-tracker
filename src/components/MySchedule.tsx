@@ -264,7 +264,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                   onClick={() => setSelectedTournamentDetail(event.tournament)}
                   className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl transition cursor-pointer z-10"
                   style={{
-                    top: `${topOffset + 52}px`,
+                    top: `${topOffset}px`,
                     left: `${leftPercent + 10.7}%`,
                     width: `calc(${widthPercent}% - 2px)`,
                     height: `${height}px`,
