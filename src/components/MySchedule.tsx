@@ -153,7 +153,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return scheduleEvents.find(event => {
       if (event.startDate !== dateStr) return false;
       const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
-      const eventEndHour = Math.floor(timeToMinutes(event.endTime) / 60);
+      const eventEndHour = Math.ceil(timeToMinutes(event.endTime) / 60);
       return hour >= eventStartHour && hour < eventEndHour;
     }) || null;
   };
@@ -217,9 +217,9 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
           </thead>
           <tbody>
             {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
-              <tr key={`hour-${hour}`} style={{ height: '30px' }}>
+              <tr key={`hour-${hour}`} style={{ height: '30px' }} className="relative">
                 {/* Time label */}
-                <td className="border-2 border-gray-400 bg-gray-100 p-1 font-bold text-center text-gray-800 w-24">
+                <td className="border-2 border-gray-400 bg-gray-100 p-1 font-bold text-center text-gray-800 w-24 align-top">
                   {minutesToTime(hour * 60)}
                 </td>
 
@@ -230,16 +230,16 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                   const isFirstHour = event ? isFirstHourOfEvent(dateStr, hour, event) : false;
 
                   return (
-                    <td key={`cell-${dateStr}-${hour}`} className="border-2 border-gray-300 p-1 bg-white hover:bg-gray-50 relative w-32">
+                    <td key={`cell-${dateStr}-${hour}`} className="border-2 border-gray-300 p-1 bg-white hover:bg-gray-50 relative w-32 align-top">
                       {/* Only render event block on its first hour */}
                       {isFirstHour && event && (
                         <button
                           onClick={() => setSelectedTournamentDetail(event.tournament)}
-                          className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded-md px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-xl transition cursor-pointer z-10 overflow-hidden"
-                          style={{ height: '180px' }} // 6 hours * 30px
+                          className="block w-full bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-xl transition cursor-pointer overflow-hidden"
+                          style={{ height: '180px', minHeight: '180px' }}
                           title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
                         >
-                          <div className="line-clamp-4 text-xs font-bold leading-tight break-words">
+                          <div className="line-clamp-6 text-xs font-bold leading-tight break-words">
                             {event.tournament.name}
                           </div>
                         </button>
@@ -294,9 +294,9 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       {/* Tournament Detail Modal */}
       {selectedTournamentDetail && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl border-4 border-blue-400 shadow-2xl w-11/12 max-w-4xl">
+          <div className="bg-white rounded-xl border-4 border-blue-400 shadow-2xl w-11/12 max-w-4xl max-h-[90vh] overflow-y-auto">
             {/* Header with close button */}
-            <div className="flex items-start justify-between p-6 bg-gradient-to-r from-blue-100 to-cyan-100 border-b-4 border-blue-400">
+            <div className="flex items-start justify-between p-6 bg-gradient-to-r from-blue-100 to-cyan-100 border-b-4 border-blue-400 sticky top-0 z-10">
               <h2 className="text-3xl font-bold text-blue-900 flex-1">{selectedTournamentDetail.name}</h2>
               <button
                 onClick={() => setSelectedTournamentDetail(null)}
@@ -307,9 +307,9 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
               </button>
             </div>
 
-            {/* Content - Grid layout for all info visible at once */}
+            {/* Content */}
             <div className="p-8 space-y-6">
-              {/* Event type badges - Row 1 */}
+              {/* Event type badges */}
               <div className="flex flex-wrap gap-3">
                 {selectedTournamentDetail.eventNum && (
                   <span className="px-4 py-2 bg-yellow-200 text-yellow-900 rounded-lg font-bold border-2 border-yellow-400 text-base">
@@ -331,7 +331,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 </span>
               </div>
 
-              {/* Date & Time - Row 2 */}
+              {/* Date & Time */}
               <div className="bg-yellow-100 px-6 py-4 rounded-lg border-3 border-yellow-400 flex items-center gap-4">
                 <Clock className="w-8 h-8 text-yellow-700 flex-shrink-0" />
                 <div>
@@ -343,7 +343,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 </div>
               </div>
 
-              {/* Buy-in & Rake - Row 3 */}
+              {/* Buy-in & Rake */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-green-100 px-6 py-4 rounded-lg border-3 border-green-400">
                   <p className="text-base text-green-700 font-bold mb-2">Buy-in</p>
@@ -355,7 +355,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 </div>
               </div>
 
-              {/* Total Cost - Row 4 */}
+              {/* Total Cost */}
               <div className="bg-red-100 px-6 py-4 rounded-lg border-3 border-red-400">
                 <p className="text-base text-red-700 font-bold mb-2">Total Cost</p>
                 <p className="text-3xl font-black text-red-900">
@@ -363,7 +363,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 </p>
               </div>
 
-              {/* Blind Structure - Row 5 */}
+              {/* Blind Structure */}
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-indigo-50 px-4 py-3 rounded-lg border-3 border-indigo-300">
                   <p className="text-base text-indigo-600 font-bold mb-2">Level Length</p>
@@ -379,7 +379,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 </div>
               </div>
 
-              {/* Description - Row 6 */}
+              {/* Description */}
               {selectedTournamentDetail.description && (
                 <div className="bg-gray-50 p-6 rounded-lg border-3 border-gray-300">
                   <p className="text-base text-gray-800 leading-relaxed font-medium">{selectedTournamentDetail.description}</p>
