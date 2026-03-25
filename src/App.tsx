@@ -101,20 +101,13 @@ function App() {
         console.log(`[API] Server returned ${data.selections?.length || 0} selections:`, data.selections);
         const selectedIds = data.selections || [];
         
-        if (selectedIds.length > 0) {
-          const restored = tournaments.filter(t => selectedIds.includes(t.id));
-          console.log(`[API] Restored ${restored.length} tournaments from server`);
-          setSelectedTournaments(restored);
-        } else {
-          console.log(`[API] No selections found on server, checking localStorage...`);
-          const savedSelections = localStorage.getItem('wsop_selected_tournaments');
-          if (savedSelections) {
-            const savedIds = JSON.parse(savedSelections);
-            const restored = tournaments.filter(t => savedIds.includes(t.id));
-            console.log(`[API] Restored ${restored.length} tournaments from localStorage`);
-            setSelectedTournaments(restored);
-          }
-        }
+        // Always load from server, even if empty (empty = user has no selections on this device)
+        const restored = tournaments.filter(t => selectedIds.includes(t.id));
+        console.log(`[API] ✅ Restored ${restored.length} tournaments from SERVER`);
+        setSelectedTournaments(restored);
+        
+        // Clear old localStorage since we got fresh data from server
+        localStorage.removeItem('wsop_selected_tournaments');
       } else {
         console.error(`[API] Server responded with status ${response.status}`);
         const errorText = await response.text();
@@ -123,19 +116,22 @@ function App() {
       }
     } catch (error) {
       console.error('[API] Failed to load selections from server:', error);
-      console.log('[API] Falling back to localStorage...');
+      console.log('[FALLBACK] Network error - falling back to localStorage (offline mode)');
       
-      // Fallback to localStorage
+      // Only use localStorage if server is unreachable
       const savedSelections = localStorage.getItem('wsop_selected_tournaments');
       if (savedSelections) {
         try {
           const savedIds = JSON.parse(savedSelections);
           const restored = tournaments.filter(t => savedIds.includes(t.id));
-          console.log(`[FALLBACK] Restored ${restored.length} tournaments from localStorage`);
+          console.log(`[FALLBACK] ⚠️ Using cached selections from localStorage: ${restored.length} tournaments`);
+          console.log('[FALLBACK] WARNING: These may be stale if server is unreachable');
           setSelectedTournaments(restored);
         } catch (e) {
           console.error('[FALLBACK] Failed to restore from localStorage:', e);
         }
+      } else {
+        console.log('[FALLBACK] No cached data in localStorage either - starting fresh');
       }
     }
   };
