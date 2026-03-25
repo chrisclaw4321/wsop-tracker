@@ -417,6 +417,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 5, // Runs 5 times daily
         gtd: 2000,
+        startingStack: 3000,
         location: 'King\'s Casino, Prague',
         blindLevels: '10-minute, starting at 10/25',
         description: 'Budget-friendly no-limit hold\'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
@@ -434,6 +435,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 5, // Runs 5 times daily
         gtd: 5000,
+        startingStack: 5000,
         location: 'King\'s Casino, Prague',
         blindLevels: '10-minute, starting at 15/25',
         description: '€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. IN-PERSON ONLY at King\'s Casino Prague.'
@@ -451,6 +453,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 5, // Runs 5 times daily
         gtd: 10000,
+        startingStack: 10000,
         location: 'King\'s Casino, Prague',
         blindLevels: '15-minute, starting at 25/50',
         description: '€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
@@ -468,6 +471,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 3, // Runs 3 times daily
         gtd: 20000,
+        startingStack: 15000,
         location: 'King\'s Casino, Prague',
         blindLevels: '20-minute, starting at 50/100',
         description: '€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
@@ -485,6 +489,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 3, // Runs 3 times daily
         gtd: 5000,
+        startingStack: 10000,
         location: 'King\'s Casino, Prague',
         blindLevels: '15-minute, starting at 25/50',
         description: 'Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts. IN-PERSON ONLY at King\'s Casino Prague.'
@@ -502,6 +507,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 2, // Runs 2 times daily
         gtd: 50000,
+        startingStack: 25000,
         location: 'King\'s Casino, Prague',
         blindLevels: '20-minute, starting at 100/200',
         description: '€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily. IN-PERSON ONLY at King\'s Casino Prague.'
@@ -519,6 +525,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 1, // Runs 1x on select days
         gtd: 5000,
+        startingStack: 10000,
         location: 'King\'s Casino, Prague',
         blindLevels: '10-minute, starting at 25/50',
         description: '€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week (Wed/Fri/Sun). IN-PERSON ONLY at King\'s Casino Prague.'
@@ -536,6 +543,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 2, // Runs 2 times daily
         gtd: 8000,
+        startingStack: 10000,
         isBounty: true,
         location: 'King\'s Casino, Prague',
         blindLevels: '15-minute, starting at 25/50',
@@ -572,6 +580,7 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 2, // Runs 2 times nightly
         isTurbo: true,
+        startingStack: 8000,
         blindLevels: '10-minute, starting at 25/50',
         gtd: 6000,
         location: 'King\'s Casino, Prague',
@@ -601,12 +610,12 @@ function App() {
     console.log(`Bracelet Events: ${braceletEvents}`);
     console.log(`  - With actual flights (expanded): ${braceletWithFlights}`);
     console.log(`  - Total flight rows from expansion: ${totalFlightExpansions}`);
-    console.log(`Satellite Events: ${satelliteEvents} (NOT expanded, using runsPerDay)`);
+    console.log(`Satellite Events: ${satelliteEvents} (expanded by start time: 4+3+4=11)`);
     console.log(`Side Events: ${sideEventCount} (NOT expanded, using runsPerDay)`);
     console.log(`Total unique event types: ${totalUniqueEvents}`);
     console.log(`Total display rows (after flight expansion): ${totalDisplayedRows}`);
-    console.log(`Expected total: ~25-28 rows (15 bracelets + flights, 3 satellites, 10 sides)`);
-    console.log(`Status: ${totalDisplayedRows >= 25 && totalDisplayedRows <= 30 ? '✅ PASS' : '❌ FAIL'}`);
+    console.log(`Expected total: ~33-40 rows (15 bracelets + flights, 11 satellites, 10 sides)`);
+    console.log(`Status: ${totalDisplayedRows >= 33 && totalDisplayedRows <= 45 ? '✅ PASS' : '❌ FAIL'}`);
     console.log('');
     console.log('Data Completeness:');
     if (missingBlindLevels.length > 0) {

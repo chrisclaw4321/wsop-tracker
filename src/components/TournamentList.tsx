@@ -50,6 +50,24 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
     return 'bg-yellow-200 text-yellow-900 border-yellow-400 border-2';
   };
 
+  // Parse blindLevels string like "20-minute, starting at 25/50" into components
+  const parseLevelLength = (blindLevels?: string): string => {
+    if (!blindLevels) return '—';
+    const match = blindLevels.match(/(\d+)-minute/);
+    return match ? `${match[1]} min` : '—';
+  };
+
+  const parseStartingBlinds = (blindLevels?: string): string => {
+    if (!blindLevels) return '—';
+    const match = blindLevels.match(/starting at (\d+\/\d+)/);
+    return match ? match[1] : '—';
+  };
+
+  const formatStack = (stack?: number): string => {
+    if (!stack) return '—';
+    return stack.toLocaleString();
+  };
+
   const getFormatFilter = (format: string): FilterFormat => {
     if (format.includes('High Roller') || format.includes('Super High Roller')) return 'highroller';
     if (format.includes('Bounty')) return 'bounty';
@@ -169,7 +187,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
           >
             <option value="all">All Events ({tournaments.length})</option>
             <option value="bracelet">Bracelet Events (15)</option>
-            <option value="satellite">Satellites (3)</option>
+            <option value="satellite">Satellites (11)</option>
             <option value="side">Side Events (10)</option>
           </select>
 
@@ -236,29 +254,17 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
 
                 {/* Quick Info - 3 Standard Boxes: Level Length, Starting Blinds, Starting Stack */}
                 <div className="grid grid-cols-3 gap-3 text-base font-bold text-gray-900 mb-2">
-                  <div className="bg-orange-100 px-3 py-2 rounded-lg border-2 border-orange-400 shadow-sm">
-                    <span className="text-sm text-orange-700">⏱️ Level Length:</span>
-                    <p className="text-base text-orange-900">
-                      {tournament.blindLevels 
-                        ? tournament.blindLevels.split(',')[0].trim() 
-                        : '—'}
-                    </p>
+                  <div className="bg-indigo-50 px-3 py-2 rounded-lg border-2 border-indigo-300 shadow-sm">
+                    <span className="text-sm text-indigo-600">⏱️ Level:</span>
+                    <p className="text-base text-indigo-900">{parseLevelLength(tournament.blindLevels)}</p>
                   </div>
-                  <div className="bg-cyan-100 px-3 py-2 rounded-lg border-2 border-cyan-400 shadow-sm">
-                    <span className="text-sm text-cyan-700">🔲 Starting Blinds:</span>
-                    <p className="text-base text-cyan-900">
-                      {tournament.blindLevels 
-                        ? tournament.blindLevels.split('at ')[1] || '—' 
-                        : '—'}
-                    </p>
+                  <div className="bg-orange-50 px-3 py-2 rounded-lg border-2 border-orange-300 shadow-sm">
+                    <span className="text-sm text-orange-600">🎰 Blinds:</span>
+                    <p className="text-base text-orange-900">{parseStartingBlinds(tournament.blindLevels)}</p>
                   </div>
-                  <div className="bg-green-100 px-3 py-2 rounded-lg border-2 border-green-400 shadow-sm">
-                    <span className="text-sm text-green-700">💎 Starting Stack:</span>
-                    <p className="text-base text-green-900">
-                      {tournament.startingStack 
-                        ? `${tournament.startingStack.toLocaleString()} chips` 
-                        : '—'}
-                    </p>
+                  <div className="bg-emerald-50 px-3 py-2 rounded-lg border-2 border-emerald-300 shadow-sm">
+                    <span className="text-sm text-emerald-600">💎 Stack:</span>
+                    <p className="text-base text-emerald-900">{formatStack(tournament.startingStack)}</p>
                   </div>
                 </div>
               </div>
@@ -273,24 +279,6 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
             {/* Expanded Details */}
             {expandedId === tournament.id && (
               <div className="px-6 py-5 bg-gradient-to-b from-blue-50 to-cyan-50 border-t-4 border-blue-300 space-y-5 text-base">
-                {/* Stack & Blinds */}
-                {(tournament.startingStack || tournament.blindLevels) && (
-                  <div className="grid grid-cols-2 gap-4 bg-white p-4 rounded-lg border-3 border-green-300 shadow-md">
-                    {tournament.startingStack && (
-                      <div className="bg-green-100 p-3 rounded-lg border-2 border-green-400">
-                        <span className="text-green-700 font-bold text-sm">💎 Starting Stack:</span>
-                        <p className="text-lg font-black text-green-900 drop-shadow">{tournament.startingStack.toLocaleString()} chips</p>
-                      </div>
-                    )}
-                    {tournament.blindLevels && (
-                      <div className="bg-orange-100 p-3 rounded-lg border-2 border-orange-400">
-                        <span className="text-orange-700 font-bold text-sm">⏱️ Blind Levels:</span>
-                        <p className="text-lg font-black text-orange-900 drop-shadow">{tournament.blindLevels}</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-
                 {/* Special Features */}
                 <div className="flex flex-wrap gap-3">
                   {tournament.isBounty && (
