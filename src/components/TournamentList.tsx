@@ -67,16 +67,27 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
     return 'all';
   };
 
-  // Parse date string to get comparable value (handles "Mar 31", "Apr 1", etc)
+  // Parse date string to get comparable value
+  // Handles ISO format "2026-03-31" and display format "Mar 31"
   const parseDateForComparison = (dateStr: string, timeStr: string): number => {
-    const monthMap: Record<string, number> = {
-      'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
-      'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
-    };
-    
-    const parts = dateStr.split(' ');
-    const month = monthMap[parts[0]] || 3; // default March
-    const day = parseInt(parts[1]) || 0;
+    let month: number;
+    let day: number;
+
+    if (dateStr.includes('-') && dateStr.length >= 10) {
+      // ISO format: "2026-03-31"
+      const isoParts = dateStr.split('-');
+      month = parseInt(isoParts[1]) || 3;
+      day = parseInt(isoParts[2]) || 0;
+    } else {
+      // Display format: "Mar 31"
+      const monthMap: Record<string, number> = {
+        'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+        'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+      };
+      const parts = dateStr.split(' ');
+      month = monthMap[parts[0]] || 3;
+      day = parseInt(parts[1]) || 0;
+    }
     
     // Parse time (e.g., "12:00 PM")
     const timeParts = timeStr.split(/[\s:]/);
@@ -142,12 +153,19 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
   };
 
   const formatDate = (dateStr: string) => {
-    // Handles "Mar 31" format
+    // Convert ISO "2026-03-31" to display "Mar 31"
+    if (dateStr.includes('-') && dateStr.length >= 10) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const parts = dateStr.split('-');
+      const month = months[parseInt(parts[1]) - 1] || 'Mar';
+      const day = parseInt(parts[2]) || 0;
+      return `${month} ${day}`;
+    }
     return dateStr;
   };
 
   const formatDateTime = (dateStr: string, timeStr: string) => {
-    return `${dateStr} ${timeStr}`;
+    return `${formatDate(dateStr)} ${timeStr}`;
   };
 
   return (
