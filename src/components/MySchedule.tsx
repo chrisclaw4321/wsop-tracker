@@ -294,87 +294,95 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       {/* Tournament Detail Modal */}
       {selectedTournamentDetail && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl border-4 border-blue-400 shadow-2xl max-w-2xl w-full max-h-96 overflow-y-auto">
+          <div className="bg-white rounded-xl border-4 border-blue-400 shadow-2xl w-11/12 max-w-4xl">
             {/* Header with close button */}
-            <div className="flex items-start justify-between p-6 bg-gradient-to-r from-blue-100 to-cyan-100 border-b-4 border-blue-400 sticky top-0">
-              <h2 className="text-2xl font-bold text-blue-900 flex-1">{selectedTournamentDetail.name}</h2>
+            <div className="flex items-start justify-between p-6 bg-gradient-to-r from-blue-100 to-cyan-100 border-b-4 border-blue-400">
+              <h2 className="text-3xl font-bold text-blue-900 flex-1">{selectedTournamentDetail.name}</h2>
               <button
                 onClick={() => setSelectedTournamentDetail(null)}
-                className="ml-4 p-2 bg-red-400 hover:bg-red-600 text-white rounded-lg transition font-bold flex-shrink-0"
+                className="ml-4 p-3 bg-red-400 hover:bg-red-600 text-white rounded-lg transition font-bold flex-shrink-0"
                 title="Close details"
               >
-                <X className="w-6 h-6" />
+                <X className="w-8 h-8" />
               </button>
             </div>
 
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              {/* Event type badges */}
-              <div className="flex flex-wrap gap-2">
+            {/* Content - Grid layout for all info visible at once */}
+            <div className="p-8 space-y-6">
+              {/* Event type badges - Row 1 */}
+              <div className="flex flex-wrap gap-3">
                 {selectedTournamentDetail.eventNum && (
-                  <span className="px-3 py-1 bg-yellow-200 text-yellow-900 rounded-lg text-sm font-bold border-2 border-yellow-400">
+                  <span className="px-4 py-2 bg-yellow-200 text-yellow-900 rounded-lg font-bold border-2 border-yellow-400 text-base">
                     Event #{selectedTournamentDetail.eventNum}
                   </span>
                 )}
                 {selectedTournamentDetail.eventType === 'satellite' && (
-                  <span className="px-3 py-1 bg-amber-200 text-amber-900 rounded-lg text-sm font-bold border-2 border-amber-400">
+                  <span className="px-4 py-2 bg-amber-300 text-amber-900 rounded-lg font-bold border-2 border-amber-400 text-base">
                     SAT
                   </span>
                 )}
                 {selectedTournamentDetail.eventType === 'side' && (
-                  <span className="px-3 py-1 bg-teal-200 text-teal-900 rounded-lg text-sm font-bold border-2 border-teal-400">
+                  <span className="px-4 py-2 bg-teal-200 text-teal-900 rounded-lg font-bold border-2 border-teal-400 text-base">
                     SIDE
                   </span>
                 )}
-                <span className={`px-4 py-2 rounded-lg text-base font-bold ${getFormatBadgeColor(selectedTournamentDetail.format)}`}>
+                <span className={`px-4 py-2 rounded-lg font-bold border-2 text-base ${getFormatBadgeColor(selectedTournamentDetail.format)}`}>
                   {getFormatLabel(selectedTournamentDetail.format)}
                 </span>
               </div>
 
-              {/* Date & Time */}
-              <div className="bg-yellow-100 px-4 py-3 rounded-lg border-2 border-yellow-400 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-yellow-700" />
+              {/* Date & Time - Row 2 */}
+              <div className="bg-yellow-100 px-6 py-4 rounded-lg border-3 border-yellow-400 flex items-center gap-4">
+                <Clock className="w-8 h-8 text-yellow-700 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-yellow-700 font-bold">Start Time</p>
-                  <p className="text-lg font-bold text-yellow-900">
+                  <p className="text-base text-yellow-700 font-bold">Start Time</p>
+                  <p className="text-2xl font-black text-yellow-900">
                     {selectedTournamentDetail.flightDate || selectedTournamentDetail.startDates[0]} at{' '}
                     {selectedTournamentDetail.flightTime || selectedTournamentDetail.startTimes[0]}
                   </p>
                 </div>
               </div>
 
-              {/* Buy-in Info */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-green-100 px-4 py-3 rounded-lg border-2 border-green-400">
-                  <p className="text-sm text-green-700 font-bold">Buy-in</p>
-                  <p className="text-xl font-black text-green-900">{formatCurrency(selectedTournamentDetail.buyIn)}</p>
+              {/* Buy-in & Rake - Row 3 */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-green-100 px-6 py-4 rounded-lg border-3 border-green-400">
+                  <p className="text-base text-green-700 font-bold mb-2">Buy-in</p>
+                  <p className="text-3xl font-black text-green-900">{formatCurrency(selectedTournamentDetail.buyIn)}</p>
                 </div>
-                <div className="bg-cyan-100 px-4 py-3 rounded-lg border-2 border-cyan-400">
-                  <p className="text-sm text-cyan-700 font-bold">Rake</p>
-                  <p className="text-xl font-black text-cyan-900">{formatCurrency(selectedTournamentDetail.rakeFee)}</p>
+                <div className="bg-cyan-100 px-6 py-4 rounded-lg border-3 border-cyan-400">
+                  <p className="text-base text-cyan-700 font-bold mb-2">Rake</p>
+                  <p className="text-3xl font-black text-cyan-900">{formatCurrency(selectedTournamentDetail.rakeFee)}</p>
                 </div>
               </div>
 
-              {/* Blind Levels */}
+              {/* Total Cost - Row 4 */}
+              <div className="bg-red-100 px-6 py-4 rounded-lg border-3 border-red-400">
+                <p className="text-base text-red-700 font-bold mb-2">Total Cost</p>
+                <p className="text-3xl font-black text-red-900">
+                  {formatCurrency(selectedTournamentDetail.buyIn + (selectedTournamentDetail.rakeFee || 0))}
+                </p>
+              </div>
+
+              {/* Blind Structure - Row 5 */}
               <div className="grid grid-cols-3 gap-4">
-                <div className="bg-indigo-50 px-3 py-2 rounded-lg border-2 border-indigo-300">
-                  <p className="text-sm text-indigo-600 font-bold">Level</p>
-                  <p className="text-base text-indigo-900">{parseLevelLength(selectedTournamentDetail.blindLevels)}</p>
+                <div className="bg-indigo-50 px-4 py-3 rounded-lg border-3 border-indigo-300">
+                  <p className="text-base text-indigo-600 font-bold mb-2">Level Length</p>
+                  <p className="text-2xl text-indigo-900 font-bold">{parseLevelLength(selectedTournamentDetail.blindLevels)}</p>
                 </div>
-                <div className="bg-orange-50 px-3 py-2 rounded-lg border-2 border-orange-300">
-                  <p className="text-sm text-orange-600 font-bold">Blinds</p>
-                  <p className="text-base text-orange-900">{parseStartingBlinds(selectedTournamentDetail.blindLevels)}</p>
+                <div className="bg-orange-50 px-4 py-3 rounded-lg border-3 border-orange-300">
+                  <p className="text-base text-orange-600 font-bold mb-2">Starting Blinds</p>
+                  <p className="text-2xl text-orange-900 font-bold">{parseStartingBlinds(selectedTournamentDetail.blindLevels)}</p>
                 </div>
-                <div className="bg-emerald-50 px-3 py-2 rounded-lg border-2 border-emerald-300">
-                  <p className="text-sm text-emerald-600 font-bold">Stack</p>
-                  <p className="text-base text-emerald-900">{formatStack(selectedTournamentDetail.startingStack)}</p>
+                <div className="bg-emerald-50 px-4 py-3 rounded-lg border-3 border-emerald-300">
+                  <p className="text-base text-emerald-600 font-bold mb-2">Starting Stack</p>
+                  <p className="text-2xl text-emerald-900 font-bold">{formatStack(selectedTournamentDetail.startingStack)}</p>
                 </div>
               </div>
 
-              {/* Description */}
+              {/* Description - Row 6 */}
               {selectedTournamentDetail.description && (
-                <div className="bg-gray-50 p-4 rounded-lg border-2 border-gray-300">
-                  <p className="text-sm text-gray-800 leading-relaxed">{selectedTournamentDetail.description}</p>
+                <div className="bg-gray-50 p-6 rounded-lg border-3 border-gray-300">
+                  <p className="text-base text-gray-800 leading-relaxed font-medium">{selectedTournamentDetail.description}</p>
                 </div>
               )}
             </div>
