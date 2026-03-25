@@ -17,6 +17,15 @@ function App() {
   const [currentTab, setCurrentTab] = useState<'list' | 'schedule'>('list');
 
   useEffect(() => {
+    // Clear service worker cache on page load to ensure fresh code
+    if ('caches' in window) {
+      caches.keys().then(cacheNames => {
+        cacheNames.forEach(cacheName => {
+          caches.delete(cacheName);
+        });
+      });
+    }
+    
     // Load tournaments data from centralized database
     loadTournaments();
     
