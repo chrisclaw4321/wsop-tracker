@@ -88,72 +88,66 @@ function App() {
 
   const loadSelectionsFromServer = async (email: string) => {
     try {
-      console.log(`[KV-API] Loading selections from KV for ${email}...`);
-      const kvKey = `wsop_selections_${email}`;
-      const response = await fetch(
-        `https://api.cloudflare.com/client/v4/accounts/26914575abf01f4199b562cc4d174f67/storage/kv/namespaces/fa7ca348e45b44c688d25b4639f03232/values/${encodeURIComponent(kvKey)}`,
-        {
-          headers: {
-            'Authorization': 'Bearer cfat_Vornxs7mVvNszOIO15xU5w5tJnICsZnzqB4ablXk09dea261'
-          }
-        }
-      );
+      console.log(`[API] Loading selections from server for ${email}...`);
+      const response = await fetch(`/api/selections?email=${encodeURIComponent(email)}`);
+      console.log(`[API] Response status: ${response.status}`);
       
       if (response.ok) {
-        const text = await response.text();
-        console.log(`[KV-API] Retrieved from KV: ${text || '(empty)'}`);
+        const data = await response.json();
+        console.log(`[API] Server returned ${data.selections?.length || 0} selections:`, data.selections);
+        const selectedIds = data.selections || [];
         
-        if (text) {
-          try {
-            const selectedIds = JSON.parse(text);
-            const restored = tournaments.filter(t => selectedIds.includes(t.id));
-            console.log(`[KV-API] ✅ Restored ${restored.length} tournaments from KV`);
-            setSelectedTournaments(restored);
-            // Save to localStorage as backup
-            localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectedIds));
-          } catch (parseError) {
-            console.error('[KV-API] Failed to parse KV data:', parseError);
-            // Fallback to localStorage
-            const savedSelections = localStorage.getItem('wsop_selected_tournaments');
-            if (savedSelections) {
-              const savedIds = JSON.parse(savedSelections);
-              const restored = tournaments.filter(t => savedIds.includes(t.id));
-              console.log(`[KV-API-FALLBACK] Using localStorage: ${restored.length} tournaments`);
-              setSelectedTournaments(restored);
-            } else {
-              setSelectedTournaments([]);
-            }
-          }
+        if (selectedIds.length > 0) {
+          // Server has selections - load them
+          const restored = tournaments.filter(t => selectedIds.includes(t.id));
+          console.log(`[API] ✅ Restored ${restored.length} tournaments from SERVER`);
+          setSelectedTournaments(restored);
+          // Save to localStorage as backup
+          localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectedIds));
         } else {
-          console.log(`[KV-API] KV is empty, checking localStorage...`);
+          // Server has no selections - try localStorage as fallback
+          console.log(`[API] Server has no selections, checking localStorage...`);
           const savedSelections = localStorage.getItem('wsop_selected_tournaments');
           if (savedSelections) {
             const savedIds = JSON.parse(savedSelections);
             const restored = tournaments.filter(t => savedIds.includes(t.id));
-            console.log(`[KV-API-FALLBACK] Loaded ${restored.length} tournaments from localStorage`);
+            console.log(`[API] Loaded ${restored.length} tournaments from localStorage`);
             setSelectedTournaments(restored);
           } else {
+            console.log(`[API] No selections found anywhere`);
             setSelectedTournaments([]);
           }
         }
       } else {
-        console.error(`[KV-API] Server responded with status ${response.status}`);
-        throw new Error(`HTTP ${response.status}`);
+        console.error(`[API] Server responded with status ${response.status}`);
+        const errorText = await response.text();
+        console.error(`[API] Error response:`, errorText);
+        
+        // Server error - use localStorage as fallback
+        const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+        if (savedSelections) {
+          const savedIds = JSON.parse(savedSelections);
+          const restored = tournaments.filter(t => savedIds.includes(t.id));
+          console.log(`[API-FALLBACK] Server error, using localStorage: ${restored.length} tournaments`);
+          setSelectedTournaments(restored);
+        } else {
+          setSelectedTournaments([]);
+        }
       }
     } catch (error) {
-      console.error('[KV-API] Failed to load from KV:', error);
-      console.log('[KV-API] Falling back to localStorage...');
+      console.error('[API] Failed to load selections from server:', error);
+      console.log('[API] Falling back to localStorage...');
       
-      // Fallback to localStorage
+      // Network error - use localStorage as fallback
       const savedSelections = localStorage.getItem('wsop_selected_tournaments');
       if (savedSelections) {
         try {
           const savedIds = JSON.parse(savedSelections);
           const restored = tournaments.filter(t => savedIds.includes(t.id));
-          console.log(`[KV-API-FALLBACK] Using localStorage: ${restored.length} tournaments`);
+          console.log(`[API-FALLBACK] Network error, using localStorage: ${restored.length} tournaments`);
           setSelectedTournaments(restored);
         } catch (e) {
-          console.error('[KV-API-FALLBACK] Failed to parse localStorage:', e);
+          console.error('[API-FALLBACK] Failed to parse localStorage:', e);
           setSelectedTournaments([]);
         }
       } else {
@@ -166,36 +160,29 @@ function App() {
     const selectionIds = newSelected.map(t => t.id);
     
     // Always save to localStorage as backup
-    console.log(`[KV-API] Saving ${selectionIds.length} selections to localStorage`);
+    console.log(`[API] Saving ${selectionIds.length} selections to localStorage`);
     localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectionIds));
     
-    // Try to save to KV
+    // Try to save to server
     try {
-      console.log(`[KV-API] Saving ${selectionIds.length} selections to KV for ${email}...`);
-      const kvKey = `wsop_selections_${email}`;
-      const response = await fetch(
-        `https://api.cloudflare.com/client/v4/accounts/26914575abf01f4199b562cc4d174f67/storage/kv/namespaces/fa7ca348e45b44c688d25b4639f03232/values/${encodeURIComponent(kvKey)}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Authorization': 'Bearer cfat_Vornxs7mVvNszOIO15xU5w5tJnICsZnzqB4ablXk09dea261',
-            'Content-Type': 'text/plain'
-          },
-          body: JSON.stringify(selectionIds)
-        }
-      );
+      console.log(`[API] Saving ${selectionIds.length} selections to server for ${email}...`);
+      const response = await fetch('/api/selections?email=' + encodeURIComponent(email), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selections: selectionIds })
+      });
       
-      console.log(`[KV-API] Save response status: ${response.status}`);
+      console.log(`[API] Save response status: ${response.status}`);
       if (!response.ok) {
         const errorText = await response.text();
-        console.error(`[KV-API] Save failed: ${response.status} - ${errorText}`);
-        console.warn('[KV-API] Saved to localStorage instead');
+        console.error(`[API] Save failed: ${response.status} - ${errorText}`);
+        console.warn('[API] Saved to localStorage instead');
       } else {
-        console.log(`[KV-API] ✅ Successfully saved to KV`);
+        console.log(`[API] ✅ Successfully saved to server`);
       }
     } catch (error) {
-      console.error('[KV-API] Failed to save selections to KV:', error);
-      console.warn('[KV-API] Saved to localStorage instead');
+      console.error('[API] Failed to save selections to server:', error);
+      console.warn('[API] Saved to localStorage instead');
     }
   };
 
