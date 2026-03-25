@@ -43,19 +43,6 @@ function App() {
     const allTournaments = loadTournamentsFromDatabase();
     setTournaments(allTournaments);
     
-    // Restore pending selections
-    const pendingSelections = localStorage.getItem('wsop_pending_selections');
-    if (pendingSelections) {
-      try {
-        const savedIds = JSON.parse(pendingSelections);
-        const restored = allTournaments.filter(t => savedIds.includes(t.id));
-        setSelectedTournaments(restored);
-        localStorage.removeItem('wsop_pending_selections');
-      } catch (e) {
-        console.error('Failed to restore pending selections:', e);
-      }
-    }
-    
     // === DATA AUDIT ===
     console.log('=== WSOP EUROPE 2026 TRACKER - LOADED FROM DATABASE ===');
     console.log(`Total tournament entries: ${allTournaments.length}`);
@@ -101,38 +88,25 @@ function App() {
         console.log(`[API] Server returned ${data.selections?.length || 0} selections:`, data.selections);
         const selectedIds = data.selections || [];
         
-        // Always load from server, even if empty (empty = user has no selections on this device)
+        // Always load from server (empty = user has no selections)
         const restored = tournaments.filter(t => selectedIds.includes(t.id));
         console.log(`[API] ✅ Restored ${restored.length} tournaments from SERVER`);
         setSelectedTournaments(restored);
         
-        // Clear old localStorage since we got fresh data from server
+        // Clear localStorage entirely - server is source of truth
         localStorage.removeItem('wsop_selected_tournaments');
       } else {
         console.error(`[API] Server responded with status ${response.status}`);
         const errorText = await response.text();
         console.error(`[API] Error response:`, errorText);
-        throw new Error(`HTTP ${response.status}`);
+        // Don't throw - just log and continue with empty selection
+        setSelectedTournaments([]);
       }
     } catch (error) {
       console.error('[API] Failed to load selections from server:', error);
-      console.log('[FALLBACK] Network error - falling back to localStorage (offline mode)');
-      
-      // Only use localStorage if server is unreachable
-      const savedSelections = localStorage.getItem('wsop_selected_tournaments');
-      if (savedSelections) {
-        try {
-          const savedIds = JSON.parse(savedSelections);
-          const restored = tournaments.filter(t => savedIds.includes(t.id));
-          console.log(`[FALLBACK] ⚠️ Using cached selections from localStorage: ${restored.length} tournaments`);
-          console.log('[FALLBACK] WARNING: These may be stale if server is unreachable');
-          setSelectedTournaments(restored);
-        } catch (e) {
-          console.error('[FALLBACK] Failed to restore from localStorage:', e);
-        }
-      } else {
-        console.log('[FALLBACK] No cached data in localStorage either - starting fresh');
-      }
+      console.warn('[API] Server unreachable - starting with empty selection (no localStorage fallback)');
+      // No fallback - force fresh start if server is down
+      setSelectedTournaments([]);
     }
   };
 
@@ -158,9 +132,7 @@ function App() {
       console.error('[API] Failed to save selections to server:', error);
     }
     
-    // Always save to localStorage as fallback
-    console.log(`[FALLBACK] Saving ${selectionIds.length} selections to localStorage`);
-    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectionIds));
+    // No localStorage - server is the only source of truth
   };
 
   const handleSelectTournament = (tournament: Tournament) => {
