@@ -183,7 +183,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 <div
                   key={`header-${idx}`}
                   style={{
-                    width: '120px',
+                    width: '90px',
                     flexShrink: 0,
                     padding: '8px',
                     textAlign: 'center',
@@ -203,7 +203,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
 
           {/* Hour rows with tournament blocks */}
           {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
-            <div key={`hour-${hour}`} style={{ display: 'flex', borderTop: '1px solid #e5e7eb', minHeight: '60px', position: 'relative' }}>
+            <div key={`hour-${hour}`} style={{ display: 'flex', borderTop: '1px solid #e5e7eb', minHeight: '42px', position: 'relative' }}>
               {/* Time label */}
               <div
                 style={{
@@ -227,11 +227,12 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 <div
                   key={`cell-${dateStr}-${hour}`}
                   style={{
-                    width: '120px',
+                    width: '90px',
                     flexShrink: 0,
                     borderRight: '1px solid #e5e7eb',
                     backgroundColor: '#fff',
-                    position: 'relative'
+                    position: 'relative',
+                    minHeight: '42px'
                   }}
                 >
                   {/* Tournament blocks for this slot */}
