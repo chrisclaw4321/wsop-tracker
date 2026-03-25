@@ -178,7 +178,8 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       
       const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
       const eventEndHour = Math.floor(timeToMinutes(event.endTime) / 60);
-      const timeMatch = hour >= eventStartHour && hour < eventEndHour;
+      // Use <= to include the final hour (e.g., hour 24 for events ending at midnight)
+      const timeMatch = hour >= eventStartHour && hour <= eventEndHour;
       
       if (dateMatch && timeMatch) {
         console.log(`[Calendar] Found event match: ${event.tournament.name} on ${dateStr} hour ${hour}`);
