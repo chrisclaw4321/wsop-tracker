@@ -29,12 +29,37 @@ function App() {
         console.error('Failed to restore user session:', e);
       }
     }
+
+    // Restore selected tournaments from localStorage
+    const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+    if (savedSelections) {
+      try {
+        const savedIds = JSON.parse(savedSelections);
+        // Will be set after tournaments load
+        localStorage.setItem('wsop_pending_selections', JSON.stringify(savedIds));
+      } catch (e) {
+        console.error('Failed to restore selections:', e);
+      }
+    }
   }, []);
 
   const loadTournaments = () => {
     // Load all tournaments from the centralized database
     const allTournaments = loadTournamentsFromDatabase();
     setTournaments(allTournaments);
+    
+    // Restore pending selections
+    const pendingSelections = localStorage.getItem('wsop_pending_selections');
+    if (pendingSelections) {
+      try {
+        const savedIds = JSON.parse(pendingSelections);
+        const restored = allTournaments.filter(t => savedIds.includes(t.id));
+        setSelectedTournaments(restored);
+        localStorage.removeItem('wsop_pending_selections');
+      } catch (e) {
+        console.error('Failed to restore pending selections:', e);
+      }
+    }
     
     // === DATA AUDIT ===
     console.log('=== WSOP EUROPE 2026 TRACKER - LOADED FROM DATABASE ===');
@@ -71,15 +96,22 @@ function App() {
   };
 
   const handleSelectTournament = (tournament: Tournament) => {
+    let newSelected: Tournament[];
     if (selectedTournaments.find(t => t.id === tournament.id)) {
-      setSelectedTournaments(selectedTournaments.filter(t => t.id !== tournament.id));
+      newSelected = selectedTournaments.filter(t => t.id !== tournament.id);
     } else {
-      setSelectedTournaments([...selectedTournaments, tournament]);
+      newSelected = [...selectedTournaments, tournament];
     }
+    setSelectedTournaments(newSelected);
+    // Persist to localStorage
+    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(newSelected.map(t => t.id)));
   };
 
   const handleRemoveFromSchedule = (tournamentId: number) => {
-    setSelectedTournaments(selectedTournaments.filter(t => t.id !== tournamentId));
+    const newSelected = selectedTournaments.filter(t => t.id !== tournamentId);
+    setSelectedTournaments(newSelected);
+    // Persist to localStorage
+    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(newSelected.map(t => t.id)));
   };
 
   const isTournamentSelected = (tournamentId: number): boolean => {
