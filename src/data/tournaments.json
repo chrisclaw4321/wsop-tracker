@@ -810,9 +810,8 @@
     {
       "name": "NLH Deepstack",
       "format": "NLH Deepstack",
-      "buyIn": 0,
+      "buyIn": 400,
       "rake": 0,
-      "buyInNote": "Buy-in not listed on Hendon Mob",
       "startingStack": 20000,
       "blindLevels": {
         "duration": 20,
