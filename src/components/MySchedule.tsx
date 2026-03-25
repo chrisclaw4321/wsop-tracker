@@ -9,7 +9,6 @@ interface MyScheduleProps {
 
 export default function MySchedule({ selectedTournaments, onRemove }: MyScheduleProps) {
   const [selectedTournamentDetail, setSelectedTournamentDetail] = useState<Tournament | null>(null);
-  const [headerOffset, setHeaderOffset] = useState(52); // Default fallback
 
   // Parse time string "12:00 PM" to minutes since midnight
   const timeToMinutes = (timeStr: string): number => {
@@ -168,17 +167,6 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return `€${amount.toLocaleString()}`;
   };
 
-  // Measure header height on first render
-  React.useEffect(() => {
-    const headerElement = document.querySelector('[data-calendar-header]');
-    if (headerElement) {
-      const rect = headerElement.getBoundingClientRect();
-      const measuredHeight = rect.height + 8; // Add small margin
-      console.log(`[Calendar] Measured header height: ${measuredHeight}px`);
-      setHeaderOffset(Math.round(measuredHeight));
-    }
-  }, []);
-
   if (selectedTournaments.length === 0) {
     return (
       <div className="space-y-8">
@@ -214,7 +202,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
         
         <div className="flex flex-col gap-0 relative">
           {/* Day Headers */}
-          <div className="flex gap-0 relative z-20" data-calendar-header>
+          <div className="flex gap-0 relative z-20">
             <div className="w-40 flex-shrink-0" /> {/* Space for time labels */}
             {allDays.map((dateStr, idx) => {
               const formatted = formatDate(dateStr);
@@ -276,7 +264,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                   onClick={() => setSelectedTournamentDetail(event.tournament)}
                   className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl transition cursor-pointer z-10"
                   style={{
-                    top: `${topOffset + headerOffset}px`,
+                    top: `${topOffset + 52}px`,
                     left: `${leftPercent + 10.7}%`,
                     width: `calc(${widthPercent}% - 2px)`,
                     height: `${height}px`,
