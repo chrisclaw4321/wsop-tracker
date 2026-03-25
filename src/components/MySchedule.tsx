@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Tournament, ScheduleEvent } from '../types';
-import { Trash2, Clock, Euro } from 'lucide-react';
+import { Trash2, Euro } from 'lucide-react';
 
 interface MyScheduleProps {
   selectedTournaments: Tournament[];
@@ -19,6 +19,15 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     if (!isPM && hours === 12) hours = 0;
     
     return hours * 60 + minutes;
+  };
+
+  // Convert minutes to formatted time string
+  const minutesToTime = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    const hour12 = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+    const period = hours >= 12 ? 'PM' : 'AM';
+    return `${hour12}:${mins.toString().padStart(2, '0')} ${period}`;
   };
 
   // Parse date string "2026-03-31" or "Mar 31"
@@ -83,34 +92,6 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return days;
   }, []);
 
-  // Group events by date
-  const eventsByDate = useMemo(() => {
-    const grouped: Record<string, ScheduleEvent[]> = {};
-    
-    allDays.forEach(date => {
-      const dateStr = date.toISOString().split('T')[0];
-      grouped[dateStr] = [];
-    });
-
-    scheduleEvents.forEach(event => {
-      if (!grouped[event.startDate]) {
-        grouped[event.startDate] = [];
-      }
-      grouped[event.startDate].push(event);
-    });
-    
-    // Sort by time within each date
-    Object.keys(grouped).forEach(date => {
-      grouped[date].sort((a, b) => {
-        const aMin = timeToMinutes(a.startTime);
-        const bMin = timeToMinutes(b.startTime);
-        return aMin - bMin;
-      });
-    });
-    
-    return grouped;
-  }, [scheduleEvents, allDays]);
-
   // Calculate summary
   const summary = useMemo(() => {
     const totalBuyIn = selectedTournaments.reduce((sum, t) => sum + t.buyIn, 0);
@@ -131,13 +112,10 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
 
   if (selectedTournaments.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-blue-900 mb-4">My Schedule</h1>
-          <div className="bg-white rounded-xl border-4 border-gray-300 p-12 text-center shadow-lg">
-            <p className="text-2xl text-gray-600 font-semibold mb-4">No tournaments selected yet</p>
-            <p className="text-lg text-gray-500">Go back to the tournament list and select tournaments to build your schedule.</p>
-          </div>
+      <div className="space-y-8">
+        <div className="bg-white rounded-xl border-4 border-gray-300 p-16 text-center shadow-lg">
+          <p className="text-2xl text-gray-600 font-semibold mb-4">No tournaments selected yet</p>
+          <p className="text-lg text-gray-500">Go back to the tournament list and select tournaments to build your schedule.</p>
         </div>
       </div>
     );
@@ -161,78 +139,89 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
         </div>
       </div>
 
-      {/* Weekly Grid Calendar */}
+      {/* Gantt-style Schedule */}
       <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Mar 31 - Apr 12)</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Gantt Chart)</h2>
         
-        <div className="grid grid-cols-14 gap-2 min-w-max">
+        <div className="flex flex-col gap-1">
           {/* Day Headers */}
-          {allDays.map((day, idx) => {
-            const formatted = formatDate(day);
-            return (
-              <div key={`header-${idx}`} className="text-center w-24">
-                <p className="font-bold text-gray-900 text-sm">{formatted.day}</p>
-                <p className="font-black text-lg text-blue-600">{formatted.date}</p>
-                <p className="text-xs text-gray-600 font-semibold">{formatted.month}</p>
+          <div className="flex gap-0">
+            <div className="w-40 flex-shrink-0" /> {/* Space for time labels */}
+            {allDays.map((day, idx) => {
+              const formatted = formatDate(day);
+              return (
+                <div key={`header-${idx}`} className="flex-1 min-w-20 border border-gray-400 bg-gradient-to-b from-blue-200 to-blue-100 p-2 text-center font-bold text-sm">
+                  <p className="text-gray-900">{formatted.day}</p>
+                  <p className="text-lg font-black text-blue-700">{formatted.date}</p>
+                  <p className="text-xs text-gray-700">{formatted.month}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Time rows (6 AM to midnight) */}
+          {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
+            <div key={`hour-${hour}`} className="flex gap-0 border-t border-gray-300">
+              {/* Time label */}
+              <div className="w-40 flex-shrink-0 bg-gray-100 border-r border-gray-400 px-3 py-2 font-bold text-sm text-gray-800 text-right">
+                {minutesToTime(hour * 60)}
               </div>
-            );
-          })}
 
-          {/* Time slots - show tournaments from 6 AM to midnight */}
-          {Array.from({ length: 19 }, (_, hour) => hour + 6).map(hour => (
-            <React.Fragment key={`hour-${hour}`}>
-              {/* Hour label (first day only) */}
-              {allDays.map((day, dayIdx) => (
-                dayIdx === 0 ? (
-                  <div key={`time-label-${hour}`} className="text-xs font-bold text-gray-600 w-24 text-center py-2">
-                    {hour > 12 ? hour - 12 : hour}:{(hour % 24 < 12 && hour % 24 !== 0) || (hour >= 12 && hour !== 12) ? '' : ''}{hour < 12 ? 'AM' : hour === 12 ? 'PM' : 'PM'}
-                  </div>
-                ) : null
-              ))}
-
-              {/* Time slots for each day */}
-              {allDays.map((day, dayIdx) => {
+              {/* Day columns */}
+              {allDays.map((day) => {
                 const dateStr = day.toISOString().split('T')[0];
-                const dayEvents = eventsByDate[dateStr] || [];
-                
-                // Find events that overlap with this hour
-                const overlappingEvent = dayEvents.find(event => {
+                const dayEvents = scheduleEvents.filter(event => {
                   const startMin = timeToMinutes(event.startTime);
                   const endMin = timeToMinutes(event.endTime);
                   const hourMin = hour * 60;
                   const nextHourMin = (hour + 1) * 60;
                   
-                  return (startMin < nextHourMin && endMin > hourMin);
+                  // Check if event overlaps with this hour
+                  return event.startDate === dateStr && startMin < nextHourMin && endMin > hourMin;
                 });
 
                 return (
-                  <div 
+                  <div
                     key={`slot-${dateStr}-${hour}`}
-                    className="w-24 h-20 border border-gray-200 bg-gray-50 p-1 text-center text-xs relative group"
+                    className="flex-1 min-w-20 border border-gray-200 bg-white hover:bg-gray-50 p-1 relative group"
+                    style={{ minHeight: '60px' }}
                   >
-                    {overlappingEvent && (
-                      <div className="bg-gradient-to-br from-blue-300 to-green-300 border-2 border-blue-600 rounded p-1 h-full flex flex-col justify-between hover:shadow-lg transition">
-                        <div className="text-left flex-1 overflow-hidden">
-                          <p className="font-bold text-blue-900 text-xs leading-tight line-clamp-2">
-                            {overlappingEvent.tournament.name.substring(0, 15)}
-                          </p>
-                          <p className="text-xs text-blue-800 font-semibold">
-                            €{overlappingEvent.tournament.buyIn}
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => onRemove(overlappingEvent.tournament.id)}
-                          className="opacity-0 group-hover:opacity-100 absolute top-1 right-1 bg-red-400 hover:bg-red-600 text-white rounded p-0.5 transition"
-                          title="Remove"
+                    {dayEvents.map((event, idx) => {
+                      const startMin = timeToMinutes(event.startTime);
+                      const endMin = timeToMinutes(event.endTime);
+                      const hourMin = hour * 60;
+                      const nextHourMin = (hour + 1) * 60;
+                      
+                      // Calculate position and height
+                      const topPercent = Math.max(0, (startMin - hourMin) / 60) * 100;
+                      const heightPercent = Math.min(100, (Math.min(endMin, nextHourMin) - Math.max(startMin, hourMin)) / 60) * 100;
+
+                      return (
+                        <div
+                          key={`${event.tournament.id}-${idx}`}
+                          className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-1 py-0.5 text-xs font-bold text-white shadow-md hover:shadow-lg transition w-full left-0 right-0"
+                          style={{
+                            top: `${topPercent}%`,
+                            height: `${Math.max(10, heightPercent)}%`,
+                            overflow: 'hidden'
+                          }}
+                          title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
                         >
-                          ✕
-                        </button>
-                      </div>
-                    )}
+                          <div className="line-clamp-2 text-xs font-bold">{event.tournament.name.substring(0, 12)}</div>
+                          <button
+                            onClick={() => onRemove(event.tournament.id)}
+                            className="opacity-0 group-hover:opacity-100 absolute top-0.5 right-0.5 bg-red-500 hover:bg-red-700 text-white rounded p-0.5 transition text-xs"
+                            title="Remove"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}
-            </React.Fragment>
+            </div>
           ))}
         </div>
       </div>
@@ -249,14 +238,12 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
             <div key={tournament.id} className="bg-gradient-to-r from-blue-50 to-green-50 border-2 border-blue-300 rounded-lg p-4 shadow-md hover:shadow-lg transition">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <p className="font-bold text-gray-900 mb-2 line-clamp-2">{tournament.name}</p>
-                  <div className="space-y-1 text-sm text-gray-700">
-                    <p className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      {tournament.flightTime || tournament.startTimes[0]}
-                    </p>
-                    <p className="flex items-center gap-2 font-bold text-blue-600">
-                      <Euro className="w-4 h-4" />
+                  <p className="font-bold text-gray-900 mb-2 line-clamp-2 text-sm">{tournament.name}</p>
+                  <div className="space-y-1 text-xs text-gray-700">
+                    <p><strong>Date:</strong> {tournament.flightDate || tournament.startDates[0]}</p>
+                    <p><strong>Time:</strong> {tournament.flightTime || tournament.startTimes[0]}</p>
+                    <p className="flex items-center gap-1 font-bold text-blue-600">
+                      <Euro className="w-3 h-3" />
                       €{tournament.buyIn}
                     </p>
                   </div>

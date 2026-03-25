@@ -29,19 +29,14 @@ function App() {
         console.error('Failed to restore user session:', e);
       }
     }
-
-    // Restore selected tournaments from localStorage
-    const savedSelections = localStorage.getItem('wsop_selected_tournaments');
-    if (savedSelections) {
-      try {
-        const savedIds = JSON.parse(savedSelections);
-        // Will be set after tournaments load
-        localStorage.setItem('wsop_pending_selections', JSON.stringify(savedIds));
-      } catch (e) {
-        console.error('Failed to restore selections:', e);
-      }
-    }
   }, []);
+
+  // Load selections from server when user logs in
+  useEffect(() => {
+    if (user && tournaments.length > 0) {
+      loadSelectionsFromServer(user.email);
+    }
+  }, [user, tournaments.length]);
 
   const loadTournaments = () => {
     // Load all tournaments from the centralized database
@@ -95,6 +90,45 @@ function App() {
     localStorage.removeItem('wsop_user');
   };
 
+  const loadSelectionsFromServer = async (email: string) => {
+    try {
+      const response = await fetch(`/api/selections?email=${encodeURIComponent(email)}`);
+      if (response.ok) {
+        const data = await response.json();
+        const selectedIds = data.selections || [];
+        const restored = tournaments.filter(t => selectedIds.includes(t.id));
+        setSelectedTournaments(restored);
+      }
+    } catch (error) {
+      console.error('Failed to load selections from server:', error);
+      // Fallback to localStorage
+      const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+      if (savedSelections) {
+        try {
+          const savedIds = JSON.parse(savedSelections);
+          const restored = tournaments.filter(t => savedIds.includes(t.id));
+          setSelectedTournaments(restored);
+        } catch (e) {
+          console.error('Failed to restore from localStorage:', e);
+        }
+      }
+    }
+  };
+
+  const saveSelectionsToServer = async (newSelected: Tournament[], email: string) => {
+    try {
+      await fetch('/api/selections?email=' + encodeURIComponent(email), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selections: newSelected.map(t => t.id) })
+      });
+    } catch (error) {
+      console.error('Failed to save selections to server:', error);
+    }
+    // Always save to localStorage as fallback
+    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(newSelected.map(t => t.id)));
+  };
+
   const handleSelectTournament = (tournament: Tournament) => {
     let newSelected: Tournament[];
     if (selectedTournaments.find(t => t.id === tournament.id)) {
@@ -103,15 +137,19 @@ function App() {
       newSelected = [...selectedTournaments, tournament];
     }
     setSelectedTournaments(newSelected);
-    // Persist to localStorage
-    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(newSelected.map(t => t.id)));
+    // Save to server and localStorage
+    if (user) {
+      saveSelectionsToServer(newSelected, user.email);
+    }
   };
 
   const handleRemoveFromSchedule = (tournamentId: number) => {
     const newSelected = selectedTournaments.filter(t => t.id !== tournamentId);
     setSelectedTournaments(newSelected);
-    // Persist to localStorage
-    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(newSelected.map(t => t.id)));
+    // Save to server and localStorage
+    if (user) {
+      saveSelectionsToServer(newSelected, user.email);
+    }
   };
 
   const isTournamentSelected = (tournamentId: number): boolean => {
@@ -147,13 +185,44 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-400 via-green-400 to-yellow-300 shadow-lg sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center border-b-4 border-blue-500">
           <div className="flex items-center space-x-2">
             <Trophy className="w-6 h-6 text-yellow-600 drop-shadow-lg" />
             <div>
               <h1 className="text-xl font-bold text-blue-900 drop-shadow">WSOP Europe 2026</h1>
               <p className="text-sm text-blue-800 font-semibold drop-shadow">Prague Tracker</p>
             </div>
+          </div>
+
+          {/* Tabs in Header */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCurrentTab('list')}
+              className={`px-6 py-2 rounded-lg font-bold text-sm transition ${
+                currentTab === 'list'
+                  ? 'bg-white text-blue-700 border-2 border-blue-600 shadow-lg'
+                  : 'bg-blue-300 text-blue-900 hover:bg-blue-400'
+              }`}
+            >
+              <List className="w-5 h-5 inline mr-2" />
+              Tournaments
+            </button>
+            <button
+              onClick={() => setCurrentTab('schedule')}
+              className={`px-6 py-2 rounded-lg font-bold text-sm transition relative ${
+                currentTab === 'schedule'
+                  ? 'bg-white text-green-700 border-2 border-green-600 shadow-lg'
+                  : 'bg-green-300 text-green-900 hover:bg-green-400'
+              }`}
+            >
+              <Calendar className="w-5 h-5 inline mr-2" />
+              My Schedule
+              {selectedTournaments.length > 0 && (
+                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-black rounded-full w-5 h-5 flex items-center justify-center transform translate-x-1 -translate-y-1">
+                  {selectedTournaments.length}
+                </span>
+              )}
+            </button>
           </div>
           
           <div className="flex items-center space-x-3">
@@ -175,37 +244,6 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-16">
-        {/* Tabs */}
-        <div className="flex gap-4 mb-10 border-b-4 border-gray-300">
-          <button
-            onClick={() => setCurrentTab('list')}
-            className={`px-8 py-4 text-xl font-bold rounded-t-xl border-t-4 border-l-4 border-r-4 transition ${
-              currentTab === 'list'
-                ? 'bg-blue-400 text-white border-blue-500 shadow-lg'
-                : 'bg-gray-200 text-gray-800 border-gray-400 hover:bg-gray-300'
-            }`}
-          >
-            <List className="w-6 h-6 inline mr-2" />
-            All Tournaments
-          </button>
-          <button
-            onClick={() => setCurrentTab('schedule')}
-            className={`px-8 py-4 text-xl font-bold rounded-t-xl border-t-4 border-l-4 border-r-4 transition relative ${
-              currentTab === 'schedule'
-                ? 'bg-green-400 text-white border-green-500 shadow-lg'
-                : 'bg-gray-200 text-gray-800 border-gray-400 hover:bg-gray-300'
-            }`}
-          >
-            <Calendar className="w-6 h-6 inline mr-2" />
-            My Schedule
-            {selectedTournaments.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center">
-                {selectedTournaments.length}
-              </span>
-            )}
-          </button>
-        </div>
-
         {/* Tab Content */}
         {currentTab === 'list' && (
           <>
