@@ -10,7 +10,6 @@ interface MyScheduleProps {
 export default function MySchedule({ selectedTournaments, onRemove }: MyScheduleProps) {
   const [selectedTournamentDetail, setSelectedTournamentDetail] = useState<Tournament | null>(null);
 
-  // Parse time string "12:00 PM" to minutes since midnight
   const timeToMinutes = (timeStr: string): number => {
     const parts = timeStr.split(/[\s:]/);
     let hours = parseInt(parts[0]) || 0;
@@ -23,7 +22,6 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return hours * 60 + minutes;
   };
 
-  // Convert minutes to formatted time string
   const minutesToTime = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -32,11 +30,8 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return `${hour12}:${mins.toString().padStart(2, '0')} ${period}`;
   };
 
-  // Parse date string "2026-03-31" or "Mar 31" to ISO string
   const parseDate = (dateStr: string): string => {
-    if (dateStr.includes('-')) {
-      return dateStr;
-    }
+    if (dateStr.includes('-')) return dateStr;
     const months: Record<string, string> = {
       'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
       'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
@@ -46,76 +41,6 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     const day = parseInt(parts[1]) || 1;
     return `2026-${month}-${day.toString().padStart(2, '0')}`;
   };
-
-  // Create schedule events
-  const scheduleEvents: ScheduleEvent[] = useMemo(() => {
-    const events = selectedTournaments.map(tournament => {
-      const startDateStr = tournament.flightDate || tournament.startDates[0];
-      const startTimeStr = tournament.flightTime || tournament.startTimes[0];
-      
-      const startDate = parseDate(startDateStr);
-      const startMinutes = timeToMinutes(startTimeStr);
-      
-      // Calculate end time (6 hours = 360 minutes)
-      const endMinutes = startMinutes + 360;
-      
-      // Calculate end date using UTC
-      const endDateObj = new Date(startDate + 'T00:00:00Z');
-      if (endMinutes >= 24 * 60) {
-        endDateObj.setUTCDate(endDateObj.getUTCDate() + 1);
-      }
-      
-      const endYear = endDateObj.getUTCFullYear();
-      const endMonth = String(endDateObj.getUTCMonth() + 1).padStart(2, '0');
-      const endDay = String(endDateObj.getUTCDate()).padStart(2, '0');
-      const endDateIso = `${endYear}-${endMonth}-${endDay}`;
-      
-      const endHours = Math.floor((endMinutes % (24 * 60)) / 60);
-      const endMins = endMinutes % 60;
-      const endTimeStr = `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`;
-      
-      return {
-        tournament,
-        startDate: startDate,
-        startTime: startTimeStr,
-        endDate: endDateIso,
-        endTime: endTimeStr,
-        durationHours: 6
-      };
-    });
-    
-    console.log(`[Calendar] Schedule events created (${events.length} total):`);
-    events.forEach((e, i) => {
-      console.log(`  ${i+1}. ${e.tournament.name} - ${e.startDate} @ ${e.startTime}`);
-    });
-    
-    return events;
-  }, [selectedTournaments]);
-
-  // Generate array of all days from Mar 31 to Apr 12, 2026 (as ISO strings)
-  const allDays = useMemo(() => {
-    const days: string[] = [];
-    const start = new Date('2026-03-31T00:00:00Z');
-    const end = new Date('2026-04-12T00:00:00Z');
-    
-    let current = new Date(start);
-    while (current <= end) {
-      const year = current.getUTCFullYear();
-      const month = String(current.getUTCMonth() + 1).padStart(2, '0');
-      const day = String(current.getUTCDate()).padStart(2, '0');
-      days.push(`${year}-${month}-${day}`);
-      
-      current.setUTCDate(current.getUTCDate() + 1);
-    }
-    return days;
-  }, []);
-
-  // Calculate summary
-  const summary = useMemo(() => {
-    const totalBuyIn = selectedTournaments.reduce((sum, t) => sum + t.buyIn, 0);
-    const totalEvents = selectedTournaments.length;
-    return { totalBuyIn, totalEvents };
-  }, [selectedTournaments]);
 
   const formatDate = (dateStr: string) => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -128,6 +53,51 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       fullDate: dateStr
     };
   };
+
+  // Generate all days
+  const allDays = useMemo(() => {
+    const days: string[] = [];
+    const start = new Date('2026-03-31T00:00:00Z');
+    const end = new Date('2026-04-12T00:00:00Z');
+    let current = new Date(start);
+    while (current <= end) {
+      const year = current.getUTCFullYear();
+      const month = String(current.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(current.getUTCDate()).padStart(2, '0');
+      days.push(`${year}-${month}-${day}`);
+      current.setUTCDate(current.getUTCDate() + 1);
+    }
+    return days;
+  }, []);
+
+  // Create tournament blocks with positioning info
+  const blocks = useMemo(() => {
+    return selectedTournaments.map(tournament => {
+      const startDateStr = tournament.flightDate || tournament.startDates[0];
+      const startTimeStr = tournament.flightTime || tournament.startTimes[0];
+      
+      const startDate = parseDate(startDateStr);
+      const startMinutes = timeToMinutes(startTimeStr);
+      const startHour = Math.floor(startMinutes / 60);
+      
+      const dayIndex = allDays.indexOf(startDate);
+      
+      return {
+        tournament,
+        startDate,
+        startTime: startTimeStr,
+        dayIndex,
+        startHour,
+        durationHours: 6
+      };
+    }).filter(block => block.dayIndex !== -1);
+  }, [selectedTournaments, allDays]);
+
+  const summary = useMemo(() => {
+    const totalBuyIn = selectedTournaments.reduce((sum, t) => sum + t.buyIn, 0);
+    const totalEvents = selectedTournaments.length;
+    return { totalBuyIn, totalEvents };
+  }, [selectedTournaments]);
 
   const parseLevelLength = (blindLevels?: string): string => {
     if (!blindLevels) return '—';
@@ -194,67 +164,56 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
         </div>
       </div>
 
-      {/* CSS Grid Gantt Calendar */}
-      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto">
+      {/* Simple Calendar - Built from scratch */}
+      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-6 overflow-x-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Gantt Chart)</h2>
         
-        {/* Grid Container */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: `60px repeat(${allDays.length}, 1fr)`,
-          gap: '1px',
-          backgroundColor: '#ccc',
-          padding: '1px',
-          borderRadius: '8px',
-          overflow: 'auto'
-        }}>
-          {/* Header Row - Time Label */}
-          <div style={{
-            padding: '8px',
-            backgroundColor: '#f3f4f6',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            fontSize: '12px',
-            borderRight: '1px solid #ccc'
-          }}>
-            Time
+        <div style={{ display: 'inline-block', minWidth: '100%' }}>
+          {/* Header with day columns */}
+          <div style={{ display: 'flex', marginBottom: '0' }}>
+            {/* Time column header */}
+            <div style={{ width: '60px', flexShrink: 0, padding: '8px', textAlign: 'center', fontWeight: 'bold', fontSize: '12px', borderBottom: '2px solid #1e40af' }}>
+              Time
+            </div>
+            
+            {/* Day column headers */}
+            {allDays.map((dateStr, idx) => {
+              const formatted = formatDate(dateStr);
+              return (
+                <div
+                  key={`header-${idx}`}
+                  style={{
+                    width: '120px',
+                    flexShrink: 0,
+                    padding: '8px',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
+                    borderBottom: '2px solid #1e40af',
+                    borderRight: '1px solid #e5e7eb'
+                  }}
+                >
+                  <div style={{ fontSize: '10px', color: '#666' }}>{formatted.day}</div>
+                  <div style={{ fontSize: '16px', fontWeight: '900', color: '#1e40af' }}>{formatted.date}</div>
+                  <div style={{ fontSize: '10px', color: '#666' }}>{formatted.month}</div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Header Row - Day Labels */}
-          {allDays.map((dateStr, idx) => {
-            const formatted = formatDate(dateStr);
-            return (
-              <div
-                key={`header-${idx}`}
-                style={{
-                  padding: '8px',
-                  backgroundColor: '#dbeafe',
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  borderBottom: '2px solid #1e40af'
-                }}
-              >
-                <div style={{ fontSize: '10px', color: '#666' }}>{formatted.day}</div>
-                <div style={{ fontSize: '16px', fontWeight: '900', color: '#1e40af' }}>{formatted.date}</div>
-                <div style={{ fontSize: '10px', color: '#666' }}>{formatted.month}</div>
-              </div>
-            );
-          })}
-
-          {/* Time Rows with Tournament Blocks */}
+          {/* Hour rows with tournament blocks */}
           {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
-            <React.Fragment key={`hour-${hour}`}>
-              {/* Time Label */}
+            <div key={`hour-${hour}`} style={{ display: 'flex', borderTop: '1px solid #e5e7eb', minHeight: '60px', position: 'relative' }}>
+              {/* Time label */}
               <div
                 style={{
+                  width: '60px',
+                  flexShrink: 0,
                   padding: '8px',
-                  backgroundColor: '#f3f4f6',
-                  fontWeight: 'bold',
                   textAlign: 'right',
+                  fontWeight: 'bold',
                   fontSize: '11px',
-                  borderRight: '1px solid #ccc',
-                  minHeight: '40px',
+                  borderRight: '1px solid #e5e7eb',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'flex-end'
@@ -263,36 +222,32 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 {minutesToTime(hour * 60)}
               </div>
 
-              {/* Day Cells with Tournament Blocks */}
-              {allDays.map((dateStr, dayIdx) => {
-                // Find tournament for this cell
-                const tournament = scheduleEvents.find(event => {
-                  const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
-                  const eventEndHour = Math.floor(timeToMinutes(event.endTime) / 60);
-                  return event.startDate === dateStr && hour >= eventStartHour && hour <= eventEndHour;
-                });
-
-                // Only render block on first hour - use gridRow to span multiple rows
-                const isFirstHour = tournament && Math.floor(timeToMinutes(tournament.startTime) / 60) === hour;
-
-                return (
-                  <div
-                    key={`cell-${dateStr}-${hour}`}
-                    style={{
-                      padding: '4px',
-                      backgroundColor: '#fff',
-                      border: '1px solid #e5e7eb',
-                      minHeight: '40px',
-                      position: 'relative',
-                      gridRow: isFirstHour && tournament ? `span ${tournament.durationHours}` : undefined
-                    }}
-                  >
-                    {isFirstHour && tournament && (
+              {/* Day columns */}
+              {allDays.map((dateStr, dayIdx) => (
+                <div
+                  key={`cell-${dateStr}-${hour}`}
+                  style={{
+                    width: '120px',
+                    flexShrink: 0,
+                    borderRight: '1px solid #e5e7eb',
+                    backgroundColor: '#fff',
+                    position: 'relative'
+                  }}
+                >
+                  {/* Tournament blocks for this slot */}
+                  {blocks
+                    .filter(b => b.startDate === dateStr && b.startHour === hour)
+                    .map((block, idx) => (
                       <button
-                        onClick={() => setSelectedTournamentDetail(tournament.tournament)}
+                        key={`block-${block.tournament.id}`}
+                        onClick={() => setSelectedTournamentDetail(block.tournament)}
                         style={{
-                          width: '100%',
-                          height: '100%',
+                          position: 'absolute',
+                          top: '2px',
+                          left: '2px',
+                          right: '2px',
+                          width: 'calc(100% - 4px)',
+                          height: `${block.durationHours * 60 - 4}px`,
                           padding: '6px',
                           backgroundColor: '#60a5fa',
                           backgroundImage: 'linear-gradient(to bottom right, #60a5fa, #4ade80)',
@@ -307,24 +262,25 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          textAlign: 'center'
+                          textAlign: 'center',
+                          zIndex: 10
                         }}
-                        title={`${tournament.tournament.name} - ${tournament.startTime} to ${tournament.endTime}`}
+                        title={`${block.tournament.name} - ${block.startTime}`}
                       >
                         <span style={{
                           display: '-webkit-box',
-                          WebkitLineClamp: 3,
+                          WebkitLineClamp: 4,
                           WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden'
+                          overflow: 'hidden',
+                          wordBreak: 'break-word'
                         }}>
-                          {tournament.tournament.name}
+                          {block.tournament.name}
                         </span>
                       </button>
-                    )}
-                  </div>
-                );
-              })}
-            </React.Fragment>
+                    ))}
+                </div>
+              ))}
+            </div>
           ))}
         </div>
       </div>
