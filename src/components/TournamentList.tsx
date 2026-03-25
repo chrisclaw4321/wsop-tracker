@@ -342,17 +342,17 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                 <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
                   <p className="text-sm font-bold text-gray-700 mb-2">📚 Sources:</p>
                   <div className="space-y-2">
-                    <button onClick={() => window.open('https://www.wsop.com', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
-                      • WSOP.com Official Schedule
+                    <button onClick={() => window.open('https://www.wsop.com/tournaments/results.asp?grid=1234&tour=2026&series=83', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
+                      • WSOP Europe Prague 2026 Schedule
                     </button>
-                    <button onClick={() => window.open('https://www.kingscasino.cz', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
-                      • King's Casino Prague
+                    <button onClick={() => window.open('https://www.kingscasino.cz/en/poker', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
+                      • King's Casino Prague Poker Schedule
                     </button>
-                    <button onClick={() => window.open('https://www.pokernews.com', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
-                      • PokerNews Coverage
+                    <button onClick={() => window.open('https://www.pokernews.com/tours/wsop-europe-prague-2026/', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
+                      • PokerNews WSOP Europe Prague Coverage
                     </button>
-                    <button onClick={() => window.open('https://www.hendonmob.com', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
-                      • Hendon Mob Database
+                    <button onClick={() => window.open('https://www.hendonmob.com/festival.php?festival=2026%20WSOP%20Europe', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
+                      • Hendon Mob WSOP Europe Results
                     </button>
                   </div>
                 </div>
