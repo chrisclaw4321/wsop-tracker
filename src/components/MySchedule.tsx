@@ -32,20 +32,20 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return `${hour12}:${mins.toString().padStart(2, '0')} ${period}`;
   };
 
-  // Parse date string "2026-03-31" or "Mar 31"
-  const parseDate = (dateStr: string): Date => {
+  // Parse date string "2026-03-31" or "Mar 31" - returns ISO string for consistent matching
+  const parseDate = (dateStr: string): string => {
     if (dateStr.includes('-')) {
-      const parts = dateStr.split('-');
-      return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+      // Already in ISO format
+      return dateStr;
     }
-    const months: Record<string, number> = {
-      'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
-      'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+    const months: Record<string, string> = {
+      'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+      'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
     };
     const parts = dateStr.split(' ');
-    const month = months[parts[0]] || 2;
+    const month = months[parts[0]] || '03';
     const day = parseInt(parts[1]) || 1;
-    return new Date(2026, month, day);
+    return `2026-${month}-${day.toString().padStart(2, '0')}`;
   };
 
   // Create schedule events
@@ -80,16 +80,22 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     });
   }, [selectedTournaments]);
 
-  // Generate array of all days from Mar 31 to Apr 12, 2026
+  // Generate array of all days from Mar 31 to Apr 12, 2026 (as ISO strings to avoid timezone issues)
   const allDays = useMemo(() => {
-    const days: Date[] = [];
-    const startDate = new Date(2026, 2, 31); // March 31
-    const endDate = new Date(2026, 3, 12); // April 12
+    const days: string[] = [];
+    // Use UTC dates to avoid timezone conversion issues
+    const start = new Date('2026-03-31T00:00:00Z');
+    const end = new Date('2026-04-12T00:00:00Z');
     
-    let currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      days.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
+    let current = new Date(start);
+    while (current <= end) {
+      // Get UTC date components
+      const year = current.getUTCFullYear();
+      const month = String(current.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(current.getUTCDate()).padStart(2, '0');
+      days.push(`${year}-${month}-${day}`);
+      
+      current.setUTCDate(current.getUTCDate() + 1);
     }
     return days;
   }, []);
@@ -101,14 +107,16 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return { totalBuyIn, totalEvents };
   }, [selectedTournaments]);
 
-  const formatDate = (date: Date) => {
+  const formatDate = (dateStr: string) => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    // Parse as UTC to avoid timezone issues
+    const date = new Date(dateStr + 'T00:00:00Z');
     return {
-      day: dayNames[date.getDay()],
-      date: date.getDate(),
-      month: months[date.getMonth()],
-      fullDate: date.toISOString().split('T')[0]
+      day: dayNames[date.getUTCDay()],
+      date: date.getUTCDate(),
+      month: months[date.getUTCMonth()],
+      fullDate: dateStr
     };
   };
 
@@ -201,8 +209,8 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
           <thead>
             <tr className="bg-gradient-to-b from-blue-200 to-blue-100">
               <th className="border-2 border-gray-400 bg-gray-100 p-2 w-24 font-bold text-gray-800 text-center">Time</th>
-              {allDays.map((day, idx) => {
-                const formatted = formatDate(day);
+              {allDays.map((dateStr, idx) => {
+                const formatted = formatDate(dateStr);
                 return (
                   <th key={`header-${idx}`} className="border-2 border-gray-400 p-2 w-32 font-bold">
                     <div className="text-center">
@@ -224,8 +232,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 </td>
 
                 {/* Day cells */}
-                {allDays.map((day) => {
-                  const dateStr = day.toISOString().split('T')[0];
+                {allDays.map((dateStr) => {
                   const event = getEventForSlot(dateStr, hour);
                   const isFirstHour = event ? isFirstHourOfEvent(dateStr, hour, event) : false;
 
