@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Tournament, ScheduleEvent } from '../types';
-import { Trash2, Euro } from 'lucide-react';
+import { Trash2, Euro, X, Clock } from 'lucide-react';
 
 interface MyScheduleProps {
   selectedTournaments: Tournament[];
@@ -8,6 +8,8 @@ interface MyScheduleProps {
 }
 
 export default function MySchedule({ selectedTournaments, onRemove }: MyScheduleProps) {
+  const [selectedTournamentDetail, setSelectedTournamentDetail] = useState<Tournament | null>(null);
+
   // Parse time string "12:00 PM" to minutes since midnight
   const timeToMinutes = (timeStr: string): number => {
     const parts = timeStr.split(/[\s:]/);
@@ -110,6 +112,42 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     };
   };
 
+  const parseLevelLength = (blindLevels?: string): string => {
+    if (!blindLevels) return '—';
+    const match = blindLevels.match(/(\d+)-minute/);
+    return match ? `${match[1]} min` : '—';
+  };
+
+  const parseStartingBlinds = (blindLevels?: string): string => {
+    if (!blindLevels) return '—';
+    const match = blindLevels.match(/starting at (\d+\/\d+)/);
+    return match ? match[1] : '—';
+  };
+
+  const formatStack = (stack?: number): string => {
+    if (!stack) return '—';
+    return `${stack.toLocaleString()} chips`;
+  };
+
+  const getFormatLabel = (format: string) => {
+    if (format.includes('NLH')) return 'NLHE';
+    if (format.includes('PLO')) return 'PLO';
+    if (format.includes('Mixed')) return 'Mixed';
+    return format;
+  };
+
+  const getFormatBadgeColor = (format: string) => {
+    if (format.includes('NLH')) return 'bg-blue-200 text-blue-900 border-blue-400 border-2';
+    if (format.includes('PLO')) return 'bg-purple-200 text-purple-900 border-purple-400 border-2';
+    if (format.includes('Mixed')) return 'bg-green-200 text-green-900 border-green-400 border-2';
+    if (format.includes('Bounty')) return 'bg-red-200 text-red-900 border-red-400 border-2';
+    return 'bg-yellow-200 text-yellow-900 border-yellow-400 border-2';
+  };
+
+  const formatCurrency = (amount: number) => {
+    return `€${amount.toLocaleString()}`;
+  };
+
   if (selectedTournaments.length === 0) {
     return (
       <div className="space-y-8">
@@ -143,14 +181,14 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Gantt Chart)</h2>
         
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-0">
           {/* Day Headers */}
           <div className="flex gap-0">
             <div className="w-40 flex-shrink-0" /> {/* Space for time labels */}
             {allDays.map((day, idx) => {
               const formatted = formatDate(day);
               return (
-                <div key={`header-${idx}`} className="flex-1 min-w-20 border border-gray-400 bg-gradient-to-b from-blue-200 to-blue-100 p-2 text-center font-bold text-sm">
+                <div key={`header-${idx}`} className="flex-1 min-w-24 border border-gray-400 bg-gradient-to-b from-blue-200 to-blue-100 p-2 text-center font-bold text-sm">
                   <p className="text-gray-900">{formatted.day}</p>
                   <p className="text-lg font-black text-blue-700">{formatted.date}</p>
                   <p className="text-xs text-gray-700">{formatted.month}</p>
@@ -159,70 +197,64 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
             })}
           </div>
 
-          {/* Time rows (6 AM to midnight) */}
+          {/* Time rows - shrunk to 30px height */}
           {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
-            <div key={`hour-${hour}`} className="flex gap-0 border-t border-gray-300">
+            <div key={`hour-${hour}`} className="flex gap-0 border-t border-gray-300" style={{ minHeight: '30px' }}>
               {/* Time label */}
-              <div className="w-40 flex-shrink-0 bg-gray-100 border-r border-gray-400 px-3 py-2 font-bold text-sm text-gray-800 text-right">
+              <div className="w-40 flex-shrink-0 bg-gray-100 border-r border-gray-400 px-3 py-1 font-bold text-xs text-gray-800 text-right">
                 {minutesToTime(hour * 60)}
               </div>
 
               {/* Day columns */}
               {allDays.map((day) => {
                 const dateStr = day.toISOString().split('T')[0];
-                const dayEvents = scheduleEvents.filter(event => {
-                  const startMin = timeToMinutes(event.startTime);
-                  const endMin = timeToMinutes(event.endTime);
-                  const hourMin = hour * 60;
-                  const nextHourMin = (hour + 1) * 60;
-                  
-                  // Check if event overlaps with this hour
-                  return event.startDate === dateStr && startMin < nextHourMin && endMin > hourMin;
-                });
 
                 return (
                   <div
                     key={`slot-${dateStr}-${hour}`}
-                    className="flex-1 min-w-20 border border-gray-200 bg-white hover:bg-gray-50 p-1 relative group"
-                    style={{ minHeight: '60px' }}
-                  >
-                    {dayEvents.map((event, idx) => {
-                      const startMin = timeToMinutes(event.startTime);
-                      const endMin = timeToMinutes(event.endTime);
-                      const hourMin = hour * 60;
-                      const nextHourMin = (hour + 1) * 60;
-                      
-                      // Calculate position and height
-                      const topPercent = Math.max(0, (startMin - hourMin) / 60) * 100;
-                      const heightPercent = Math.min(100, (Math.min(endMin, nextHourMin) - Math.max(startMin, hourMin)) / 60) * 100;
-
-                      return (
-                        <div
-                          key={`${event.tournament.id}-${idx}`}
-                          className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-1 py-0.5 text-xs font-bold text-white shadow-md hover:shadow-lg transition w-full left-0 right-0"
-                          style={{
-                            top: `${topPercent}%`,
-                            height: `${Math.max(10, heightPercent)}%`,
-                            overflow: 'hidden'
-                          }}
-                          title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
-                        >
-                          <div className="line-clamp-2 text-xs font-bold">{event.tournament.name.substring(0, 12)}</div>
-                          <button
-                            onClick={() => onRemove(event.tournament.id)}
-                            className="opacity-0 group-hover:opacity-100 absolute top-0.5 right-0.5 bg-red-500 hover:bg-red-700 text-white rounded p-0.5 transition text-xs"
-                            title="Remove"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
+                    className="flex-1 min-w-24 border border-gray-200 bg-white hover:bg-gray-50 p-0.5 relative"
+                    style={{ minHeight: '30px' }}
+                  />
                 );
               })}
             </div>
           ))}
+
+          {/* Tournament blocks - positioned absolutely over the grid */}
+          {scheduleEvents.map((event, idx) => {
+            const startMin = timeToMinutes(event.startTime);
+            const startHour = Math.floor(startMin / 60);
+            const startHourOffset = startMin % 60;
+            const dayIndex = allDays.findIndex(d => d.toISOString().split('T')[0] === event.startDate);
+
+            if (dayIndex === -1) return null;
+
+            // Calculate position
+            const topOffset = (startHour - 6) * 30 + (startHourOffset / 60) * 30;
+            const height = (event.durationHours / 1) * 30;
+            const leftPercent = (dayIndex / allDays.length) * 100;
+            const widthPercent = (100 / allDays.length);
+
+            return (
+              <button
+                key={`block-${event.tournament.id}`}
+                onClick={() => setSelectedTournamentDetail(event.tournament)}
+                className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl transition cursor-pointer z-10"
+                style={{
+                  top: `${topOffset + 52}px`,
+                  left: `${leftPercent + 10.7}%`,
+                  width: `calc(${widthPercent}% - 2px)`,
+                  height: `${height}px`,
+                  maxWidth: '150px'
+                }}
+                title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
+              >
+                <div className="line-clamp-3 text-xs font-bold leading-tight">
+                  {event.tournament.name}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -237,7 +269,10 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
           }).map((tournament) => (
             <div key={tournament.id} className="bg-gradient-to-r from-blue-50 to-green-50 border-2 border-blue-300 rounded-lg p-4 shadow-md hover:shadow-lg transition">
               <div className="flex items-start justify-between">
-                <div className="flex-1">
+                <button
+                  onClick={() => setSelectedTournamentDetail(tournament)}
+                  className="flex-1 text-left hover:text-blue-600 transition"
+                >
                   <p className="font-bold text-gray-900 mb-2 line-clamp-2 text-sm">{tournament.name}</p>
                   <div className="space-y-1 text-xs text-gray-700">
                     <p><strong>Date:</strong> {tournament.flightDate || tournament.startDates[0]}</p>
@@ -247,7 +282,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                       €{tournament.buyIn}
                     </p>
                   </div>
-                </div>
+                </button>
                 <button
                   onClick={() => onRemove(tournament.id)}
                   className="ml-2 p-2 bg-red-200 hover:bg-red-400 text-red-900 rounded-lg transition font-bold flex-shrink-0"
@@ -260,6 +295,97 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
           ))}
         </div>
       </div>
+
+      {/* Tournament Detail Modal */}
+      {selectedTournamentDetail && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl border-4 border-blue-400 shadow-2xl max-w-2xl w-full max-h-96 overflow-y-auto">
+            {/* Header with close button */}
+            <div className="flex items-start justify-between p-6 bg-gradient-to-r from-blue-100 to-cyan-100 border-b-4 border-blue-400 sticky top-0">
+              <h2 className="text-2xl font-bold text-blue-900 flex-1">{selectedTournamentDetail.name}</h2>
+              <button
+                onClick={() => setSelectedTournamentDetail(null)}
+                className="ml-4 p-2 bg-red-400 hover:bg-red-600 text-white rounded-lg transition font-bold flex-shrink-0"
+                title="Close details"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              {/* Event type badges */}
+              <div className="flex flex-wrap gap-2">
+                {selectedTournamentDetail.eventNum && (
+                  <span className="px-3 py-1 bg-yellow-200 text-yellow-900 rounded-lg text-sm font-bold border-2 border-yellow-400">
+                    Event #{selectedTournamentDetail.eventNum}
+                  </span>
+                )}
+                {selectedTournamentDetail.eventType === 'satellite' && (
+                  <span className="px-3 py-1 bg-amber-200 text-amber-900 rounded-lg text-sm font-bold border-2 border-amber-400">
+                    SAT
+                  </span>
+                )}
+                {selectedTournamentDetail.eventType === 'side' && (
+                  <span className="px-3 py-1 bg-teal-200 text-teal-900 rounded-lg text-sm font-bold border-2 border-teal-400">
+                    SIDE
+                  </span>
+                )}
+                <span className={`px-4 py-2 rounded-lg text-base font-bold ${getFormatBadgeColor(selectedTournamentDetail.format)}`}>
+                  {getFormatLabel(selectedTournamentDetail.format)}
+                </span>
+              </div>
+
+              {/* Date & Time */}
+              <div className="bg-yellow-100 px-4 py-3 rounded-lg border-2 border-yellow-400 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-yellow-700" />
+                <div>
+                  <p className="text-sm text-yellow-700 font-bold">Start Time</p>
+                  <p className="text-lg font-bold text-yellow-900">
+                    {selectedTournamentDetail.flightDate || selectedTournamentDetail.startDates[0]} at{' '}
+                    {selectedTournamentDetail.flightTime || selectedTournamentDetail.startTimes[0]}
+                  </p>
+                </div>
+              </div>
+
+              {/* Buy-in Info */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-green-100 px-4 py-3 rounded-lg border-2 border-green-400">
+                  <p className="text-sm text-green-700 font-bold">Buy-in</p>
+                  <p className="text-xl font-black text-green-900">{formatCurrency(selectedTournamentDetail.buyIn)}</p>
+                </div>
+                <div className="bg-cyan-100 px-4 py-3 rounded-lg border-2 border-cyan-400">
+                  <p className="text-sm text-cyan-700 font-bold">Rake</p>
+                  <p className="text-xl font-black text-cyan-900">{formatCurrency(selectedTournamentDetail.rakeFee)}</p>
+                </div>
+              </div>
+
+              {/* Blind Levels */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-indigo-50 px-3 py-2 rounded-lg border-2 border-indigo-300">
+                  <p className="text-sm text-indigo-600 font-bold">Level</p>
+                  <p className="text-base text-indigo-900">{parseLevelLength(selectedTournamentDetail.blindLevels)}</p>
+                </div>
+                <div className="bg-orange-50 px-3 py-2 rounded-lg border-2 border-orange-300">
+                  <p className="text-sm text-orange-600 font-bold">Blinds</p>
+                  <p className="text-base text-orange-900">{parseStartingBlinds(selectedTournamentDetail.blindLevels)}</p>
+                </div>
+                <div className="bg-emerald-50 px-3 py-2 rounded-lg border-2 border-emerald-300">
+                  <p className="text-sm text-emerald-600 font-bold">Stack</p>
+                  <p className="text-base text-emerald-900">{formatStack(selectedTournamentDetail.startingStack)}</p>
+                </div>
+              </div>
+
+              {/* Description */}
+              {selectedTournamentDetail.description && (
+                <div className="bg-gray-50 p-4 rounded-lg border-2 border-gray-300">
+                  <p className="text-sm text-gray-800 leading-relaxed">{selectedTournamentDetail.description}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

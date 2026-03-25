@@ -46,9 +46,9 @@ export async function onRequest(context) {
         });
       }
 
-      // Store in KV with 30-day expiration
+      // Store in KV with 1-year expiration
       await env.WSOP_SELECTIONS.put(kvKey, JSON.stringify(selections), {
-        expirationTtl: 60 * 60 * 24 * 30 // 30 days
+        expirationTtl: 60 * 60 * 24 * 365 // 1 year
       });
 
       return new Response(JSON.stringify({ success: true }), {
