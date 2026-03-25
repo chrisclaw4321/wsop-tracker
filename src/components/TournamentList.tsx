@@ -234,30 +234,32 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                   )}
                 </div>
 
-                {/* Quick Info - Date/Time prominent without clicking */}
-                <div className="grid grid-cols-5 gap-3 text-base font-bold text-gray-900 mb-2">
-                  <div className="bg-yellow-100 px-3 py-2 rounded-lg border-2 border-yellow-400 shadow-sm">
-                    <span className="text-sm text-yellow-700">📅 Start:</span>
-                    <p className="text-base text-yellow-900">{formatDateTime(tournament.flightDate || tournament.startDates[0], tournament.flightTime || tournament.startTimes[0])}</p>
-                  </div>
-                  <div className="bg-green-100 px-3 py-2 rounded-lg border-2 border-green-400 shadow-sm">
-                    <span className="text-sm text-green-700">💰 Buy-in:</span>
-                    <p className="text-base text-green-900">{formatCurrency(tournament.buyIn)}</p>
+                {/* Quick Info - 3 Standard Boxes: Level Length, Starting Blinds, Starting Stack */}
+                <div className="grid grid-cols-3 gap-3 text-base font-bold text-gray-900 mb-2">
+                  <div className="bg-orange-100 px-3 py-2 rounded-lg border-2 border-orange-400 shadow-sm">
+                    <span className="text-sm text-orange-700">⏱️ Level Length:</span>
+                    <p className="text-base text-orange-900">
+                      {tournament.blindLevels 
+                        ? tournament.blindLevels.split(',')[0].trim() 
+                        : '—'}
+                    </p>
                   </div>
                   <div className="bg-cyan-100 px-3 py-2 rounded-lg border-2 border-cyan-400 shadow-sm">
-                    <span className="text-sm text-cyan-700">+ Rake:</span>
-                    <p className="text-base text-cyan-900">{formatCurrency(tournament.rakeFee)}</p>
+                    <span className="text-sm text-cyan-700">🔲 Starting Blinds:</span>
+                    <p className="text-base text-cyan-900">
+                      {tournament.blindLevels 
+                        ? tournament.blindLevels.split('at ')[1] || '—' 
+                        : '—'}
+                    </p>
                   </div>
-                  <div className="bg-red-100 px-3 py-2 rounded-lg border-2 border-red-400 shadow-sm">
-                    <span className="text-sm text-red-700">= Total:</span>
-                    <p className="text-lg font-black text-red-900">{formatCurrency(tournament.buyIn + tournament.rakeFee)}</p>
+                  <div className="bg-green-100 px-3 py-2 rounded-lg border-2 border-green-400 shadow-sm">
+                    <span className="text-sm text-green-700">💎 Starting Stack:</span>
+                    <p className="text-base text-green-900">
+                      {tournament.startingStack 
+                        ? `${tournament.startingStack.toLocaleString()} chips` 
+                        : '—'}
+                    </p>
                   </div>
-                  {tournament.gtd && (
-                    <div className="bg-purple-100 px-3 py-2 rounded-lg border-2 border-purple-400 shadow-sm">
-                      <span className="text-sm text-purple-700">🏆 GTD:</span>
-                      <p className="text-base text-purple-900">{formatCurrency(tournament.gtd)}</p>
-                    </div>
-                  )}
                 </div>
               </div>
 

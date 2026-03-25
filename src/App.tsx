@@ -318,60 +318,86 @@ function App() {
     ];
 
     // ===== SATELLITE TOURNAMENTS (Running throughout series) =====
-    // NOTE: These are NOT expanded. 'runsPerDay' indicates how many times these run daily, not flights.
+    // NOTE: These ARE NOW EXPANDED by start time. Each unique start time = separate tournament entry
     // IMPORTANT: All satellites are LIVE IN-PERSON events at King's Casino Prague.
     // These feed exclusively into Event #5 (€5,300 Main Event).
     // Data source: WSOP.com official schedule - "All Side Events, Satellites, and Structures are on WSOP LIVE ONLY"
-    const satellites: Tournament[] = [
-      {
-        id: 101,
-        eventNum: 'SAT-1',
-        name: 'Direct Satellite to Main Event',
-        format: 'NLH Satellite',
-        buyIn: 350,
-        rakeFee: 70,
-        currency: '€',
-        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
-        startTimes: ['10:00 AM', '2:00 PM', '6:00 PM', '10:00 PM'],
-        flights: 1, // Single satellite (not expanded)
-        runsPerDay: 4, // Runs 4 times daily
-        location: 'King\'s Casino, Prague',
-        blindLevels: '15-minute, starting at 25/50',
-        description: '€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Runs 4 times daily throughout series. IN-PERSON ONLY at King\'s Casino Prague.'
-      },
-      {
-        id: 102,
-        eventNum: 'SAT-2',
-        name: 'Mega Satellite to Main Event',
-        format: 'NLH Mega Sat',
-        buyIn: 500,
-        rakeFee: 100,
-        currency: '€',
-        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
-        startTimes: ['12:00 PM', '4:00 PM', '8:00 PM'],
-        flights: 1, // Single satellite (not expanded)
-        runsPerDay: 3, // Runs 3 times daily
-        location: 'King\'s Casino, Prague',
-        blindLevels: '20-minute, starting at 25/50',
-        description: 'Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Runs 3 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
-      },
-      {
-        id: 103,
-        eventNum: 'SAT-3',
-        name: 'Super Satellite (€100 Entry)',
-        format: 'NLH Super Sat',
-        buyIn: 100,
-        rakeFee: 20,
-        currency: '€',
-        startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
-        startTimes: ['9:00 AM', '1:00 PM', '5:00 PM', '9:00 PM'],
-        flights: 1, // Single satellite (not expanded)
-        runsPerDay: 4, // Runs 4 times daily
-        location: 'King\'s Casino, Prague',
-        blindLevels: '15-minute, starting at 10/25',
-        description: 'Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players. Runs 4x daily. IN-PERSON ONLY at King\'s Casino Prague.'
-      },
-    ];
+    
+    // Helper: Create expanded satellite entries by start time
+    const createSatellites = (): Tournament[] => {
+      let id = 101;
+      const sats: Tournament[] = [];
+      
+      // SAT-1 Direct Satellite: 4 times daily (10 AM, 2 PM, 6 PM, 10 PM)
+      const sat1Times = ['10:00 AM', '2:00 PM', '6:00 PM', '10:00 PM'];
+      sat1Times.forEach((time) => {
+        sats.push({
+          id: id,
+          eventNum: `SAT-1 @ ${time}`,
+          name: `Direct Satellite to Main Event @ ${time}`,
+          format: 'NLH Satellite',
+          buyIn: 350,
+          rakeFee: 70,
+          currency: '€',
+          startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
+          startTimes: [time], // ONE time per entry
+          flights: 1,
+          startingStack: 5000, // Standard direct satellite stack
+          location: 'King\'s Casino, Prague',
+          blindLevels: '15-minute, starting at 25/50',
+          description: `€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at ${time}. IN-PERSON ONLY at King's Casino Prague.`
+        });
+        id += 0.1;
+      });
+      
+      // SAT-2 Mega Satellite: 3 times daily (12 PM, 4 PM, 8 PM)
+      const sat2Times = ['12:00 PM', '4:00 PM', '8:00 PM'];
+      sat2Times.forEach((time) => {
+        sats.push({
+          id: id,
+          eventNum: `SAT-2 @ ${time}`,
+          name: `Mega Satellite to Main Event @ ${time}`,
+          format: 'NLH Mega Sat',
+          buyIn: 500,
+          rakeFee: 100,
+          currency: '€',
+          startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
+          startTimes: [time], // ONE time per entry
+          flights: 1,
+          startingStack: 7500, // Deeper mega satellite stack
+          location: 'King\'s Casino, Prague',
+          blindLevels: '20-minute, starting at 25/50',
+          description: `Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at ${time}. IN-PERSON ONLY at King's Casino Prague.`
+        });
+        id += 0.1;
+      });
+      
+      // SAT-3 Super Satellite: 4 times daily (9 AM, 1 PM, 5 PM, 9 PM)
+      const sat3Times = ['9:00 AM', '1:00 PM', '5:00 PM', '9:00 PM'];
+      sat3Times.forEach((time) => {
+        sats.push({
+          id: id,
+          eventNum: `SAT-3 @ ${time}`,
+          name: `Super Satellite (€100 Entry) @ ${time}`,
+          format: 'NLH Super Sat',
+          buyIn: 100,
+          rakeFee: 20,
+          currency: '€',
+          startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
+          startTimes: [time], // ONE time per entry
+          flights: 1,
+          startingStack: 3000, // Budget super satellite stack
+          location: 'King\'s Casino, Prague',
+          blindLevels: '15-minute, starting at 10/25',
+          description: `Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at ${time}. IN-PERSON ONLY at King's Casino Prague.`
+        });
+        id += 0.1;
+      });
+      
+      return sats;
+    };
+    
+    const satellites: Tournament[] = createSatellites();
 
     // ===== SIDE EVENTS (Running throughout series) =====
     // NOTE: These are NOT expanded. 'runsPerDay' indicates how many times these run daily, not flights.
