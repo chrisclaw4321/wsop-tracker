@@ -79,9 +79,9 @@ function App() {
         flights: 4,
         location: 'King\'s Casino, Prague',
         startingStack: 25000,
-        blindLevels: '20-minute',
+        blindLevels: '20-minute, starting at 25/50',
         isBounty: true,
-        description: 'Four-flight opening tournament with mystery bounty component. Perfect entry-level WSOPE bracelet event.'
+        description: 'Four-flight opening tournament with mystery bounty component. Perfect entry-level WSOPE bracelet event. In-person at King\'s Casino Prague.'
       },
       {
         id: 2,
@@ -96,8 +96,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 40000,
-        blindLevels: '40-minute',
-        description: 'Variant mix: PLO → PLO8 → Big O. Ideal for experienced Omaha specialists.'
+        blindLevels: '40-minute, starting at 100/200 (200BB)',
+        description: 'Variant mix: PLO → PLO8 → Big O. Ideal for experienced Omaha specialists. In-person event at King\'s Casino Prague.'
       },
       {
         id: 3,
@@ -112,8 +112,8 @@ function App() {
         flights: 2,
         location: 'King\'s Casino, Prague',
         startingStack: 20000,
-        blindLevels: '15-minute',
-        description: 'The low buy-in, high-volume event. Budget-friendly bracelet opportunity with large fields.'
+        blindLevels: '15-minute, starting at 25/50',
+        description: 'The low buy-in, high-volume event. Budget-friendly bracelet opportunity with large fields. In-person at King\'s Casino Prague.'
       },
       {
         id: 4,
@@ -128,9 +128,9 @@ function App() {
         flights: 2,
         location: 'King\'s Casino, Prague',
         startingStack: 50000,
-        blindLevels: '20-minute',
+        blindLevels: '20-minute, starting at 50/100 (250BB)',
         isBounty: true,
-        description: 'The Colossus meets PLO with bounty component. Fantastic for aggressive action players.'
+        description: 'The Colossus meets PLO with bounty component. Fantastic for aggressive action players. In-person at King\'s Casino Prague.'
       },
       {
         id: 5,
@@ -146,9 +146,9 @@ function App() {
         gtd: 10000000,
         location: 'King\'s Casino, Prague',
         startingStack: 5000,
-        blindLevels: '10-minute',
+        blindLevels: '10-minute, starting at 50/100',
         isMultiday: true,
-        description: '€10,000,000 GUARANTEED - The most prestigious event. Largest prize pool guarantee in European poker history. 130min late reg, unlimited re-entries.'
+        description: '€10,000,000 GUARANTEED - The most prestigious event. Largest prize pool guarantee in European poker history. 130min late reg, unlimited re-entries. In-person at King\'s Casino Prague.'
       },
       {
         id: 6,
@@ -163,8 +163,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 25000,
-        blindLevels: '30-minute',
-        description: 'FIRST-EVER Ladies event at WSOPE. Confirmed players: Vanessa Kade, Leo Margets, Kitty Kuo, Mackenzie Dern. Custom gemstone bracelet for winner.'
+        blindLevels: '30-minute, starting at 25/50 (250BB)',
+        description: 'FIRST-EVER Ladies event at WSOPE. Confirmed players: Vanessa Kade, Leo Margets, Kitty Kuo, Mackenzie Dern. Custom gemstone bracelet for winner. In-person at King\'s Casino Prague.'
       },
       {
         id: 7,
@@ -179,10 +179,10 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 30000,
-        blindLevels: '12-minute',
+        blindLevels: '12-minute, starting at 50/100',
         isTurbo: true,
         isBounty: true,
-        description: 'Fast-paced turbo format combined with bounties. 12-minute levels, aggressive action.'
+        description: 'Fast-paced turbo format combined with bounties. 12-minute levels, aggressive action. In-person at King\'s Casino Prague.'
       },
       {
         id: 8,
@@ -197,8 +197,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 50000,
-        blindLevels: '30-minute',
-        description: 'Large starting stack (50k chips) = deep-stacked play. Positional, thoughtful poker.'
+        blindLevels: '30-minute, starting at 25/50',
+        description: 'Large starting stack (50k chips) = deep-stacked play. Positional, thoughtful poker. In-person at King\'s Casino Prague.'
       },
       {
         id: 9,
@@ -213,8 +213,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 60000,
-        blindLevels: '40/60-minute',
-        description: 'Deep-stacked PLO championship. For experienced four-card players. High roller prestige.'
+        blindLevels: '40-minute, starting at 100/200',
+        description: 'Deep-stacked PLO championship. For experienced four-card players. High roller prestige. In-person at King\'s Casino Prague.'
       },
       {
         id: 10,
@@ -229,8 +229,8 @@ function App() {
         flights: 2,
         location: 'King\'s Casino, Prague',
         startingStack: 40000,
-        blindLevels: '20-minute',
-        description: 'Ryder Cup-style team competition. EU vs. Rest of World. Unique format, social element.'
+        blindLevels: '20-minute, starting at 50/100',
+        description: 'Ryder Cup-style team competition. EU vs. Rest of World. Unique format, social element. In-person at King\'s Casino Prague.'
       },
       {
         id: 11,
@@ -245,8 +245,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 100000,
-        blindLevels: '30/60-minute',
-        description: 'Elite poker. €20,800 buy-in attracts world\'s best. Deep stacks, slow blinds, maximum prestige.'
+        blindLevels: '30-minute, starting at 500/1000',
+        description: 'Elite poker. €20,800 buy-in attracts world\'s best. Deep stacks, slow blinds, maximum prestige. In-person at King\'s Casino Prague.'
       },
       {
         id: 12,
@@ -262,8 +262,8 @@ function App() {
         gtd: 1500000,
         location: 'King\'s Casino, Prague',
         startingStack: 35000,
-        blindLevels: '20-minute',
-        description: '€1,500,000 GTD - The "Mini Main Event". NEW EVENT. Four flights provide flexibility. Golden ring, golden jacket.'
+        blindLevels: '20-minute, starting at 50/100',
+        description: '€1,500,000 GTD - The "Mini Main Event". NEW EVENT. Four flights provide flexibility. Golden ring, golden jacket. In-person at King\'s Casino Prague.'
       },
       {
         id: 13,
@@ -278,8 +278,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 75000,
-        blindLevels: '60-minute',
-        description: 'GGPoker-sponsored high roller. Named after GGMillion$ online series. Premium field, premium results.'
+        blindLevels: '60-minute, starting at 250/500',
+        description: 'GGPoker-sponsored high roller. Named after GGMillion$ online series. Premium field, premium results. In-person at King\'s Casino Prague.'
       },
       {
         id: 14,
@@ -294,9 +294,8 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 25000,
-        blindLevels: '30-minute',
-        isBounty: false,
-        description: 'NEW AT WSOPE - Double board bomb pot format popularized by high-stakes streams. Four-card chaos, recreational-friendly.'
+        blindLevels: '30-minute, starting at 25/50',
+        description: 'NEW AT WSOPE - Double board bomb pot format popularized by high-stakes streams. Four-card chaos, recreational-friendly. In-person at King\'s Casino Prague.'
       },
       {
         id: 15,
@@ -311,15 +310,18 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 30000,
-        blindLevels: '12-minute',
+        blindLevels: '12-minute, starting at 50/100',
         isTurbo: true,
         isBounty: true,
-        description: 'Final bracelet event of the series (Presented by GGPoker). Fast turbo + bounty hunting. Ending on a high note.'
+        description: 'Final bracelet event of the series (Presented by GGPoker). Fast turbo + bounty hunting. Ending on a high note. In-person at King\'s Casino Prague.'
       }
     ];
 
     // ===== SATELLITE TOURNAMENTS (Running throughout series) =====
     // NOTE: These are NOT expanded. 'runsPerDay' indicates how many times these run daily, not flights.
+    // IMPORTANT: All satellites are LIVE IN-PERSON events at King's Casino Prague.
+    // These feed exclusively into Event #5 (€5,300 Main Event).
+    // Data source: WSOP.com official schedule - "All Side Events, Satellites, and Structures are on WSOP LIVE ONLY"
     const satellites: Tournament[] = [
       {
         id: 101,
@@ -334,7 +336,8 @@ function App() {
         flights: 1, // Single satellite (not expanded)
         runsPerDay: 4, // Runs 4 times daily
         location: 'King\'s Casino, Prague',
-        description: '€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Runs 4 times daily throughout series.'
+        blindLevels: '15-minute, starting at 25/50',
+        description: '€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Runs 4 times daily throughout series. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 102,
@@ -349,7 +352,8 @@ function App() {
         flights: 1, // Single satellite (not expanded)
         runsPerDay: 3, // Runs 3 times daily
         location: 'King\'s Casino, Prague',
-        description: 'Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Runs 3 times daily.'
+        blindLevels: '20-minute, starting at 25/50',
+        description: 'Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Runs 3 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 103,
@@ -364,12 +368,15 @@ function App() {
         flights: 1, // Single satellite (not expanded)
         runsPerDay: 4, // Runs 4 times daily
         location: 'King\'s Casino, Prague',
-        description: 'Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players. Runs 4x daily.'
+        blindLevels: '15-minute, starting at 10/25',
+        description: 'Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players. Runs 4x daily. IN-PERSON ONLY at King\'s Casino Prague.'
       },
     ];
 
     // ===== SIDE EVENTS (Running throughout series) =====
     // NOTE: These are NOT expanded. 'runsPerDay' indicates how many times these run daily, not flights.
+    // IMPORTANT: All side events are LIVE IN-PERSON events at King's Casino Prague.
+    // Data source: WSOP.com official schedule - "All Side Events, Satellites, and Structures are on WSOP LIVE ONLY"
     const sideEvents: Tournament[] = [
       {
         id: 201,
@@ -385,7 +392,8 @@ function App() {
         runsPerDay: 5, // Runs 5 times daily
         gtd: 2000,
         location: 'King\'s Casino, Prague',
-        description: 'Budget-friendly no-limit hold\'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily.'
+        blindLevels: '10-minute, starting at 10/25',
+        description: 'Budget-friendly no-limit hold\'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 202,
@@ -401,7 +409,8 @@ function App() {
         runsPerDay: 5, // Runs 5 times daily
         gtd: 5000,
         location: 'King\'s Casino, Prague',
-        description: '€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players.'
+        blindLevels: '10-minute, starting at 15/25',
+        description: '€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 203,
@@ -417,7 +426,8 @@ function App() {
         runsPerDay: 5, // Runs 5 times daily
         gtd: 10000,
         location: 'King\'s Casino, Prague',
-        description: '€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily.'
+        blindLevels: '15-minute, starting at 25/50',
+        description: '€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 204,
@@ -433,7 +443,8 @@ function App() {
         runsPerDay: 3, // Runs 3 times daily
         gtd: 20000,
         location: 'King\'s Casino, Prague',
-        description: '€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily.'
+        blindLevels: '20-minute, starting at 50/100',
+        description: '€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 205,
@@ -449,7 +460,8 @@ function App() {
         runsPerDay: 3, // Runs 3 times daily
         gtd: 5000,
         location: 'King\'s Casino, Prague',
-        description: 'Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts.'
+        blindLevels: '15-minute, starting at 25/50',
+        description: 'Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 206,
@@ -465,12 +477,13 @@ function App() {
         runsPerDay: 2, // Runs 2 times daily
         gtd: 50000,
         location: 'King\'s Casino, Prague',
-        description: '€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily.'
+        blindLevels: '20-minute, starting at 100/200',
+        description: '€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 207,
         eventNum: 'SIDE-7',
-        name: 'Heads-Up €200 NLHE (Weekends)',
+        name: 'Heads-Up €200 NLHE (Select Days)',
         format: 'NLH Heads-Up',
         buyIn: 200,
         rakeFee: 40,
@@ -481,7 +494,8 @@ function App() {
         runsPerDay: 1, // Runs 1x on select days
         gtd: 5000,
         location: 'King\'s Casino, Prague',
-        description: '€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week (Wed/Fri/Sun).'
+        blindLevels: '10-minute, starting at 25/50',
+        description: '€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week (Wed/Fri/Sun). IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 208,
@@ -498,12 +512,13 @@ function App() {
         gtd: 8000,
         isBounty: true,
         location: 'King\'s Casino, Prague',
-        description: '€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. Runs 2x daily. Recreational friendly.'
+        blindLevels: '15-minute, starting at 25/50',
+        description: '€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. Runs 2x daily. Recreational friendly. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 209,
         eventNum: 'SIDE-9',
-        name: 'Deepstack €200 NLHE (Weekend)',
+        name: 'Deepstack €200 NLHE (Select Days)',
         format: 'NLH Deepstack',
         buyIn: 200,
         rakeFee: 40,
@@ -513,10 +528,10 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 1, // Runs once on select days
         startingStack: 50000,
-        blindLevels: '30-minute',
+        blindLevels: '30-minute, starting at 25/50',
         gtd: 15000,
         location: 'King\'s Casino, Prague',
-        description: '€200 buy-in with 50,000 chip starting stack. 30-minute blinds. €15,000 GTD. Deep, strategic poker. 4 events during series.'
+        description: '€200 buy-in with 50,000 chip starting stack. 30-minute blinds. €15,000 GTD. Deep, strategic poker. 4 events during series. IN-PERSON ONLY at King\'s Casino Prague.'
       },
       {
         id: 210,
@@ -531,9 +546,10 @@ function App() {
         flights: 1, // Single event (not expanded)
         runsPerDay: 2, // Runs 2 times nightly
         isTurbo: true,
+        blindLevels: '10-minute, starting at 25/50',
         gtd: 6000,
         location: 'King\'s Casino, Prague',
-        description: 'Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x nightly. Quick sessions.'
+        description: 'Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x nightly. Quick sessions. IN-PERSON ONLY at King\'s Casino Prague.'
       },
     ];
 
@@ -639,26 +655,26 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-400 via-green-400 to-yellow-300 shadow-lg sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <Trophy className="w-10 h-10 text-yellow-600 drop-shadow-lg" />
+        <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <Trophy className="w-6 h-6 text-yellow-600 drop-shadow-lg" />
             <div>
-              <h1 className="text-2xl font-bold text-blue-900 drop-shadow">WSOP Europe 2026</h1>
-              <p className="text-base text-blue-800 font-semibold drop-shadow">Prague Tournament Tracker</p>
+              <h1 className="text-xl font-bold text-blue-900 drop-shadow">WSOP Europe 2026</h1>
+              <p className="text-sm text-blue-800 font-semibold drop-shadow">Prague Tracker</p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <div className="text-right">
-              {user.picture && <img src={user.picture} alt={user.name} className="w-14 h-14 rounded-full border-2 border-white shadow-md" />}
-              <p className="text-lg text-blue-900 font-semibold">{user.name}</p>
-              <p className="text-base text-blue-800">{user.email}</p>
+              {user.picture && <img src={user.picture} alt={user.name} className="w-10 h-10 rounded-full border-2 border-white shadow-md" />}
+              <p className="text-sm text-blue-900 font-semibold">{user.name}</p>
+              <p className="text-xs text-blue-800">{user.email}</p>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-2 bg-red-400 hover:bg-red-500 text-white px-6 py-3 rounded-lg font-bold text-lg transition shadow-md"
+              className="flex items-center space-x-2 bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg font-bold text-sm transition shadow-md"
             >
-              <LogOut className="w-6 h-6" />
+              <LogOut className="w-5 h-5" />
               <span>Logout</span>
             </button>
           </div>
