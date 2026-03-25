@@ -50,7 +50,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
 
   // Create schedule events
   const scheduleEvents: ScheduleEvent[] = useMemo(() => {
-    return selectedTournaments.map(tournament => {
+    const events = selectedTournaments.map(tournament => {
       const startDateStr = tournament.flightDate || tournament.startDates[0];
       const startTimeStr = tournament.flightTime || tournament.startTimes[0];
       
@@ -85,6 +85,13 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
         durationHours: 6
       };
     });
+    
+    // Debug log
+    console.log(`[Calendar] Schedule events created (${events.length} total):`, 
+      events.map(e => `${e.tournament.name} on ${e.startDate} @ ${e.startTime}`)
+    );
+    
+    return events;
   }, [selectedTournaments]);
 
   // Generate array of all days from Mar 31 to Apr 12, 2026 (as ISO strings to avoid timezone issues)
@@ -165,12 +172,30 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
 
   // Get event for a specific day and time slot
   const getEventForSlot = (dateStr: string, hour: number): ScheduleEvent | null => {
-    return scheduleEvents.find(event => {
-      if (event.startDate !== dateStr) return false;
+    const match = scheduleEvents.find(event => {
+      const dateMatch = event.startDate === dateStr;
+      if (!dateMatch) return false;
+      
       const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
       const eventEndHour = Math.floor(timeToMinutes(event.endTime) / 60);
-      return hour >= eventStartHour && hour < eventEndHour;
+      const timeMatch = hour >= eventStartHour && hour < eventEndHour;
+      
+      if (dateMatch && timeMatch) {
+        console.log(`[Calendar] Found event match: ${event.tournament.name} on ${dateStr} hour ${hour}`);
+      }
+      return timeMatch;
     }) || null;
+    
+    // Debug: Log all events on first call for this date
+    if (hour === 6 && !sessionStorage.getItem(`logged_${dateStr}`)) {
+      sessionStorage.setItem(`logged_${dateStr}`, 'true');
+      const eventsOnDate = scheduleEvents.filter(e => e.startDate === dateStr);
+      if (eventsOnDate.length > 0) {
+        console.log(`[Calendar] Events on ${dateStr}:`, eventsOnDate.map(e => `${e.tournament.name} @ ${e.startTime}`));
+      }
+    }
+    
+    return match;
   };
 
   // Check if this is the first hour of an event (to avoid duplicate blocks)
