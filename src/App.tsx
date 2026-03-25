@@ -132,16 +132,6 @@ function App() {
           <p className="text-gray-700 text-2xl mb-6 font-semibold">
             Explore all {tournaments.length} WSOP tournaments at King's Casino, Prague. Filter, sort, and track your favorite events.
           </p>
-          
-          {/* Info Box */}
-          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 border-4 border-yellow-400 rounded-xl p-6 mb-8 shadow-lg">
-            <p className="text-gray-800 text-xl font-semibold">
-              <strong>📌 Note:</strong> This tracker displays <strong>15 official WSOP bracelet events</strong> plus <strong>satellites and side events</strong>, all powered by a centralized database. 
-              <a href="https://www.wsop.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline ml-1 font-bold">
-                Official WSOP →
-              </a>
-            </p>
-          </div>
         </div>
 
         <TournamentList tournaments={tournaments} />
