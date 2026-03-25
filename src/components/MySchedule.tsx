@@ -223,55 +223,39 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => {
-              // Track which tournaments have blocks starting in this row
-              const tournamentsInRow: { [key: string]: ScheduleEvent } = {};
-              
-              allDays.forEach(day => {
-                const dateStr = day.toISOString().split('T')[0];
-                const event = getEventForSlot(dateStr, hour);
-                if (event && isFirstHourOfEvent(dateStr, hour, event)) {
-                  tournamentsInRow[dateStr] = event;
-                }
-              });
+            {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
+              <tr key={`hour-${hour}`} style={{ height: '30px' }} className="relative">
+                {/* Time label */}
+                <td className="border-2 border-gray-400 bg-gray-100 p-1 font-bold text-center text-gray-800 w-24 align-top">
+                  {minutesToTime(hour * 60)}
+                </td>
 
-              return (
-                <tr key={`hour-${hour}`} style={{ height: '30px' }} className="relative">
-                  {/* Time label */}
-                  <td className="border-2 border-gray-400 bg-gray-100 p-1 font-bold text-center text-gray-800 w-24 align-top">
-                    {minutesToTime(hour * 60)}
-                  </td>
+                {/* Day cells */}
+                {allDays.map((day) => {
+                  const dateStr = day.toISOString().split('T')[0];
+                  const event = getEventForSlot(dateStr, hour);
+                  const isFirstHour = event ? isFirstHourOfEvent(dateStr, hour, event) : false;
 
-                  {/* Day cells */}
-                  {allDays.map((day) => {
-                    const dateStr = day.toISOString().split('T')[0];
-                    const event = tournamentsInRow[dateStr];
-
-                    return (
-                      <td
-                        key={`cell-${dateStr}-${hour}`}
-                        className="border-2 border-gray-300 p-1 bg-white hover:bg-gray-50 relative w-32 align-top"
-                        style={event ? { height: '180px' } : undefined}
-                      >
-                        {/* Only render event block on its first hour */}
-                        {event && (
-                          <button
-                            onClick={() => setSelectedTournamentDetail(event.tournament)}
-                            className="absolute top-0 left-0 right-0 bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-xl transition cursor-pointer overflow-hidden"
-                            style={{ height: '180px', width: 'calc(100% - 2px)' }}
-                            title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
-                          >
-                            <div className="line-clamp-6 text-xs font-bold leading-tight break-words">
-                              {event.tournament.name}
-                            </div>
-                          </button>
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+                  return (
+                    <td key={`cell-${dateStr}-${hour}`} className="border-2 border-gray-300 p-1 bg-white hover:bg-gray-50 relative w-32 align-top">
+                      {/* Only render event block on its first hour */}
+                      {isFirstHour && event && (
+                        <button
+                          onClick={() => setSelectedTournamentDetail(event.tournament)}
+                          className="block w-full bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-xl transition cursor-pointer overflow-hidden"
+                          style={{ height: '180px', minHeight: '180px' }}
+                          title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
+                        >
+                          <div className="line-clamp-6 text-xs font-bold leading-tight break-words">
+                            {event.tournament.name}
+                          </div>
+                        </button>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
