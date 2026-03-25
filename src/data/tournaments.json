@@ -888,6 +888,30 @@
       ]
     },
     {
+      "name": "€800 PLO Turbo",
+      "format": "PLO Turbo",
+      "buyIn": 800,
+      "rake": 0,
+      "startingStack": 20000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "50/100"
+      },
+      "instances": [
+        {
+          "date": "2026-04-07",
+          "time": "12:00 PM"
+        }
+      ],
+      "features": [
+        "turbo"
+      ],
+      "description": "PLO Turbo. 20,000 chips, 15-minute levels.",
+      "sources": [
+        "hochgepokert.com"
+      ]
+    },
+    {
       "name": "€1,500 NLH 8-Handed",
       "format": "NLH 8-Handed",
       "buyIn": 1500,
