@@ -92,41 +92,79 @@ function App() {
 
   const loadSelectionsFromServer = async (email: string) => {
     try {
+      console.log(`[API] Loading selections from server for ${email}...`);
       const response = await fetch(`/api/selections?email=${encodeURIComponent(email)}`);
+      console.log(`[API] Response status: ${response.status}`);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log(`[API] Server returned ${data.selections?.length || 0} selections:`, data.selections);
         const selectedIds = data.selections || [];
-        const restored = tournaments.filter(t => selectedIds.includes(t.id));
-        setSelectedTournaments(restored);
+        
+        if (selectedIds.length > 0) {
+          const restored = tournaments.filter(t => selectedIds.includes(t.id));
+          console.log(`[API] Restored ${restored.length} tournaments from server`);
+          setSelectedTournaments(restored);
+        } else {
+          console.log(`[API] No selections found on server, checking localStorage...`);
+          const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+          if (savedSelections) {
+            const savedIds = JSON.parse(savedSelections);
+            const restored = tournaments.filter(t => savedIds.includes(t.id));
+            console.log(`[API] Restored ${restored.length} tournaments from localStorage`);
+            setSelectedTournaments(restored);
+          }
+        }
+      } else {
+        console.error(`[API] Server responded with status ${response.status}`);
+        const errorText = await response.text();
+        console.error(`[API] Error response:`, errorText);
+        throw new Error(`HTTP ${response.status}`);
       }
     } catch (error) {
-      console.error('Failed to load selections from server:', error);
+      console.error('[API] Failed to load selections from server:', error);
+      console.log('[API] Falling back to localStorage...');
+      
       // Fallback to localStorage
       const savedSelections = localStorage.getItem('wsop_selected_tournaments');
       if (savedSelections) {
         try {
           const savedIds = JSON.parse(savedSelections);
           const restored = tournaments.filter(t => savedIds.includes(t.id));
+          console.log(`[FALLBACK] Restored ${restored.length} tournaments from localStorage`);
           setSelectedTournaments(restored);
         } catch (e) {
-          console.error('Failed to restore from localStorage:', e);
+          console.error('[FALLBACK] Failed to restore from localStorage:', e);
         }
       }
     }
   };
 
   const saveSelectionsToServer = async (newSelected: Tournament[], email: string) => {
+    const selectionIds = newSelected.map(t => t.id);
+    
     try {
-      await fetch('/api/selections?email=' + encodeURIComponent(email), {
+      console.log(`[API] Saving ${selectionIds.length} selections to server for ${email}:`, selectionIds);
+      const response = await fetch('/api/selections?email=' + encodeURIComponent(email), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ selections: newSelected.map(t => t.id) })
+        body: JSON.stringify({ selections: selectionIds })
       });
+      
+      console.log(`[API] Save response status: ${response.status}`);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`[API] Save failed: ${response.status} - ${errorText}`);
+      } else {
+        console.log(`[API] ✅ Successfully saved to server`);
+      }
     } catch (error) {
-      console.error('Failed to save selections to server:', error);
+      console.error('[API] Failed to save selections to server:', error);
     }
+    
     // Always save to localStorage as fallback
-    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(newSelected.map(t => t.id)));
+    console.log(`[FALLBACK] Saving ${selectionIds.length} selections to localStorage`);
+    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectionIds));
   };
 
   const handleSelectTournament = (tournament: Tournament) => {

@@ -1,0 +1,15 @@
+name = "wsop-tracker"
+type = "javascript"
+account_id = "26914575abf01f4199b562cc4d174f67"
+workers_dev = true
+route = ""
+zone_id = ""
+
+[env.production]
+routes = [{ pattern = "wsop-tracker.pages.dev/*", zone_id = "" }]
+
+# KV Namespace Bindings
+[[kv_namespace_bindings]]
+binding = "WSOP_SELECTIONS"
+id = "wsop_selections_production"
+preview_id = "wsop_selections_preview"
