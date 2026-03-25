@@ -337,6 +337,25 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                     </p>
                   </div>
                 )}
+
+                {/* Sources */}
+                <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
+                  <p className="text-sm font-bold text-gray-700 mb-2">📚 Sources:</p>
+                  <div className="space-y-1">
+                    <a href="https://www.wsop.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                      • WSOP.com Official Schedule
+                    </a>
+                    <a href="https://www.kingscasino.cz" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                      • King's Casino Prague
+                    </a>
+                    <a href="https://www.pokernews.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                      • PokerNews Coverage
+                    </a>
+                    <a href="https://www.hendonmob.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                      • Hendon Mob Database
+                    </a>
+                  </div>
+                </div>
               </div>
             )}
           </div>
