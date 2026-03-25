@@ -57,10 +57,9 @@ export interface SideEvent {
     startingBlinds: string;
   };
   gtd?: number;
-  schedule: Array<{
-    time: string;
-    runsDates: string;
-  }>;
+  startDate: string;
+  endDate: string;
+  startTime: string;
   description: string;
   sources: string[];
 }
@@ -118,35 +117,29 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
     });
   });
 
-  // Load side events - expand by schedule time
+  // Load side events - already expanded by time in database
   tournamentsData.sideEvents.forEach((side: SideEvent) => {
-    side.schedule.forEach((scheduleTime, scheduleIndex) => {
-      const [startDate, endDate] = scheduleTime.runsDates.split(' to ').length === 2 
-        ? scheduleTime.runsDates.split(' to ') 
-        : [scheduleTime.runsDates.split(',')[0] || scheduleTime.runsDates, null];
-      
-      tournaments.push({
-        id: side.id + scheduleIndex / 1000,
-        eventNum: side.sideNum,
-        name: `${side.name} @ ${scheduleTime.time}`,
-        format: side.format,
-        buyIn: side.buyIn,
-        rakeFee: side.rake,
-        currency: '€',
-        startDates: [startDate.trim()],
-        startTimes: [scheduleTime.time],
-        flightDate: startDate.trim(),
-        flightTime: scheduleTime.time,
-        flights: 1,
-        runsPerDay: 1,
-        gtd: side.gtd,
-        location: 'King\'s Casino, Prague',
-        startingStack: side.startingStack,
-        blindLevels: `${side.blindLevels.duration}-minute, starting at ${side.blindLevels.startingBlinds}`,
-        isBounty: side.format.includes('Bounty'),
-        isTurbo: side.format.includes('Turbo'),
-        description: side.description,
-      });
+    tournaments.push({
+      id: side.id,
+      eventNum: side.sideNum,
+      name: side.name,
+      format: side.format,
+      buyIn: side.buyIn,
+      rakeFee: side.rake,
+      currency: '€',
+      startDates: [side.startDate],
+      startTimes: [side.startTime],
+      flightDate: side.startDate,
+      flightTime: side.startTime,
+      flights: 1,
+      runsPerDay: 1,
+      gtd: side.gtd,
+      location: 'King\'s Casino, Prague',
+      startingStack: side.startingStack,
+      blindLevels: `${side.blindLevels.duration}-minute, starting at ${side.blindLevels.startingBlinds}`,
+      isBounty: side.format.includes('Bounty'),
+      isTurbo: side.format.includes('Turbo'),
+      description: side.description,
     });
   });
 

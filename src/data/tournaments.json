@@ -43,9 +43,14 @@
           "time": "12:00 PM"
         }
       ],
-      "features": ["bounty"],
+      "features": [
+        "bounty"
+      ],
       "description": "Four-flight opening tournament with mystery bounty component. Perfect entry-level WSOPE bracelet event.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 2,
@@ -68,7 +73,10 @@
       ],
       "features": [],
       "description": "Variant mix: PLO → PLO8 → Big O. Ideal for experienced Omaha specialists.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 3,
@@ -96,7 +104,10 @@
       ],
       "features": [],
       "description": "The low buy-in, high-volume event. Budget-friendly bracelet opportunity with large fields.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 4,
@@ -122,9 +133,14 @@
           "time": "6:00 PM"
         }
       ],
-      "features": ["bounty"],
+      "features": [
+        "bounty"
+      ],
       "description": "The Colossus meets PLO with bounty component. Fantastic for aggressive action players.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 5,
@@ -156,9 +172,14 @@
           "time": "12:00 PM"
         }
       ],
-      "features": ["multiday"],
+      "features": [
+        "multiday"
+      ],
       "description": "€10,000,000 GUARANTEED - The most prestigious event. Largest prize pool guarantee in European poker history. 130min late reg, unlimited re-entries.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 6,
@@ -181,7 +202,10 @@
       ],
       "features": [],
       "description": "FIRST-EVER Ladies event at WSOPE. Confirmed players: Vanessa Kade, Leo Margets, Kitty Kuo, Mackenzie Dern. Custom gemstone bracelet for winner.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 7,
@@ -202,9 +226,15 @@
           "time": "2:00 PM"
         }
       ],
-      "features": ["turbo", "bounty"],
+      "features": [
+        "turbo",
+        "bounty"
+      ],
       "description": "Fast-paced turbo format combined with bounties. 12-minute levels, aggressive action.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 8,
@@ -227,7 +257,10 @@
       ],
       "features": [],
       "description": "Large starting stack (50k chips) = deep-stacked play. Positional, thoughtful poker.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 9,
@@ -250,7 +283,10 @@
       ],
       "features": [],
       "description": "Deep-stacked PLO championship. For experienced four-card players. High roller prestige.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 10,
@@ -278,7 +314,10 @@
       ],
       "features": [],
       "description": "Ryder Cup-style team competition. EU vs. Rest of World. Unique format, social element.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 11,
@@ -301,7 +340,10 @@
       ],
       "features": [],
       "description": "Elite poker. €20,800 buy-in attracts world's best. Deep stacks, slow blinds, maximum prestige.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 12,
@@ -340,7 +382,10 @@
       ],
       "features": [],
       "description": "€1,500,000 GTD - The \"Mini Main Event\". NEW EVENT. Four flights provide flexibility. Golden ring, golden jacket.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 13,
@@ -363,7 +408,10 @@
       ],
       "features": [],
       "description": "GGPoker-sponsored high roller. Named after GGMillion$ online series. Premium field, premium results.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 14,
@@ -386,7 +434,10 @@
       ],
       "features": [],
       "description": "NEW AT WSOPE - Double board bomb pot format popularized by high-stakes streams. Four-card chaos, recreational-friendly.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 15,
@@ -407,9 +458,15 @@
           "time": "2:00 PM"
         }
       ],
-      "features": ["turbo", "bounty"],
+      "features": [
+        "turbo",
+        "bounty"
+      ],
       "description": "Final bracelet event of the series (Presented by GGPoker). Fast turbo + bounty hunting. Ending on a high note.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     }
   ],
   "satellites": [
@@ -430,7 +487,10 @@
       "endDate": "2026-04-10",
       "startTime": "10:00 AM",
       "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 10:00 AM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 101.2,
@@ -449,7 +509,10 @@
       "endDate": "2026-04-10",
       "startTime": "2:00 PM",
       "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 2:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 101.3,
@@ -468,7 +531,10 @@
       "endDate": "2026-04-10",
       "startTime": "6:00 PM",
       "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 6:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 101.4,
@@ -487,7 +553,10 @@
       "endDate": "2026-04-10",
       "startTime": "10:00 PM",
       "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 10:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 102.1,
@@ -506,7 +575,10 @@
       "endDate": "2026-04-10",
       "startTime": "12:00 PM",
       "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at 12:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 102.2,
@@ -525,7 +597,10 @@
       "endDate": "2026-04-10",
       "startTime": "4:00 PM",
       "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at 4:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 102.3,
@@ -544,7 +619,10 @@
       "endDate": "2026-04-10",
       "startTime": "8:00 PM",
       "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at 8:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 103.1,
@@ -563,7 +641,10 @@
       "endDate": "2026-04-10",
       "startTime": "9:00 AM",
       "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 9:00 AM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 103.2,
@@ -582,7 +663,10 @@
       "endDate": "2026-04-10",
       "startTime": "1:00 PM",
       "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 1:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 103.3,
@@ -601,7 +685,10 @@
       "endDate": "2026-04-10",
       "startTime": "5:00 PM",
       "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 5:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     },
     {
       "id": 103.4,
@@ -620,14 +707,17 @@
       "endDate": "2026-04-10",
       "startTime": "9:00 PM",
       "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 9:00 PM daily.",
-      "sources": ["wsop.com", "kingscasino.cz"]
+      "sources": [
+        "wsop.com",
+        "kingscasino.cz"
+      ]
     }
   ],
   "sideEvents": [
     {
-      "id": 201,
-      "sideNum": "SIDE-1",
-      "name": "Micro €25 NLHE",
+      "id": 201.1,
+      "sideNum": "SIDE-1 @ 6:00 AM",
+      "name": "Micro €25 NLHE @ 6:00 AM",
       "format": "NLH",
       "buyIn": 25,
       "rake": 5,
@@ -637,35 +727,107 @@
         "startingBlinds": "10/25"
       },
       "gtd": 2000,
-      "schedule": [
-        {
-          "time": "6:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "10:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "2:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "6:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "10:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        }
-      ],
-      "description": "Budget-friendly no-limit hold'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "6:00 AM",
+      "description": "Budget-friendly no-limit hold'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. Starts at 6:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 202,
-      "sideNum": "SIDE-2",
-      "name": "Low Buy-in €50 NLHE",
+      "id": 201.2,
+      "sideNum": "SIDE-1 @ 10:00 AM",
+      "name": "Micro €25 NLHE @ 10:00 AM",
+      "format": "NLH",
+      "buyIn": 25,
+      "rake": 5,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "10/25"
+      },
+      "gtd": 2000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "10:00 AM",
+      "description": "Budget-friendly no-limit hold'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. Starts at 10:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 201.3,
+      "sideNum": "SIDE-1 @ 2:00 PM",
+      "name": "Micro €25 NLHE @ 2:00 PM",
+      "format": "NLH",
+      "buyIn": 25,
+      "rake": 5,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "10/25"
+      },
+      "gtd": 2000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "2:00 PM",
+      "description": "Budget-friendly no-limit hold'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. Starts at 2:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 201.4,
+      "sideNum": "SIDE-1 @ 6:00 PM",
+      "name": "Micro €25 NLHE @ 6:00 PM",
+      "format": "NLH",
+      "buyIn": 25,
+      "rake": 5,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "10/25"
+      },
+      "gtd": 2000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "6:00 PM",
+      "description": "Budget-friendly no-limit hold'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. Starts at 6:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 201.5,
+      "sideNum": "SIDE-1 @ 10:00 PM",
+      "name": "Micro €25 NLHE @ 10:00 PM",
+      "format": "NLH",
+      "buyIn": 25,
+      "rake": 5,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "10/25"
+      },
+      "gtd": 2000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "10:00 PM",
+      "description": "Budget-friendly no-limit hold'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily. Starts at 10:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 202.1,
+      "sideNum": "SIDE-2 @ 7:00 AM",
+      "name": "Low Buy-in €50 NLHE @ 7:00 AM",
       "format": "NLH",
       "buyIn": 50,
       "rake": 10,
@@ -675,35 +837,107 @@
         "startingBlinds": "15/25"
       },
       "gtd": 5000,
-      "schedule": [
-        {
-          "time": "7:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "11:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "3:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "7:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "11:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        }
-      ],
-      "description": "€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "7:00 AM",
+      "description": "€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. Starts at 7:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 203,
-      "sideNum": "SIDE-3",
-      "name": "Mid Buy-in €100 NLHE",
+      "id": 202.2,
+      "sideNum": "SIDE-2 @ 11:00 AM",
+      "name": "Low Buy-in €50 NLHE @ 11:00 AM",
+      "format": "NLH",
+      "buyIn": 50,
+      "rake": 10,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "15/25"
+      },
+      "gtd": 5000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "11:00 AM",
+      "description": "€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. Starts at 11:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 202.3,
+      "sideNum": "SIDE-2 @ 3:00 PM",
+      "name": "Low Buy-in €50 NLHE @ 3:00 PM",
+      "format": "NLH",
+      "buyIn": 50,
+      "rake": 10,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "15/25"
+      },
+      "gtd": 5000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "3:00 PM",
+      "description": "€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. Starts at 3:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 202.4,
+      "sideNum": "SIDE-2 @ 7:00 PM",
+      "name": "Low Buy-in €50 NLHE @ 7:00 PM",
+      "format": "NLH",
+      "buyIn": 50,
+      "rake": 10,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "15/25"
+      },
+      "gtd": 5000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "7:00 PM",
+      "description": "€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. Starts at 7:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 202.5,
+      "sideNum": "SIDE-2 @ 11:00 PM",
+      "name": "Low Buy-in €50 NLHE @ 11:00 PM",
+      "format": "NLH",
+      "buyIn": 50,
+      "rake": 10,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "15/25"
+      },
+      "gtd": 5000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "11:00 PM",
+      "description": "€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players. Starts at 11:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 203.1,
+      "sideNum": "SIDE-3 @ 8:00 AM",
+      "name": "Mid Buy-in €100 NLHE @ 8:00 AM",
       "format": "NLH",
       "buyIn": 100,
       "rake": 20,
@@ -713,35 +947,107 @@
         "startingBlinds": "25/50"
       },
       "gtd": 10000,
-      "schedule": [
-        {
-          "time": "8:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "12:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "4:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "8:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "12:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        }
-      ],
-      "description": "€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "8:00 AM",
+      "description": "€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. Starts at 8:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 204,
-      "sideNum": "SIDE-4",
-      "name": "High Buy-in €250 NLHE",
+      "id": 203.2,
+      "sideNum": "SIDE-3 @ 12:00 PM",
+      "name": "Mid Buy-in €100 NLHE @ 12:00 PM",
+      "format": "NLH",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 10000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "12:00 PM",
+      "description": "€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. Starts at 12:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 203.3,
+      "sideNum": "SIDE-3 @ 4:00 PM",
+      "name": "Mid Buy-in €100 NLHE @ 4:00 PM",
+      "format": "NLH",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 10000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "4:00 PM",
+      "description": "€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. Starts at 4:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 203.4,
+      "sideNum": "SIDE-3 @ 8:00 PM",
+      "name": "Mid Buy-in €100 NLHE @ 8:00 PM",
+      "format": "NLH",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 10000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "8:00 PM",
+      "description": "€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. Starts at 8:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 203.5,
+      "sideNum": "SIDE-3 @ 12:00 AM",
+      "name": "Mid Buy-in €100 NLHE @ 12:00 AM",
+      "format": "NLH",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 10000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "12:00 AM",
+      "description": "€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily. Starts at 12:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 204.1,
+      "sideNum": "SIDE-4 @ 2:00 PM",
+      "name": "High Buy-in €250 NLHE @ 2:00 PM",
       "format": "NLH",
       "buyIn": 250,
       "rake": 50,
@@ -751,27 +1057,63 @@
         "startingBlinds": "50/100"
       },
       "gtd": 20000,
-      "schedule": [
-        {
-          "time": "2:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "6:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        },
-        {
-          "time": "10:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-12"
-        }
-      ],
-      "description": "€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "2:00 PM",
+      "description": "€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily. Starts at 2:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 205,
-      "sideNum": "SIDE-5",
-      "name": "Low Buy-in €100 PLO",
+      "id": 204.2,
+      "sideNum": "SIDE-4 @ 6:00 PM",
+      "name": "High Buy-in €250 NLHE @ 6:00 PM",
+      "format": "NLH",
+      "buyIn": 250,
+      "rake": 50,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 20,
+        "startingBlinds": "50/100"
+      },
+      "gtd": 20000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "6:00 PM",
+      "description": "€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily. Starts at 6:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 204.3,
+      "sideNum": "SIDE-4 @ 10:00 PM",
+      "name": "High Buy-in €250 NLHE @ 10:00 PM",
+      "format": "NLH",
+      "buyIn": 250,
+      "rake": 50,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 20,
+        "startingBlinds": "50/100"
+      },
+      "gtd": 20000,
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-12",
+      "startTime": "10:00 PM",
+      "description": "€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily. Starts at 10:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 205.1,
+      "sideNum": "SIDE-5 @ 11:00 AM",
+      "name": "Low Buy-in €100 PLO @ 11:00 AM",
       "format": "PLO",
       "buyIn": 100,
       "rake": 20,
@@ -781,27 +1123,63 @@
         "startingBlinds": "25/50"
       },
       "gtd": 5000,
-      "schedule": [
-        {
-          "time": "11:00 AM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        },
-        {
-          "time": "3:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        },
-        {
-          "time": "8:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        }
-      ],
-      "description": "Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "11:00 AM",
+      "description": "Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts. Starts at 11:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 206,
-      "sideNum": "SIDE-6",
-      "name": "High Roller €1,000 NLHE",
+      "id": 205.2,
+      "sideNum": "SIDE-5 @ 3:00 PM",
+      "name": "Low Buy-in €100 PLO @ 3:00 PM",
+      "format": "PLO",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 5000,
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "3:00 PM",
+      "description": "Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts. Starts at 3:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 205.3,
+      "sideNum": "SIDE-5 @ 8:00 PM",
+      "name": "Low Buy-in €100 PLO @ 8:00 PM",
+      "format": "PLO",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 5000,
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "8:00 PM",
+      "description": "Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts. Starts at 8:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 206.1,
+      "sideNum": "SIDE-6 @ 7:00 PM",
+      "name": "High Roller €1,000 NLHE @ 7:00 PM",
       "format": "NLH High Roller",
       "buyIn": 1000,
       "rake": 200,
@@ -811,18 +1189,36 @@
         "startingBlinds": "100/200"
       },
       "gtd": 50000,
-      "schedule": [
-        {
-          "time": "7:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        },
-        {
-          "time": "10:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        }
-      ],
-      "description": "€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "7:00 PM",
+      "description": "€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily. Starts at 7:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 206.2,
+      "sideNum": "SIDE-6 @ 10:00 PM",
+      "name": "High Roller €1,000 NLHE @ 10:00 PM",
+      "format": "NLH High Roller",
+      "buyIn": 1000,
+      "rake": 200,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 20,
+        "startingBlinds": "100/200"
+      },
+      "gtd": 50000,
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "10:00 PM",
+      "description": "€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily. Starts at 10:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
       "id": 207,
@@ -837,19 +1233,19 @@
         "startingBlinds": "25/50"
       },
       "gtd": 5000,
-      "schedule": [
-        {
-          "time": "6:00 PM",
-          "runsDates": "2026-04-02, 2026-04-04, 2026-04-06, 2026-04-08, 2026-04-10, 2026-04-12"
-        }
-      ],
+      "startDate": "2026-04-02",
+      "endDate": "2026-04-12",
+      "startTime": "6:00 PM",
       "description": "€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 208,
-      "sideNum": "SIDE-8",
-      "name": "Bounty €150 NLHE",
+      "id": 208.1,
+      "sideNum": "SIDE-8 @ 5:00 PM",
+      "name": "Bounty €150 NLHE @ 5:00 PM",
       "format": "NLH + Bounty",
       "buyIn": 150,
       "rake": 30,
@@ -859,18 +1255,36 @@
         "startingBlinds": "25/50"
       },
       "gtd": 8000,
-      "schedule": [
-        {
-          "time": "5:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        },
-        {
-          "time": "9:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        }
-      ],
-      "description": "€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. Runs 2x daily. Recreational friendly.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "5:00 PM",
+      "description": "€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. Runs 2x daily. Recreational friendly. Starts at 5:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 208.2,
+      "sideNum": "SIDE-8 @ 9:00 PM",
+      "name": "Bounty €150 NLHE @ 9:00 PM",
+      "format": "NLH + Bounty",
+      "buyIn": 150,
+      "rake": 30,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 8000,
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "9:00 PM",
+      "description": "€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. Runs 2x daily. Recreational friendly. Starts at 9:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
       "id": 209,
@@ -885,19 +1299,19 @@
         "startingBlinds": "25/50"
       },
       "gtd": 15000,
-      "schedule": [
-        {
-          "time": "2:00 PM",
-          "runsDates": "2026-04-02, 2026-04-05, 2026-04-08, 2026-04-11"
-        }
-      ],
+      "startDate": "2026-04-02",
+      "endDate": "2026-04-11",
+      "startTime": "2:00 PM",
       "description": "€200 buy-in with 50,000 chip starting stack. 30-minute blinds. €15,000 GTD. Deep, strategic poker. 4 events during series.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     },
     {
-      "id": 210,
-      "sideNum": "SIDE-10",
-      "name": "Turbo €100 NLHE",
+      "id": 210.1,
+      "sideNum": "SIDE-10 @ 11:00 PM",
+      "name": "Turbo €100 NLHE @ 11:00 PM",
       "format": "NLH Turbo",
       "buyIn": 100,
       "rake": 20,
@@ -907,18 +1321,36 @@
         "startingBlinds": "25/50"
       },
       "gtd": 6000,
-      "schedule": [
-        {
-          "time": "11:00 PM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        },
-        {
-          "time": "1:00 AM",
-          "runsDates": "2026-04-01 to 2026-04-12"
-        }
-      ],
-      "description": "Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x nightly. Quick sessions.",
-      "sources": ["kingscasino.cz", "pokernews.com"]
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "11:00 PM",
+      "description": "Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x nightly. Quick sessions. Starts at 11:00 PM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
+    },
+    {
+      "id": 210.2,
+      "sideNum": "SIDE-10 @ 1:00 AM",
+      "name": "Turbo €100 NLHE @ 1:00 AM",
+      "format": "NLH Turbo",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": null,
+      "blindLevels": {
+        "duration": 10,
+        "startingBlinds": "25/50"
+      },
+      "gtd": 6000,
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-12",
+      "startTime": "1:00 AM",
+      "description": "Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x nightly. Quick sessions. Starts at 1:00 AM daily.",
+      "sources": [
+        "kingscasino.cz",
+        "pokernews.com"
+      ]
     }
   ]
 }
