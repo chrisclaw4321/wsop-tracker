@@ -244,7 +244,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                           left: '2px',
                           right: '2px',
                           width: 'calc(100% - 4px)',
-                          height: `${block.durationHours * 60 - 4}px`,
+                          height: `${block.durationHours * 42 - 4}px`,
                           padding: '6px',
                           backgroundColor: '#60a5fa',
                           backgroundImage: 'linear-gradient(to bottom right, #60a5fa, #4ade80)',
