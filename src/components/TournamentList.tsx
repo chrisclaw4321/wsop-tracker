@@ -356,16 +356,19 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                 {/* Sources - Copyable URLs (workaround for Cloudflare firewall) */}
                 {tournament.description && (
                   <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
-                    <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources (copy & paste):</p>
+                    <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources (copy & paste URLs):</p>
                     <div className="space-y-2 text-xs">
-                      <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
-                        thehendonmob.com/festival.php?a=r&n=65393
+                      <div>
+                        <span className="text-gray-600">Official WSOP Schedule:</span>
+                        <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
+                          https://www.wsop.com/tournaments/2026-wsop-europe/
+                        </div>
                       </div>
-                      <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
-                        wsop.com/tournaments/2026-wsop-europe/
-                      </div>
-                      <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
-                        kingscasino.cz/en/poker
+                      <div>
+                        <span className="text-gray-600">Hendon Mob Database (may be blocked):</span>
+                        <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
+                          pokerdb.thehendonmob.com/festival.php?a=r&n=65393
+                        </div>
                       </div>
                     </div>
                   </div>
