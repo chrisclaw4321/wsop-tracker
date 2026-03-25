@@ -414,9 +414,9 @@
   ],
   "satellites": [
     {
-      "id": 101,
-      "satNum": "SAT-1",
-      "name": "Direct Satellite to Main Event",
+      "id": 101.1,
+      "satNum": "SAT-1 @ 10:00 AM",
+      "name": "Direct Satellite to Main Event @ 10:00 AM",
       "format": "NLH Satellite",
       "buyIn": 350,
       "rake": 70,
@@ -426,31 +426,73 @@
         "startingBlinds": "25/50"
       },
       "feedsTo": "Event #5 (€5,300)",
-      "schedule": [
-        {
-          "time": "10:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "2:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "6:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "10:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        }
-      ],
-      "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Runs 4 times daily throughout series.",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "10:00 AM",
+      "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 10:00 AM daily.",
       "sources": ["wsop.com", "kingscasino.cz"]
     },
     {
-      "id": 102,
-      "satNum": "SAT-2",
-      "name": "Mega Satellite to Main Event",
+      "id": 101.2,
+      "satNum": "SAT-1 @ 2:00 PM",
+      "name": "Direct Satellite to Main Event @ 2:00 PM",
+      "format": "NLH Satellite",
+      "buyIn": 350,
+      "rake": 70,
+      "startingStack": 5000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "2:00 PM",
+      "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 2:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 101.3,
+      "satNum": "SAT-1 @ 6:00 PM",
+      "name": "Direct Satellite to Main Event @ 6:00 PM",
+      "format": "NLH Satellite",
+      "buyIn": 350,
+      "rake": 70,
+      "startingStack": 5000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "6:00 PM",
+      "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 6:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 101.4,
+      "satNum": "SAT-1 @ 10:00 PM",
+      "name": "Direct Satellite to Main Event @ 10:00 PM",
+      "format": "NLH Satellite",
+      "buyIn": 350,
+      "rake": 70,
+      "startingStack": 5000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "25/50"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "10:00 PM",
+      "description": "€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Starts at 10:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 102.1,
+      "satNum": "SAT-2 @ 12:00 PM",
+      "name": "Mega Satellite to Main Event @ 12:00 PM",
       "format": "NLH Mega Sat",
       "buyIn": 500,
       "rake": 100,
@@ -460,27 +502,54 @@
         "startingBlinds": "25/50"
       },
       "feedsTo": "Event #5 (€5,300)",
-      "schedule": [
-        {
-          "time": "12:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "4:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "8:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        }
-      ],
-      "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Runs 3x daily.",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "12:00 PM",
+      "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at 12:00 PM daily.",
       "sources": ["wsop.com", "kingscasino.cz"]
     },
     {
-      "id": 103,
-      "satNum": "SAT-3",
-      "name": "Super Satellite (€100 Entry)",
+      "id": 102.2,
+      "satNum": "SAT-2 @ 4:00 PM",
+      "name": "Mega Satellite to Main Event @ 4:00 PM",
+      "format": "NLH Mega Sat",
+      "buyIn": 500,
+      "rake": 100,
+      "startingStack": 7500,
+      "blindLevels": {
+        "duration": 20,
+        "startingBlinds": "25/50"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "4:00 PM",
+      "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at 4:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 102.3,
+      "satNum": "SAT-2 @ 8:00 PM",
+      "name": "Mega Satellite to Main Event @ 8:00 PM",
+      "format": "NLH Mega Sat",
+      "buyIn": 500,
+      "rake": 100,
+      "startingStack": 7500,
+      "blindLevels": {
+        "duration": 20,
+        "startingBlinds": "25/50"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "8:00 PM",
+      "description": "Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites. Starts at 8:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 103.1,
+      "satNum": "SAT-3 @ 9:00 AM",
+      "name": "Super Satellite (€100 Entry) @ 9:00 AM",
       "format": "NLH Super Sat",
       "buyIn": 100,
       "rake": 20,
@@ -490,25 +559,67 @@
         "startingBlinds": "10/25"
       },
       "feedsTo": "Event #5 (€5,300)",
-      "schedule": [
-        {
-          "time": "9:00 AM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "1:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "5:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        },
-        {
-          "time": "9:00 PM",
-          "runsDates": "2026-03-31 to 2026-04-10"
-        }
-      ],
-      "description": "Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players. Runs 4x daily.",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "9:00 AM",
+      "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 9:00 AM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 103.2,
+      "satNum": "SAT-3 @ 1:00 PM",
+      "name": "Super Satellite (€100 Entry) @ 1:00 PM",
+      "format": "NLH Super Sat",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": 3000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "10/25"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "1:00 PM",
+      "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 1:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 103.3,
+      "satNum": "SAT-3 @ 5:00 PM",
+      "name": "Super Satellite (€100 Entry) @ 5:00 PM",
+      "format": "NLH Super Sat",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": 3000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "10/25"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "5:00 PM",
+      "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 5:00 PM daily.",
+      "sources": ["wsop.com", "kingscasino.cz"]
+    },
+    {
+      "id": 103.4,
+      "satNum": "SAT-3 @ 9:00 PM",
+      "name": "Super Satellite (€100 Entry) @ 9:00 PM",
+      "format": "NLH Super Sat",
+      "buyIn": 100,
+      "rake": 20,
+      "startingStack": 3000,
+      "blindLevels": {
+        "duration": 15,
+        "startingBlinds": "10/25"
+      },
+      "feedsTo": "Event #5 (€5,300)",
+      "startDate": "2026-03-31",
+      "endDate": "2026-04-10",
+      "startTime": "9:00 PM",
+      "description": "Low buy-in satellite awarding €350, €500, €750 entries. Pyramid structure for budget players. Starts at 9:00 PM daily.",
       "sources": ["wsop.com", "kingscasino.cz"]
     }
   ],

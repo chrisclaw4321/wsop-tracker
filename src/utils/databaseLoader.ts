@@ -37,10 +37,9 @@ export interface SatelliteEvent {
     startingBlinds: string;
   };
   feedsTo: string;
-  schedule: Array<{
-    time: string;
-    runsDates: string;
-  }>;
+  startDate: string;
+  endDate: string;
+  startTime: string;
   description: string;
   sources: string[];
 }
@@ -97,29 +96,25 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
     });
   });
 
-  // Load satellite events - expand by schedule time
+  // Load satellite events - already expanded by time in database
   tournamentsData.satellites.forEach((satellite: SatelliteEvent) => {
-    satellite.schedule.forEach((scheduleTime, scheduleIndex) => {
-      const [startDate, endDate] = scheduleTime.runsDates.split(' to ');
-      tournaments.push({
-        id: satellite.id + scheduleIndex / 1000,
-        eventNum: satellite.satNum,
-        name: `${satellite.name} @ ${scheduleTime.time}`,
-        format: satellite.format,
-        buyIn: satellite.buyIn,
-        rakeFee: satellite.rake,
-        currency: '€',
-        startDates: [startDate],
-        startTimes: [scheduleTime.time],
-        flightDate: startDate,
-        flightTime: scheduleTime.time,
-        flights: 1,
-        runsPerDay: 1,
-        location: 'King\'s Casino, Prague',
-        startingStack: satellite.startingStack,
-        blindLevels: `${satellite.blindLevels.duration}-minute, starting at ${satellite.blindLevels.startingBlinds}`,
-        description: satellite.description,
-      });
+    tournaments.push({
+      id: satellite.id,
+      eventNum: satellite.satNum,
+      name: satellite.name,
+      format: satellite.format,
+      buyIn: satellite.buyIn,
+      rakeFee: satellite.rake,
+      currency: '€',
+      startDates: [satellite.startDate],
+      startTimes: [satellite.startTime],
+      flightDate: satellite.startDate,
+      flightTime: satellite.startTime,
+      flights: 1,
+      location: 'King\'s Casino, Prague',
+      startingStack: satellite.startingStack,
+      blindLevels: `${satellite.blindLevels.duration}-minute, starting at ${satellite.blindLevels.startingBlinds}`,
+      description: satellite.description,
     });
   });
 
