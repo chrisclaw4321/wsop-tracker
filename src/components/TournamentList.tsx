@@ -341,19 +341,19 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                 {/* Sources */}
                 <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
                   <p className="text-sm font-bold text-gray-700 mb-2">📚 Sources:</p>
-                  <div className="space-y-1">
-                    <a href="https://www.wsop.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                  <div className="space-y-2">
+                    <button onClick={() => window.open('https://www.wsop.com', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
                       • WSOP.com Official Schedule
-                    </a>
-                    <a href="https://www.kingscasino.cz" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                    </button>
+                    <button onClick={() => window.open('https://www.kingscasino.cz', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
                       • King's Casino Prague
-                    </a>
-                    <a href="https://www.pokernews.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                    </button>
+                    <button onClick={() => window.open('https://www.pokernews.com', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
                       • PokerNews Coverage
-                    </a>
-                    <a href="https://www.hendonmob.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm block">
+                    </button>
+                    <button onClick={() => window.open('https://www.hendonmob.com', '_blank')} className="w-full text-left text-blue-600 hover:text-blue-800 hover:underline text-sm block px-2 py-1 rounded hover:bg-blue-50 transition">
                       • Hendon Mob Database
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
