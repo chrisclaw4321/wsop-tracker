@@ -17,6 +17,10 @@ export interface Tournament {
   isTurbo?: boolean;
   description: string;
   location: string;
+  // For expanded flights
+  flightIndex?: number; // 0, 1, 2, etc. for which flight this is
+  flightDate?: string; // specific date for this flight
+  flightTime?: string; // specific time for this flight
 }
 
 export interface User {

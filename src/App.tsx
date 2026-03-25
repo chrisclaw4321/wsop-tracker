@@ -27,6 +27,38 @@ function App() {
     }
   }, []);
 
+  const expandFlights = (tournaments: Tournament[]): Tournament[] => {
+    const expanded: Tournament[] = [];
+    tournaments.forEach((t) => {
+      if (t.flights > 1) {
+        // Expand into multiple flight entries
+        for (let i = 0; i < t.flights; i++) {
+          const flightDate = t.startDates[i] || t.startDates[0];
+          const flightTime = t.startTimes[i] || t.startTimes[0];
+          const flightNum = i + 1;
+          
+          expanded.push({
+            ...t,
+            id: t.id + (i / 1000), // Create unique id for each flight
+            flightIndex: i,
+            flightDate,
+            flightTime,
+            name: `${t.name} - Flight ${flightNum}` // Add flight number to name
+          });
+        }
+      } else {
+        // Single flight, add as-is with flight info
+        expanded.push({
+          ...t,
+          flightIndex: 0,
+          flightDate: t.startDates[0],
+          flightTime: t.startTimes[0]
+        });
+      }
+    });
+    return expanded;
+  };
+
   const loadTournaments = () => {
     // WSOP Europe Prague 2026 - Complete tournament schedule
     // 15 Bracelet Events + Satellites + Side Events (all happening at King's Casino Prague)
@@ -473,7 +505,8 @@ function App() {
     ];
 
     const allEvents = [...data, ...satellites, ...sideEvents];
-    setTournaments(allEvents);
+    const expandedEvents = expandFlights(allEvents);
+    setTournaments(expandedEvents);
   };
 
   const handleGoogleLogin = (credentialResponse: any) => {
@@ -507,21 +540,21 @@ function App() {
   if (!user) {
     return (
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-black flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 flex items-center justify-center p-4">
           <div className="text-center">
             <div className="flex justify-center mb-8">
-              <Trophy className="w-16 h-16 text-yellow-400" />
+              <Trophy className="w-24 h-24 text-yellow-500" />
             </div>
-            <h1 className="text-5xl font-bold text-white mb-4">WSOP Europe Prague 2026</h1>
-            <p className="text-xl text-gray-300 mb-12">Tournament Tracker</p>
+            <h1 className="text-6xl font-bold text-blue-900 mb-4">WSOP Europe Prague 2026</h1>
+            <p className="text-3xl text-green-700 mb-12 font-semibold">Tournament Tracker</p>
             
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 max-w-sm mx-auto border border-white/20">
-              <p className="text-gray-200 mb-6">Sign in with your Google account to view tournaments</p>
+            <div className="bg-white rounded-xl p-10 max-w-sm mx-auto border-4 border-blue-300 shadow-2xl">
+              <p className="text-xl text-gray-800 mb-8 font-semibold">Sign in with your Google account to view tournaments</p>
               <GoogleLogin 
                 onSuccess={handleGoogleLogin}
                 onError={() => alert('Login failed')}
               />
-              <p className="text-sm text-gray-400 mt-4">Authorized email: {AUTHORIZED_EMAIL}</p>
+              <p className="text-lg text-gray-600 mt-6 font-medium">Authorized email: {AUTHORIZED_EMAIL}</p>
             </div>
           </div>
         </div>
@@ -530,29 +563,29 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50">
       {/* Header */}
-      <header className="bg-black/40 backdrop-blur-md border-b border-purple-500/20 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <Trophy className="w-8 h-8 text-yellow-400" />
+      <header className="bg-gradient-to-r from-blue-400 via-green-400 to-yellow-300 shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+            <Trophy className="w-12 h-12 text-yellow-600 drop-shadow-lg" />
             <div>
-              <h1 className="text-3xl font-bold text-white">WSOP Europe 2026</h1>
-              <p className="text-sm text-purple-300">Prague Tournament Tracker</p>
+              <h1 className="text-4xl font-bold text-blue-900 drop-shadow">WSOP Europe 2026</h1>
+              <p className="text-xl text-blue-800 font-semibold drop-shadow">Prague Tournament Tracker</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-4">
             <div className="text-right">
-              {user.picture && <img src={user.picture} alt={user.name} className="w-10 h-10 rounded-full" />}
-              <p className="text-sm text-gray-300">{user.name}</p>
-              <p className="text-xs text-gray-400">{user.email}</p>
+              {user.picture && <img src={user.picture} alt={user.name} className="w-14 h-14 rounded-full border-2 border-white shadow-md" />}
+              <p className="text-lg text-blue-900 font-semibold">{user.name}</p>
+              <p className="text-base text-blue-800">{user.email}</p>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 px-4 py-2 rounded-lg transition"
+              className="flex items-center space-x-2 bg-red-400 hover:bg-red-500 text-white px-6 py-3 rounded-lg font-bold text-lg transition shadow-md"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-6 h-6" />
               <span>Logout</span>
             </button>
           </div>
@@ -560,24 +593,23 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-12">
-        <div className="mb-8">
-          <div className="flex items-center space-x-2 text-purple-300 mb-4">
-            <Calendar className="w-5 h-5" />
+      <main className="max-w-7xl mx-auto px-6 py-16">
+        <div className="mb-10">
+          <div className="flex items-center space-x-3 text-blue-700 mb-6 text-2xl font-bold">
+            <Calendar className="w-8 h-8" />
             <span>March 31 - April 12, 2026</span>
           </div>
-          <p className="text-gray-400 text-lg mb-4">
-            Explore all {tournaments.length} WSOP bracelet tournaments at King's Casino, Prague. Filter, sort, and track your favorite events.
+          <p className="text-gray-700 text-2xl mb-6 font-semibold">
+            Explore all {tournaments.length} WSOP tournaments at King's Casino, Prague. Filter, sort, and track your favorite events.
           </p>
           
           {/* Info Box: Satellites & Side Events */}
-          <div className="bg-gradient-to-r from-amber-900/30 to-orange-900/30 border border-amber-500/30 rounded-lg p-4 mb-6">
-            <p className="text-amber-200 text-sm">
-              <strong>📌 Note:</strong> This tracker shows the <strong>15 official WSOP bracelet events</strong>. 
-              For <strong>50+ side events and satellite tournaments</strong> (€50-€1,000+ buy-ins), 
-              check the <strong>WSOP+ app</strong> or ask at the tournament desk. 
-              <a href="https://www.wsop.com" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-100 underline ml-1">
-                Learn more →
+          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 border-4 border-yellow-400 rounded-xl p-6 mb-8 shadow-lg">
+            <p className="text-gray-800 text-xl font-semibold">
+              <strong>📌 Note:</strong> This tracker shows <strong>15 official WSOP bracelet events</strong> plus <strong>satellite and side events</strong>. 
+              For additional information, 
+              <a href="https://www.wsop.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline ml-1 font-bold">
+                visit WSOP.com →
               </a>
             </p>
           </div>
@@ -587,8 +619,8 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black/40 border-t border-purple-500/20 mt-20 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+      <footer className="bg-gradient-to-r from-blue-300 to-green-300 border-t-4 border-blue-400 mt-20 py-10 shadow-lg">
+        <div className="max-w-7xl mx-auto px-6 text-center text-blue-900 font-bold text-lg">
           <p>WSOP Europe Prague 2026 | King's Casino | Data subject to official WSOP updates</p>
         </div>
       </footer>
