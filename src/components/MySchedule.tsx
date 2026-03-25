@@ -54,16 +54,23 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       const startDateStr = tournament.flightDate || tournament.startDates[0];
       const startTimeStr = tournament.flightTime || tournament.startTimes[0];
       
-      const startDate = parseDate(startDateStr);
+      // IMPORTANT: Parse to ISO format for consistent matching in getEventForSlot
+      const startDate = parseDate(startDateStr);  // Returns ISO string like "2026-04-05"
       const startMinutes = timeToMinutes(startTimeStr);
       
       // Calculate end time (6 hours = 360 minutes)
       const endMinutes = startMinutes + 360;
-      const endDate = new Date(startDate);
       
+      // Calculate end date using UTC
+      const endDateObj = new Date(startDate + 'T00:00:00Z');
       if (endMinutes >= 24 * 60) {
-        endDate.setDate(endDate.getDate() + 1);
+        endDateObj.setUTCDate(endDateObj.getUTCDate() + 1);
       }
+      
+      const endYear = endDateObj.getUTCFullYear();
+      const endMonth = String(endDateObj.getUTCMonth() + 1).padStart(2, '0');
+      const endDay = String(endDateObj.getUTCDate()).padStart(2, '0');
+      const endDateIso = `${endYear}-${endMonth}-${endDay}`;
       
       const endHours = Math.floor((endMinutes % (24 * 60)) / 60);
       const endMins = endMinutes % 60;
@@ -71,9 +78,9 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       
       return {
         tournament,
-        startDate: startDateStr,
+        startDate: startDate,  // ISO string "2026-04-05"
         startTime: startTimeStr,
-        endDate: endDate.toISOString().split('T')[0],
+        endDate: endDateIso,  // ISO string
         endTime: endTimeStr,
         durationHours: 6
       };
