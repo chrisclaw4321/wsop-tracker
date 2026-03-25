@@ -231,8 +231,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                     flexShrink: 0,
                     borderRight: '1px solid #e5e7eb',
                     backgroundColor: '#fff',
-                    position: 'relative',
-                    minHeight: '42px'
+                    position: 'relative'
                   }}
                 >
                   {/* Tournament blocks for this slot */}
@@ -417,4 +416,3 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     </div>
   );
 }
-// Cache buster: 1774469665
