@@ -88,33 +88,75 @@ function App() {
         console.log(`[API] Server returned ${data.selections?.length || 0} selections:`, data.selections);
         const selectedIds = data.selections || [];
         
-        // Always load from server (empty = user has no selections)
-        const restored = tournaments.filter(t => selectedIds.includes(t.id));
-        console.log(`[API] ✅ Restored ${restored.length} tournaments from SERVER`);
-        setSelectedTournaments(restored);
-        
-        // Clear localStorage entirely - server is source of truth
-        localStorage.removeItem('wsop_selected_tournaments');
+        if (selectedIds.length > 0) {
+          // Server has selections - load them
+          const restored = tournaments.filter(t => selectedIds.includes(t.id));
+          console.log(`[API] ✅ Restored ${restored.length} tournaments from SERVER`);
+          setSelectedTournaments(restored);
+          // Save to localStorage as backup
+          localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectedIds));
+        } else {
+          // Server has no selections - try localStorage as fallback
+          console.log(`[API] Server has no selections, checking localStorage...`);
+          const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+          if (savedSelections) {
+            const savedIds = JSON.parse(savedSelections);
+            const restored = tournaments.filter(t => savedIds.includes(t.id));
+            console.log(`[API] Loaded ${restored.length} tournaments from localStorage`);
+            setSelectedTournaments(restored);
+          } else {
+            console.log(`[API] No selections found anywhere`);
+            setSelectedTournaments([]);
+          }
+        }
       } else {
         console.error(`[API] Server responded with status ${response.status}`);
         const errorText = await response.text();
         console.error(`[API] Error response:`, errorText);
-        // Don't throw - just log and continue with empty selection
-        setSelectedTournaments([]);
+        
+        // Server error - use localStorage as fallback
+        const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+        if (savedSelections) {
+          const savedIds = JSON.parse(savedSelections);
+          const restored = tournaments.filter(t => savedIds.includes(t.id));
+          console.log(`[API-FALLBACK] Server error, using localStorage: ${restored.length} tournaments`);
+          setSelectedTournaments(restored);
+        } else {
+          setSelectedTournaments([]);
+        }
       }
     } catch (error) {
       console.error('[API] Failed to load selections from server:', error);
-      console.warn('[API] Server unreachable - starting with empty selection (no localStorage fallback)');
-      // No fallback - force fresh start if server is down
-      setSelectedTournaments([]);
+      console.log('[API] Falling back to localStorage...');
+      
+      // Network error - use localStorage as fallback
+      const savedSelections = localStorage.getItem('wsop_selected_tournaments');
+      if (savedSelections) {
+        try {
+          const savedIds = JSON.parse(savedSelections);
+          const restored = tournaments.filter(t => savedIds.includes(t.id));
+          console.log(`[API-FALLBACK] Network error, using localStorage: ${restored.length} tournaments`);
+          setSelectedTournaments(restored);
+        } catch (e) {
+          console.error('[API-FALLBACK] Failed to parse localStorage:', e);
+          setSelectedTournaments([]);
+        }
+      } else {
+        setSelectedTournaments([]);
+      }
     }
   };
 
   const saveSelectionsToServer = async (newSelected: Tournament[], email: string) => {
     const selectionIds = newSelected.map(t => t.id);
     
+    // Always save to localStorage as backup
+    console.log(`[API] Saving ${selectionIds.length} selections to localStorage`);
+    localStorage.setItem('wsop_selected_tournaments', JSON.stringify(selectionIds));
+    
+    // Try to save to server
     try {
-      console.log(`[API] Saving ${selectionIds.length} selections to server for ${email}:`, selectionIds);
+      console.log(`[API] Saving ${selectionIds.length} selections to server for ${email}...`);
       const response = await fetch('/api/selections?email=' + encodeURIComponent(email), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -125,14 +167,14 @@ function App() {
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`[API] Save failed: ${response.status} - ${errorText}`);
+        console.warn('[API] Saved to localStorage instead');
       } else {
         console.log(`[API] ✅ Successfully saved to server`);
       }
     } catch (error) {
       console.error('[API] Failed to save selections to server:', error);
+      console.warn('[API] Saved to localStorage instead');
     }
-    
-    // No localStorage - server is the only source of truth
   };
 
   const handleSelectTournament = (tournament: Tournament) => {
