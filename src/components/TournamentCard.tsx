@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tournament } from '../types';
-import { Calendar, Users, Zap, Award, MapPin, Info } from 'lucide-react';
+import { Calendar, Users, Zap, Award, MapPin, Info, Clock } from 'lucide-react';
 
 interface Props {
   tournament: Tournament;
@@ -97,6 +97,29 @@ export default function TournamentCard({ tournament }: Props) {
             </div>
           </div>
           
+          {/* Continuation Days */}
+          {tournament.continuationDays && tournament.continuationDays.length > 0 && (
+            <div className="pt-3 border-t border-purple-500/20">
+              <p className="text-gray-400 text-xs uppercase tracking-wide mb-2 flex items-center space-x-1">
+                <Clock className="w-3 h-3" />
+                <span>Continuation Days</span>
+              </p>
+              <div className="space-y-1">
+                {tournament.continuationDays.map((cd) => {
+                  const cdDate = new Date(cd.date + 'T12:00:00');
+                  return (
+                    <div key={cd.day} className="flex justify-between text-xs">
+                      <span className="text-purple-300 font-medium">Day {cd.day}</span>
+                      <span className="text-gray-300">
+                        {cdDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} @ {cd.time}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           <div className="pt-3 border-t border-purple-500/20">
             <p className="text-gray-300 text-xs">
               <span className="font-semibold">Location:</span> {tournament.location}

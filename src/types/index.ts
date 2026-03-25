@@ -22,6 +22,8 @@ export interface Tournament {
   flightIndex?: number; // 0, 1, 2, etc. for which flight this is
   flightDate?: string; // specific date for this flight
   flightTime?: string; // specific time for this flight
+  // Continuation days for multi-day bracelet events
+  continuationDays?: { day: number; date: string; time: string }[];
 }
 
 export interface User {

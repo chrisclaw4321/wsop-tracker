@@ -2,7 +2,7 @@
 
 /**
  * Satellite Audit Script
- * Checks satellite structure and actual schedule variations
+ * Checks satellite structure against actual DB format
  */
 
 import fs from 'fs';
@@ -18,70 +18,59 @@ console.log('WSOP EUROPE PRAGUE 2026 - SATELLITE AUDIT');
 console.log('='.repeat(80));
 console.log('');
 
-console.log('📊 CURRENT SATELLITE STRUCTURE IN DATABASE:');
+let issues = 0;
+
+console.log('📊 SATELLITE STRUCTURE IN DATABASE:');
 console.log('-'.repeat(80));
 
 db.satellites.forEach((sat, index) => {
-  console.log(`\n${index + 1}. ${sat.satNum} - ${sat.name}`);
+  console.log(`\n${index + 1}. [ID ${sat.id}] ${sat.name}`);
   console.log(`   Buy-in: €${sat.buyIn} + €${sat.rake} = €${sat.buyIn + sat.rake}`);
   console.log(`   Starting Stack: ${sat.startingStack} chips`);
   console.log(`   Blind Levels: ${sat.blindLevels.duration}-minute, starting at ${sat.blindLevels.startingBlinds}`);
   console.log(`   Feeds To: ${sat.feedsTo}`);
-  console.log(`   Schedule:`);
+  console.log(`   Instances: ${sat.instances.length}`);
   
-  sat.schedule.forEach((sched, i) => {
-    console.log(`     ${i + 1}. Time: ${sched.time}`);
-    console.log(`        Runs: ${sched.runsDates}`);
+  sat.instances.forEach((inst, i) => {
+    console.log(`     ${i + 1}. ${inst.date} @ ${inst.time} (${inst.seatsGtd} seats GTD)`);
   });
-  
-  console.log(`   Total schedule entries: ${sat.schedule.length}`);
-});
 
-console.log('\n' + '='.repeat(80));
-console.log('ANALYSIS');
-console.log('='.repeat(80));
+  // Validate required fields
+  if (!sat.name) { console.log('   ❌ Missing name'); issues++; }
+  if (sat.buyIn === undefined) { console.log('   ❌ Missing buyIn'); issues++; }
+  if (!sat.feedsTo) { console.log('   ❌ Missing feedsTo'); issues++; }
+  if (!sat.instances || sat.instances.length === 0) { console.log('   ❌ Missing instances'); issues++; }
+  if (!sat.blindLevels) { console.log('   ❌ Missing blindLevels'); issues++; }
+  if (!sat.startingStack) { console.log('   ❌ Missing startingStack'); issues++; }
 
-console.log('\n🔍 Key Question: Do satellites have DIFFERENT start times?');
-console.log('-'.repeat(80));
-
-db.satellites.forEach((sat) => {
-  const times = sat.schedule.map(s => s.time);
-  const uniqueTimes = new Set(times);
-  
-  console.log(`\n${sat.satNum}: ${sat.name}`);
-  console.log(`  Schedule entries: ${sat.schedule.length}`);
-  console.log(`  Start times: ${Array.from(uniqueTimes).join(', ')}`);
-  console.log(`  Unique times: ${uniqueTimes.size}`);
-  
-  if (uniqueTimes.size > 1) {
-    console.log(`  ⚠️  MULTIPLE START TIMES - Should these be separate DB entries?`);
-  } else {
-    console.log(`  ✅ Single start time - Correct`);
+  // Check for duplicate instances
+  const instanceKeys = sat.instances.map(i => `${i.date}-${i.time}`);
+  const uniqueKeys = new Set(instanceKeys);
+  if (uniqueKeys.size !== instanceKeys.length) {
+    console.log('   ❌ Duplicate instances detected!');
+    issues++;
   }
 });
 
-console.log('\n' + '='.repeat(80));
-console.log('CONCLUSION');
-console.log('='.repeat(80));
-
-let hasMultipleTimes = false;
-db.satellites.forEach(sat => {
-  const uniqueTimes = new Set(sat.schedule.map(s => s.time));
-  if (uniqueTimes.size > 1) {
-    hasMultipleTimes = true;
-  }
-});
-
-if (hasMultipleTimes) {
-  console.log(`\n❌ ISSUE FOUND: Some satellites have multiple different start times`);
-  console.log(`   According to the requirement, each unique time should be a separate entry`);
-  console.log(`\n   Current structure: 3 satellites with multiple times per satellite`);
-  console.log(`   Should be: Multiple entries (one per unique time)`);
-  console.log(`\n   Example:`);
-  console.log(`   SAT-1 @ 10:00 AM (runs Mar 31 - Apr 10)`);
-  console.log(`   SAT-1 @ 2:00 PM (runs Mar 31 - Apr 10)`);
-  console.log(`   SAT-1 @ 6:00 PM (runs Mar 31 - Apr 10)`);
-  console.log(`   SAT-1 @ 10:00 PM (runs Mar 31 - Apr 10)`);
+// Check for duplicate satellite IDs
+const satIds = db.satellites.map(s => s.id);
+const uniqueSatIds = new Set(satIds);
+if (uniqueSatIds.size !== satIds.length) {
+  console.log('\n❌ Duplicate satellite IDs detected!');
+  issues++;
 } else {
-  console.log(`\n✅ All satellites have single start times - Correct`);
+  console.log('\n✅ All satellite IDs are unique');
+}
+
+console.log('\n' + '='.repeat(80));
+console.log('SUMMARY');
+console.log('='.repeat(80));
+console.log(`\nTotal satellites: ${db.satellites.length}`);
+console.log(`Total instances: ${db.satellites.reduce((sum, s) => sum + s.instances.length, 0)}`);
+console.log(`Issues found: ${issues}`);
+
+if (issues === 0) {
+  console.log('\n✅ SATELLITE AUDIT PASSED');
+} else {
+  console.log(`\n❌ SATELLITE AUDIT FAILED - ${issues} issues found`);
 }

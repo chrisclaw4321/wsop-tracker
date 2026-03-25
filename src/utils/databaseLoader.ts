@@ -90,6 +90,19 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
 
   // Load bracelet events with flights expanded
   tournamentsData.braceletEvents.forEach((bracelet: any) => {
+    // Collect continuation days
+    const continuationDays: { day: number; date: string; time: string }[] = [];
+    for (let d = 2; d <= 6; d++) {
+      const dayKey = `day${d}`;
+      if (bracelet[dayKey]) {
+        continuationDays.push({
+          day: d,
+          date: bracelet[dayKey].date,
+          time: bracelet[dayKey].time,
+        });
+      }
+    }
+
     bracelet.flights.forEach((flight: any, flightIndex: number) => {
       const totalBuyIn = bracelet.buyIn + (bracelet.rake || 0);
       tournaments.push({
@@ -117,6 +130,7 @@ export const loadTournamentsFromDatabase = (): Tournament[] => {
         isTurbo: bracelet.features.includes('turbo'),
         isMultiday: bracelet.features.includes('multiday'),
         description: bracelet.description,
+        continuationDays: continuationDays.length > 0 ? continuationDays : undefined,
       });
     });
   });

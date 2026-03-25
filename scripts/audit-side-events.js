@@ -2,7 +2,7 @@
 
 /**
  * Side Events Audit Script
- * Checks side event structure and actual schedule variations
+ * Checks side event structure against actual DB format
  */
 
 import fs from 'fs';
@@ -18,97 +18,62 @@ console.log('WSOP EUROPE PRAGUE 2026 - SIDE EVENTS AUDIT');
 console.log('='.repeat(80));
 console.log('');
 
-console.log('📊 CURRENT SIDE EVENTS STRUCTURE IN DATABASE:');
+let issues = 0;
+
+console.log('📊 SIDE EVENTS STRUCTURE IN DATABASE:');
 console.log('-'.repeat(80));
 
 db.sideEvents.forEach((side, index) => {
-  console.log(`\n${index + 1}. ${side.sideNum} - ${side.name}`);
+  console.log(`\n${index + 1}. [ID ${side.id}] ${side.name}`);
   console.log(`   Buy-in: €${side.buyIn} + €${side.rake} = €${side.buyIn + side.rake}`);
-  console.log(`   Starting Stack: ${side.startingStack || 'N/A'} chips`);
+  console.log(`   Starting Stack: ${side.startingStack} chips`);
   console.log(`   Blind Levels: ${side.blindLevels.duration}-minute, starting at ${side.blindLevels.startingBlinds}`);
-  console.log(`   GTD: €${side.gtd || 'N/A'}`);
-  console.log(`   Schedule:`);
+  console.log(`   Instances: ${side.instances.length}`);
   
-  side.schedule.forEach((sched, i) => {
-    console.log(`     ${i + 1}. Time: ${sched.time}`);
-    console.log(`        Runs: ${sched.runsDates}`);
+  side.instances.forEach((inst, i) => {
+    console.log(`     ${i + 1}. ${inst.date} @ ${inst.time}${inst.note ? ' (' + inst.note + ')' : ''}`);
   });
-  
-  console.log(`   Total schedule entries: ${side.schedule.length}`);
-});
 
-console.log('\n' + '='.repeat(80));
-console.log('ANALYSIS');
-console.log('='.repeat(80));
+  // Validate required fields
+  if (!side.name) { console.log('   ❌ Missing name'); issues++; }
+  if (side.buyIn === undefined) { console.log('   ❌ Missing buyIn'); issues++; }
+  if (!side.instances || side.instances.length === 0) { console.log('   ❌ Missing instances'); issues++; }
+  if (!side.blindLevels) { console.log('   ❌ Missing blindLevels'); issues++; }
 
-console.log('\n🔍 Key Question: Do side events have DIFFERENT start times?');
-console.log('-'.repeat(80));
+  // Check for buy-in = 0 without note
+  if (side.buyIn === 0 && !side.buyInNote) {
+    console.log('   ⚠️  Buy-in is €0 without explanation');
+    issues++;
+  }
 
-let totalIssues = 0;
-const eventsSummary = [];
-
-db.sideEvents.forEach((side) => {
-  const times = side.schedule.map(s => s.time);
-  const uniqueTimes = new Set(times);
-  
-  console.log(`\n${side.sideNum}: ${side.name}`);
-  console.log(`  Schedule entries: ${side.schedule.length}`);
-  console.log(`  Start times: ${Array.from(uniqueTimes).join(', ')}`);
-  console.log(`  Unique times: ${uniqueTimes.size}`);
-  
-  if (uniqueTimes.size > 1) {
-    console.log(`  ⚠️  MULTIPLE START TIMES - Should be ${uniqueTimes.size} separate entries`);
-    totalIssues += uniqueTimes.size - 1;
-    eventsSummary.push({
-      sideNum: side.sideNum,
-      name: side.name,
-      currentEntries: 1,
-      shouldBe: uniqueTimes.size,
-      times: Array.from(uniqueTimes)
-    });
-  } else {
-    console.log(`  ✅ Single start time - Correct`);
-    eventsSummary.push({
-      sideNum: side.sideNum,
-      name: side.name,
-      currentEntries: 1,
-      shouldBe: 1,
-      times: Array.from(uniqueTimes)
-    });
+  // Check for duplicate instances
+  const instanceKeys = side.instances.map(i => `${i.date}-${i.time}`);
+  const uniqueKeys = new Set(instanceKeys);
+  if (uniqueKeys.size !== instanceKeys.length) {
+    console.log('   ❌ Duplicate instances detected!');
+    issues++;
   }
 });
 
-console.log('\n' + '='.repeat(80));
-console.log('RESTRUCTURING NEEDED');
-console.log('='.repeat(80));
-
-let totalNewEntries = 0;
-eventsSummary.forEach(event => {
-  if (event.shouldBe > 1) {
-    console.log(`\n${event.sideNum}: ${event.name}`);
-    console.log(`  Currently: 1 entry`);
-    console.log(`  Should be: ${event.shouldBe} entries (one per time)`);
-    event.times.forEach(time => {
-      console.log(`    - ${event.sideNum} @ ${time}`);
-      totalNewEntries++;
-    });
-  } else {
-    totalNewEntries++;
-  }
-});
+// Check for duplicate side event IDs
+const sideIds = db.sideEvents.map(s => s.id);
+const uniqueSideIds = new Set(sideIds);
+if (uniqueSideIds.size !== sideIds.length) {
+  console.log('\n❌ Duplicate side event IDs detected!');
+  issues++;
+} else {
+  console.log('\n✅ All side event IDs are unique');
+}
 
 console.log('\n' + '='.repeat(80));
 console.log('SUMMARY');
 console.log('='.repeat(80));
+console.log(`\nTotal side events: ${db.sideEvents.length}`);
+console.log(`Total instances: ${db.sideEvents.reduce((sum, s) => sum + s.instances.length, 0)}`);
+console.log(`Issues found: ${issues}`);
 
-const currentTotal = db.sideEvents.length;
-console.log(`\nCurrent side events in DB: ${currentTotal}`);
-console.log(`Should be after restructuring: ${totalNewEntries}`);
-
-if (totalIssues === 0) {
-  console.log(`\n✅ All side events have single start times - Correct structure!`);
+if (issues === 0) {
+  console.log('\n✅ SIDE EVENTS AUDIT PASSED');
 } else {
-  console.log(`\n❌ RESTRUCTURING NEEDED: ${totalIssues} additional entries required`);
-  console.log(`   Current entries: ${currentTotal}`);
-  console.log(`   Required entries: ${totalNewEntries}`);
+  console.log(`\n❌ SIDE EVENTS AUDIT FAILED - ${issues} issues found`);
 }
