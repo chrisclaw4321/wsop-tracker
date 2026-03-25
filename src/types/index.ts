@@ -12,6 +12,7 @@ export interface Tournament {
   gtd?: number; // guaranteed prize pool in euros
   startingStack?: number; // chip stack
   blindLevels?: string; // e.g., "10-minute" or "40-minute"
+  runsPerDay?: number; // For satellites/side events: how many times per day (replaces 'flights')
   isMultiday?: boolean;
   isBounty?: boolean;
   isTurbo?: boolean;

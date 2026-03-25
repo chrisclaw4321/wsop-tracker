@@ -30,8 +30,10 @@ function App() {
   const expandFlights = (tournaments: Tournament[]): Tournament[] => {
     const expanded: Tournament[] = [];
     tournaments.forEach((t) => {
-      if (t.flights > 1) {
-        // Expand into multiple flight entries
+      // ONLY expand bracelet events (id 1-15) with actual flights
+      // Satellites (id 101+) and side events (id 201+) are NOT expanded - they show runs per day
+      if (t.id >= 1 && t.id <= 15 && t.flights > 1) {
+        // Expand bracelet events into multiple flight entries
         for (let i = 0; i < t.flights; i++) {
           const flightDate = t.startDates[i] || t.startDates[0];
           const flightTime = t.startTimes[i] || t.startTimes[0];
@@ -47,7 +49,7 @@ function App() {
           });
         }
       } else {
-        // Single flight, add as-is with flight info
+        // Single flight or satellites/side events - add as-is with flight info
         expanded.push({
           ...t,
           flightIndex: 0,
@@ -76,6 +78,8 @@ function App() {
         startTimes: ['12:00 PM', '2:00 PM', '6:00 PM', '12:00 PM'],
         flights: 4,
         location: 'King\'s Casino, Prague',
+        startingStack: 25000,
+        blindLevels: '20-minute',
         isBounty: true,
         description: 'Four-flight opening tournament with mystery bounty component. Perfect entry-level WSOPE bracelet event.'
       },
@@ -107,6 +111,8 @@ function App() {
         startTimes: ['12:00 PM', '6:00 PM'],
         flights: 2,
         location: 'King\'s Casino, Prague',
+        startingStack: 20000,
+        blindLevels: '15-minute',
         description: 'The low buy-in, high-volume event. Budget-friendly bracelet opportunity with large fields.'
       },
       {
@@ -122,6 +128,7 @@ function App() {
         flights: 2,
         location: 'King\'s Casino, Prague',
         startingStack: 50000,
+        blindLevels: '20-minute',
         isBounty: true,
         description: 'The Colossus meets PLO with bounty component. Fantastic for aggressive action players.'
       },
@@ -155,6 +162,8 @@ function App() {
         startTimes: ['12:00 PM'],
         flights: 1,
         location: 'King\'s Casino, Prague',
+        startingStack: 25000,
+        blindLevels: '30-minute',
         description: 'FIRST-EVER Ladies event at WSOPE. Confirmed players: Vanessa Kade, Leo Margets, Kitty Kuo, Mackenzie Dern. Custom gemstone bracelet for winner.'
       },
       {
@@ -169,9 +178,11 @@ function App() {
         startTimes: ['2:00 PM'],
         flights: 1,
         location: 'King\'s Casino, Prague',
+        startingStack: 30000,
+        blindLevels: '12-minute',
         isTurbo: true,
         isBounty: true,
-        description: 'Fast-paced turbo format combined with bounties. 60-90 minute levels, aggressive action.'
+        description: 'Fast-paced turbo format combined with bounties. 12-minute levels, aggressive action.'
       },
       {
         id: 8,
@@ -186,6 +197,7 @@ function App() {
         flights: 1,
         location: 'King\'s Casino, Prague',
         startingStack: 50000,
+        blindLevels: '30-minute',
         description: 'Large starting stack (50k chips) = deep-stacked play. Positional, thoughtful poker.'
       },
       {
@@ -216,6 +228,8 @@ function App() {
         startTimes: ['12:00 PM', '6:00 PM'],
         flights: 2,
         location: 'King\'s Casino, Prague',
+        startingStack: 40000,
+        blindLevels: '20-minute',
         description: 'Ryder Cup-style team competition. EU vs. Rest of World. Unique format, social element.'
       },
       {
@@ -247,6 +261,8 @@ function App() {
         flights: 4,
         gtd: 1500000,
         location: 'King\'s Casino, Prague',
+        startingStack: 35000,
+        blindLevels: '20-minute',
         description: '€1,500,000 GTD - The "Mini Main Event". NEW EVENT. Four flights provide flexibility. Golden ring, golden jacket.'
       },
       {
@@ -294,6 +310,8 @@ function App() {
         startTimes: ['2:00 PM'],
         flights: 1,
         location: 'King\'s Casino, Prague',
+        startingStack: 30000,
+        blindLevels: '12-minute',
         isTurbo: true,
         isBounty: true,
         description: 'Final bracelet event of the series (Presented by GGPoker). Fast turbo + bounty hunting. Ending on a high note.'
@@ -301,6 +319,7 @@ function App() {
     ];
 
     // ===== SATELLITE TOURNAMENTS (Running throughout series) =====
+    // NOTE: These are NOT expanded. 'runsPerDay' indicates how many times these run daily, not flights.
     const satellites: Tournament[] = [
       {
         id: 101,
@@ -312,9 +331,10 @@ function App() {
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
         startTimes: ['10:00 AM', '2:00 PM', '6:00 PM', '10:00 PM'],
-        flights: 40,
+        flights: 1, // Single satellite (not expanded)
+        runsPerDay: 4, // Runs 4 times daily
         location: 'King\'s Casino, Prague',
-        description: '€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Running multiple times daily throughout series.'
+        description: '€350 direct satellite to €5,300 Main Event. Winner takes €5,300 Main Event entry. Runs 4 times daily throughout series.'
       },
       {
         id: 102,
@@ -326,54 +346,59 @@ function App() {
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
         startTimes: ['12:00 PM', '4:00 PM', '8:00 PM'],
-        flights: 30,
+        flights: 1, // Single satellite (not expanded)
+        runsPerDay: 3, // Runs 3 times daily
         location: 'King\'s Casino, Prague',
-        description: 'Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Running 3x daily.'
+        description: 'Mega satellite awarding 3-8+ Main Event seats based on field size. Best ROI for satellites (multiple winners). Runs 3 times daily.'
       },
       {
         id: 103,
         eventNum: 'SAT-3',
-        name: 'Super Satellite',
+        name: 'Super Satellite (€100 Entry)',
         format: 'NLH Super Sat',
         buyIn: 100,
         rakeFee: 20,
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10'],
         startTimes: ['9:00 AM', '1:00 PM', '5:00 PM', '9:00 PM'],
-        flights: 50,
+        flights: 1, // Single satellite (not expanded)
+        runsPerDay: 4, // Runs 4 times daily
         location: 'King\'s Casino, Prague',
-        description: 'Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players.'
+        description: 'Low buy-in satellite awarding €350, €500, €750 satellite entries. Pyramid structure for budget-conscious players. Runs 4x daily.'
       },
     ];
 
-    // ===== SIDE EVENTS (Expected throughout series) =====
+    // ===== SIDE EVENTS (Running throughout series) =====
+    // NOTE: These are NOT expanded. 'runsPerDay' indicates how many times these run daily, not flights.
     const sideEvents: Tournament[] = [
       {
         id: 201,
         eventNum: 'SIDE-1',
-        name: 'Micro NLHE',
+        name: 'Micro €25 NLHE (5x Daily)',
         format: 'NLH',
         buyIn: 25,
         rakeFee: 5,
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['6:00 AM', '10:00 AM', '2:00 PM', '6:00 PM', '10:00 PM'],
-        flights: 100,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 5, // Runs 5 times daily
         gtd: 2000,
         location: 'King\'s Casino, Prague',
-        description: 'Budget-friendly no-limit hold\'em. €2,000 GTD. Perfect for recreational players and bankroll builders.'
+        description: 'Budget-friendly no-limit hold\'em. €2,000 GTD. Perfect for recreational players and bankroll builders. Runs 5 times daily.'
       },
       {
         id: 202,
         eventNum: 'SIDE-2',
-        name: 'Low Buy-in NLHE',
+        name: 'Low Buy-in €50 NLHE (5x Daily)',
         format: 'NLH',
         buyIn: 50,
         rakeFee: 10,
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['7:00 AM', '11:00 AM', '3:00 PM', '7:00 PM', '11:00 PM'],
-        flights: 80,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 5, // Runs 5 times daily
         gtd: 5000,
         location: 'King\'s Casino, Prague',
         description: '€5,000 GTD daily tournament. Running 5 times per day. Most accessible side event for recreational players.'
@@ -381,44 +406,47 @@ function App() {
       {
         id: 203,
         eventNum: 'SIDE-3',
-        name: 'Mid Buy-in NLHE',
+        name: 'Mid Buy-in €100 NLHE (5x Daily)',
         format: 'NLH',
         buyIn: 100,
         rakeFee: 20,
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['8:00 AM', '12:00 PM', '4:00 PM', '8:00 PM', '12:00 AM'],
-        flights: 60,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 5, // Runs 5 times daily
         gtd: 10000,
         location: 'King\'s Casino, Prague',
-        description: '€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players.'
+        description: '€10,000 GTD daily. €100+€20 buy-in. Balanced field of recreational and semi-pro players. Runs 5 times daily.'
       },
       {
         id: 204,
         eventNum: 'SIDE-4',
-        name: 'High Buy-in NLHE',
+        name: 'High Buy-in €250 NLHE (3x Daily)',
         format: 'NLH',
         buyIn: 250,
         rakeFee: 50,
         currency: '€',
         startDates: ['Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['2:00 PM', '6:00 PM', '10:00 PM'],
-        flights: 40,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 3, // Runs 3 times daily
         gtd: 20000,
         location: 'King\'s Casino, Prague',
-        description: '€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. 3 flights per day.'
+        description: '€20,000 GTD daily. €250+€50 buy-in. Premium field with stronger competition. Runs 3 times daily.'
       },
       {
         id: 205,
         eventNum: 'SIDE-5',
-        name: 'Low Buy-in PLO',
+        name: 'Low Buy-in €100 PLO (3x Daily)',
         format: 'PLO',
         buyIn: 100,
         rakeFee: 20,
         currency: '€',
         startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['11:00 AM', '3:00 PM', '8:00 PM'],
-        flights: 50,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 3, // Runs 3 times daily
         gtd: 5000,
         location: 'King\'s Casino, Prague',
         description: 'Four-card variant €5,000 GTD. €100+€20 buy-in. Running 3 times daily. Great for PLO enthusiasts.'
@@ -426,60 +454,64 @@ function App() {
       {
         id: 206,
         eventNum: 'SIDE-6',
-        name: 'High Roller Tournament',
+        name: 'High Roller €1,000 NLHE (2x Daily)',
         format: 'NLH High Roller',
         buyIn: 1000,
         rakeFee: 200,
         currency: '€',
         startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['7:00 PM', '10:00 PM'],
-        flights: 20,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 2, // Runs 2 times daily
         gtd: 50000,
         location: 'King\'s Casino, Prague',
-        description: '€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. 2 flights daily.'
+        description: '€1,000 buy-in with €50,000 GTD. Premium nightly event. Elite field with experienced professionals. Runs 2x daily.'
       },
       {
         id: 207,
         eventNum: 'SIDE-7',
-        name: 'Heads-Up Tournament',
+        name: 'Heads-Up €200 NLHE (Weekends)',
         format: 'NLH Heads-Up',
         buyIn: 200,
         rakeFee: 40,
         currency: '€',
         startDates: ['Apr 2', 'Apr 4', 'Apr 6', 'Apr 8', 'Apr 10', 'Apr 12'],
         startTimes: ['6:00 PM'],
-        flights: 15,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 1, // Runs 1x on select days
         gtd: 5000,
         location: 'King\'s Casino, Prague',
-        description: '€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week.'
+        description: '€5,000 GTD heads-up tournament. €200+€40 buy-in. Single-elimination one-on-one format. 3x per week (Wed/Fri/Sun).'
       },
       {
         id: 208,
         eventNum: 'SIDE-8',
-        name: 'Bounty NLHE',
+        name: 'Bounty €150 NLHE (2x Daily)',
         format: 'NLH + Bounty',
         buyIn: 150,
         rakeFee: 30,
         currency: '€',
         startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['5:00 PM', '9:00 PM'],
-        flights: 50,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 2, // Runs 2 times daily
         gtd: 8000,
         isBounty: true,
-        location: 'King\'s Castle, Prague',
-        description: '€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. 2 flights daily. Recreational friendly.'
+        location: 'King\'s Casino, Prague',
+        description: '€8,000 GTD with bounty component. Eliminate players, win bounties! €150+€30 buy-in. Runs 2x daily. Recreational friendly.'
       },
       {
         id: 209,
         eventNum: 'SIDE-9',
-        name: 'Deepstack Tournament',
+        name: 'Deepstack €200 NLHE (Weekend)',
         format: 'NLH Deepstack',
         buyIn: 200,
         rakeFee: 40,
         currency: '€',
         startDates: ['Apr 2', 'Apr 5', 'Apr 8', 'Apr 11'],
         startTimes: ['2:00 PM'],
-        flights: 30,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 1, // Runs once on select days
         startingStack: 50000,
         blindLevels: '30-minute',
         gtd: 15000,
@@ -489,23 +521,64 @@ function App() {
       {
         id: 210,
         eventNum: 'SIDE-10',
-        name: 'Turbo Tournament',
+        name: 'Turbo €100 NLHE (2x Nightly)',
         format: 'NLH Turbo',
         buyIn: 100,
         rakeFee: 20,
         currency: '€',
         startDates: ['Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12'],
         startTimes: ['11:00 PM', '1:00 AM'],
-        flights: 60,
+        flights: 1, // Single event (not expanded)
+        runsPerDay: 2, // Runs 2 times nightly
         isTurbo: true,
         gtd: 6000,
         location: 'King\'s Casino, Prague',
-        description: 'Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x daily. Quick sessions.'
+        description: 'Fast-paced turbo format with short blind levels. €6,000 GTD. €100+€20 buy-in. Late night action 2x nightly. Quick sessions.'
       },
     ];
 
     const allEvents = [...data, ...satellites, ...sideEvents];
     const expandedEvents = expandFlights(allEvents);
+    
+    // === DATA VALIDATION & SANITY CHECKS ===
+    const braceletEvents = data.length;
+    const satelliteEvents = satellites.length;
+    const sideEventCount = sideEvents.length;
+    const totalUniqueEvents = allEvents.length;
+    const totalDisplayedRows = expandedEvents.length;
+    
+    // Count bracelet events with flights
+    const braceletWithFlights = data.filter(e => e.flights > 1).length;
+    const totalFlightExpansions = data.reduce((sum, e) => sum + (e.flights > 1 ? e.flights : 0), 0);
+    
+    // Validation: check for missing blind levels in bracelet events
+    const missingBlindLevels = data.filter(e => !e.blindLevels).map(e => `Event #${e.eventNum}`);
+    const missingStartingStacks = data.filter(e => !e.startingStack).map(e => `Event #${e.eventNum}`);
+    
+    console.log('=== WSOP EUROPE 2026 TRACKER - DATA AUDIT ===');
+    console.log(`Bracelet Events: ${braceletEvents}`);
+    console.log(`  - With actual flights (expanded): ${braceletWithFlights}`);
+    console.log(`  - Total flight rows from expansion: ${totalFlightExpansions}`);
+    console.log(`Satellite Events: ${satelliteEvents} (NOT expanded, using runsPerDay)`);
+    console.log(`Side Events: ${sideEventCount} (NOT expanded, using runsPerDay)`);
+    console.log(`Total unique event types: ${totalUniqueEvents}`);
+    console.log(`Total display rows (after flight expansion): ${totalDisplayedRows}`);
+    console.log(`Expected total: ~25-28 rows (15 bracelets + flights, 3 satellites, 10 sides)`);
+    console.log(`Status: ${totalDisplayedRows >= 25 && totalDisplayedRows <= 30 ? '✅ PASS' : '❌ FAIL'}`);
+    console.log('');
+    console.log('Data Completeness:');
+    if (missingBlindLevels.length > 0) {
+      console.warn(`Missing blind levels: ${missingBlindLevels.join(', ')}`);
+    } else {
+      console.log('✅ All bracelet events have blind level data');
+    }
+    if (missingStartingStacks.length > 0) {
+      console.warn(`Missing starting stacks: ${missingStartingStacks.join(', ')}`);
+    } else {
+      console.log('✅ All bracelet events have starting stack data');
+    }
+    console.log('===================================');
+    
     setTournaments(expandedEvents);
   };
 
@@ -542,11 +615,11 @@ function App() {
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 flex items-center justify-center p-4">
           <div className="text-center">
-            <div className="flex justify-center mb-8">
-              <Trophy className="w-24 h-24 text-yellow-500" />
+            <div className="flex justify-center mb-6">
+              <Trophy className="w-16 h-16 text-yellow-500" />
             </div>
-            <h1 className="text-6xl font-bold text-blue-900 mb-4">WSOP Europe Prague 2026</h1>
-            <p className="text-3xl text-green-700 mb-12 font-semibold">Tournament Tracker</p>
+            <h1 className="text-3xl font-bold text-blue-900 mb-2">WSOP Europe Prague 2026</h1>
+            <p className="text-xl text-green-700 mb-8 font-semibold">Tournament Tracker</p>
             
             <div className="bg-white rounded-xl p-10 max-w-sm mx-auto border-4 border-blue-300 shadow-2xl">
               <p className="text-xl text-gray-800 mb-8 font-semibold">Sign in with your Google account to view tournaments</p>
@@ -566,12 +639,12 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-400 via-green-400 to-yellow-300 shadow-lg sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <Trophy className="w-12 h-12 text-yellow-600 drop-shadow-lg" />
+            <Trophy className="w-10 h-10 text-yellow-600 drop-shadow-lg" />
             <div>
-              <h1 className="text-4xl font-bold text-blue-900 drop-shadow">WSOP Europe 2026</h1>
-              <p className="text-xl text-blue-800 font-semibold drop-shadow">Prague Tournament Tracker</p>
+              <h1 className="text-2xl font-bold text-blue-900 drop-shadow">WSOP Europe 2026</h1>
+              <p className="text-base text-blue-800 font-semibold drop-shadow">Prague Tournament Tracker</p>
             </div>
           </div>
           
