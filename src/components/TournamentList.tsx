@@ -23,6 +23,17 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
     return 'bracelet';
   };
 
+  // Extract clean event number (remove "Flight X" suffix)
+  const getCleanEventNum = (eventNum: string): string => {
+    return eventNum.replace(/\s*-\s*Flight\s*\d+\s*$/i, '').trim();
+  };
+
+  // Count flights for an event
+  const getFlightCount = (eventNum: string, allTournaments: Tournament[]): number => {
+    const cleanNum = getCleanEventNum(eventNum);
+    return allTournaments.filter(t => getCleanEventNum(t.eventNum) === cleanNum).length;
+  };
+
   const getFormatLabel = (format: string) => {
     if (format.includes('NLH')) return 'NLHE';
     if (format.includes('PLO')) return 'PLO';
@@ -143,7 +154,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
             placeholder="Search tournaments..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-14 pr-6 py-4 bg-white border-4 border-blue-400 rounded-lg text-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-300 shadow-md font-semibold"
+            className="w-full pl-14 pr-6 py-4 bg-white border-4 border-blue-400 rounded-lg text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-300 shadow-md font-semibold"
           />
         </div>
 
@@ -154,7 +165,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as FilterType)}
-            className="px-4 py-3 bg-white border-3 border-blue-400 rounded-lg text-lg font-bold text-blue-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer"
+            className="px-4 py-2 bg-white border-3 border-blue-400 rounded-lg text-base font-bold text-blue-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer"
           >
             <option value="all">All Events ({tournaments.length})</option>
             <option value="bracelet">Bracelet Events (15)</option>
@@ -166,7 +177,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
           <select
             value={filterFormat}
             onChange={(e) => setFilterFormat(e.target.value as FilterFormat)}
-            className="px-4 py-3 bg-white border-3 border-purple-400 rounded-lg text-lg font-bold text-purple-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer"
+            className="px-4 py-2 bg-white border-3 border-purple-400 rounded-lg text-base font-bold text-purple-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer"
           >
             <option value="all">All Formats</option>
             <option value="nlh">No-Limit Hold'em</option>
@@ -181,7 +192,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortBy)}
-            className="px-4 py-3 bg-white border-3 border-green-400 rounded-lg text-lg font-bold text-green-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer ml-auto"
+            className="px-4 py-2 bg-white border-3 border-green-400 rounded-lg text-base font-bold text-green-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer ml-auto"
           >
             <option value="startTime">⏰ Start Time (Chronological)</option>
             <option value="buyIn">💰 Buy-in (Low to High)</option>
@@ -190,7 +201,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
           </select>
         </div>
 
-        <p className="text-xl text-gray-800 font-bold bg-yellow-100 p-4 rounded-lg border-3 border-yellow-400 shadow-md">
+        <p className="text-base text-gray-800 font-bold bg-yellow-100 p-4 rounded-lg border-3 border-yellow-400 shadow-md">
           Showing {sorted.length} of {tournaments.length} tournaments
         </p>
       </div>
@@ -208,38 +219,43 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
               className="w-full p-5 flex items-center justify-between hover:bg-blue-50 transition"
             >
               <div className="flex-1 text-left min-w-0">
-                <div className="flex items-center gap-4 mb-3">
-                  <span className="text-3xl font-bold text-yellow-600 min-w-[80px] drop-shadow">#{tournament.eventNum}</span>
-                  <h3 className="text-2xl font-bold text-blue-900 truncate flex-1 drop-shadow-sm">
+                <div className="flex items-center gap-4 mb-3 flex-wrap">
+                  <span className="text-3xl font-bold text-yellow-600 min-w-fit drop-shadow">#{getCleanEventNum(tournament.eventNum)}</span>
+                  <h3 className="text-xl font-bold text-blue-900 truncate flex-1 drop-shadow-sm">
                     {tournament.name}
                   </h3>
-                  <span className={`px-4 py-2 rounded-lg text-lg font-bold whitespace-nowrap shadow-md ${getFormatBadgeColor(tournament.format)}`}>
+                  <span className={`px-4 py-2 rounded-lg text-base font-bold whitespace-nowrap shadow-md ${getFormatBadgeColor(tournament.format)}`}>
                     {getFormatLabel(tournament.format)}
                   </span>
+                  {getFlightCount(tournament.eventNum, tournaments) > 1 && (
+                    <span className="px-3 py-2 bg-indigo-200 text-indigo-900 rounded-lg text-base font-bold border-2 border-indigo-400 shadow-md whitespace-nowrap">
+                      ✈️ {getFlightCount(tournament.eventNum, tournaments)} Flights
+                    </span>
+                  )}
                 </div>
 
                 {/* Quick Info - Date/Time prominent without clicking */}
-                <div className="grid grid-cols-5 gap-3 text-lg font-bold text-gray-900 mb-2">
+                <div className="grid grid-cols-5 gap-3 text-base font-bold text-gray-900 mb-2">
                   <div className="bg-yellow-100 px-3 py-2 rounded-lg border-2 border-yellow-400 shadow-sm">
-                    <span className="text-yellow-700">📅 Start:</span>
-                    <p className="text-xl text-yellow-900">{formatDateTime(tournament.flightDate || tournament.startDates[0], tournament.flightTime || tournament.startTimes[0])}</p>
+                    <span className="text-sm text-yellow-700">📅 Start:</span>
+                    <p className="text-base text-yellow-900">{formatDateTime(tournament.flightDate || tournament.startDates[0], tournament.flightTime || tournament.startTimes[0])}</p>
                   </div>
                   <div className="bg-green-100 px-3 py-2 rounded-lg border-2 border-green-400 shadow-sm">
-                    <span className="text-green-700">💰 Buy-in:</span>
-                    <p className="text-xl text-green-900">{formatCurrency(tournament.buyIn)}</p>
+                    <span className="text-sm text-green-700">💰 Buy-in:</span>
+                    <p className="text-base text-green-900">{formatCurrency(tournament.buyIn)}</p>
                   </div>
                   <div className="bg-cyan-100 px-3 py-2 rounded-lg border-2 border-cyan-400 shadow-sm">
-                    <span className="text-cyan-700">+ Rake:</span>
-                    <p className="text-xl text-cyan-900">{formatCurrency(tournament.rakeFee)}</p>
+                    <span className="text-sm text-cyan-700">+ Rake:</span>
+                    <p className="text-base text-cyan-900">{formatCurrency(tournament.rakeFee)}</p>
                   </div>
                   <div className="bg-red-100 px-3 py-2 rounded-lg border-2 border-red-400 shadow-sm">
-                    <span className="text-red-700">= Total:</span>
-                    <p className="text-2xl font-black text-red-900">{formatCurrency(tournament.buyIn + tournament.rakeFee)}</p>
+                    <span className="text-sm text-red-700">= Total:</span>
+                    <p className="text-lg font-black text-red-900">{formatCurrency(tournament.buyIn + tournament.rakeFee)}</p>
                   </div>
                   {tournament.gtd && (
                     <div className="bg-purple-100 px-3 py-2 rounded-lg border-2 border-purple-400 shadow-sm">
-                      <span className="text-purple-700">🏆 GTD:</span>
-                      <p className="text-xl text-purple-900">{formatCurrency(tournament.gtd)}</p>
+                      <span className="text-sm text-purple-700">🏆 GTD:</span>
+                      <p className="text-base text-purple-900">{formatCurrency(tournament.gtd)}</p>
                     </div>
                   )}
                 </div>
@@ -254,20 +270,20 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
 
             {/* Expanded Details */}
             {expandedId === tournament.id && (
-              <div className="px-6 py-5 bg-gradient-to-b from-blue-50 to-cyan-50 border-t-4 border-blue-300 space-y-5 text-xl">
+              <div className="px-6 py-5 bg-gradient-to-b from-blue-50 to-cyan-50 border-t-4 border-blue-300 space-y-5 text-base">
                 {/* Stack & Blinds */}
                 {(tournament.startingStack || tournament.blindLevels) && (
                   <div className="grid grid-cols-2 gap-4 bg-white p-4 rounded-lg border-3 border-green-300 shadow-md">
                     {tournament.startingStack && (
                       <div className="bg-green-100 p-3 rounded-lg border-2 border-green-400">
-                        <span className="text-green-700 font-bold text-lg">💎 Starting Stack:</span>
-                        <p className="text-2xl font-black text-green-900 drop-shadow">{tournament.startingStack.toLocaleString()} chips</p>
+                        <span className="text-green-700 font-bold text-sm">💎 Starting Stack:</span>
+                        <p className="text-lg font-black text-green-900 drop-shadow">{tournament.startingStack.toLocaleString()} chips</p>
                       </div>
                     )}
                     {tournament.blindLevels && (
                       <div className="bg-orange-100 p-3 rounded-lg border-2 border-orange-400">
-                        <span className="text-orange-700 font-bold text-lg">⏱️ Blind Levels:</span>
-                        <p className="text-2xl font-black text-orange-900 drop-shadow">{tournament.blindLevels}</p>
+                        <span className="text-orange-700 font-bold text-sm">⏱️ Blind Levels:</span>
+                        <p className="text-lg font-black text-orange-900 drop-shadow">{tournament.blindLevels}</p>
                       </div>
                     )}
                   </div>
@@ -276,22 +292,22 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                 {/* Special Features */}
                 <div className="flex flex-wrap gap-3">
                   {tournament.isBounty && (
-                    <span className="px-4 py-3 bg-red-200 text-red-900 rounded-lg text-xl font-bold border-2 border-red-400 shadow-md">
+                    <span className="px-4 py-3 bg-red-200 text-red-900 rounded-lg text-base font-bold border-2 border-red-400 shadow-md">
                       🎯 Bounty Event
                     </span>
                   )}
                   {tournament.isTurbo && (
-                    <span className="px-4 py-3 bg-orange-200 text-orange-900 rounded-lg text-xl font-bold border-2 border-orange-400 shadow-md">
+                    <span className="px-4 py-3 bg-orange-200 text-orange-900 rounded-lg text-base font-bold border-2 border-orange-400 shadow-md">
                       ⚡ Turbo Format
                     </span>
                   )}
                   {tournament.isMultiday && (
-                    <span className="px-4 py-3 bg-blue-200 text-blue-900 rounded-lg text-xl font-bold border-2 border-blue-400 shadow-md">
+                    <span className="px-4 py-3 bg-blue-200 text-blue-900 rounded-lg text-base font-bold border-2 border-blue-400 shadow-md">
                       📅 Multi-Day
                     </span>
                   )}
                   {tournament.eventNum === '5' && (
-                    <span className="px-4 py-3 bg-yellow-200 text-yellow-900 rounded-lg text-xl font-bold border-2 border-yellow-400 shadow-md">
+                    <span className="px-4 py-3 bg-yellow-200 text-yellow-900 rounded-lg text-base font-bold border-2 border-yellow-400 shadow-md">
                       👑 Main Event - €10M GTD
                     </span>
                   )}
@@ -300,7 +316,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                 {/* Description */}
                 {tournament.description && (
                   <div className="bg-white p-4 rounded-lg border-2 border-gray-300 shadow-md">
-                    <p className="text-gray-800 text-lg leading-relaxed">
+                    <p className="text-gray-800 text-base leading-relaxed">
                       {tournament.description}
                     </p>
                   </div>
