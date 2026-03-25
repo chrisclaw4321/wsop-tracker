@@ -252,6 +252,12 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                   )}
                 </div>
 
+                {/* Start Date & Time - Prominent display */}
+                <div className="bg-yellow-100 px-3 py-2 rounded-lg border-2 border-yellow-400 shadow-sm mb-2">
+                  <span className="text-sm text-yellow-700">📅 Start:</span>
+                  <p className="text-base font-bold text-yellow-900">{formatDateTime(tournament.flightDate || tournament.startDates[0], tournament.flightTime || tournament.startTimes[0])}</p>
+                </div>
+
                 {/* Buy-in Info Row - Always show all 4 boxes */}
                 <div className="grid grid-cols-4 gap-3 text-base font-bold text-gray-900 mb-2">
                   <div className="bg-green-100 px-3 py-2 rounded-lg border-2 border-green-400 shadow-sm">
