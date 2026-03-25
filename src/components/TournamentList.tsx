@@ -338,21 +338,33 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                   </div>
                 )}
 
-                {/* Sources - Display as copyable URLs */}
+                {/* Sources - Clickable Links with Cloudflare CSP headers */}
                 <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
-                  <p className="text-sm font-bold text-gray-700 mb-2">📚 Sources (copy URL to open in browser):</p>
-                  <div className="space-y-2 text-xs font-mono text-gray-600">
-                    <div className="bg-white p-2 rounded border border-gray-200 truncate">
-                      wsop.com/tournaments/results.asp?grid=1234&tour=2026&series=83
+                  <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources:</p>
+                  <div className="space-y-1">
+                    <div className="text-sm">
+                      <span className="text-gray-600">🌐 WSOP.com: </span>
+                      <a href="https://www.wsop.com/tournaments/results.asp?grid=1234&tour=2026&series=83" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
+                        Official Tournament Schedule
+                      </a>
                     </div>
-                    <div className="bg-white p-2 rounded border border-gray-200 truncate">
-                      kingscasino.cz/en/poker
+                    <div className="text-sm">
+                      <span className="text-gray-600">🎰 King's Casino: </span>
+                      <a href="https://www.kingscasino.cz/en/poker" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
+                        Prague Poker Schedule
+                      </a>
                     </div>
-                    <div className="bg-white p-2 rounded border border-gray-200 truncate">
-                      pokernews.com/tours/wsop-europe-prague-2026/
+                    <div className="text-sm">
+                      <span className="text-gray-600">📰 PokerNews: </span>
+                      <a href="https://www.pokernews.com/tours/wsop-europe-prague-2026/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
+                        WSOP Europe Coverage
+                      </a>
                     </div>
-                    <div className="bg-white p-2 rounded border border-gray-200 truncate">
-                      hendonmob.com/festival.php?festival=2026%20WSOP%20Europe
+                    <div className="text-sm">
+                      <span className="text-gray-600">📊 Hendon Mob: </span>
+                      <a href="https://www.hendonmob.com/festival.php?festival=2026%20WSOP%20Europe" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline break-all">
+                        Results Database
+                      </a>
                     </div>
                   </div>
                 </div>
