@@ -178,83 +178,86 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       </div>
 
       {/* Gantt-style Schedule */}
-      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto">
+      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Gantt Chart)</h2>
         
-        <div className="flex flex-col gap-0">
-          {/* Day Headers */}
-          <div className="flex gap-0">
-            <div className="w-40 flex-shrink-0" /> {/* Space for time labels */}
-            {allDays.map((day, idx) => {
-              const formatted = formatDate(day);
-              return (
-                <div key={`header-${idx}`} className="flex-1 min-w-24 border border-gray-400 bg-gradient-to-b from-blue-200 to-blue-100 p-2 text-center font-bold text-sm">
-                  <p className="text-gray-900">{formatted.day}</p>
-                  <p className="text-lg font-black text-blue-700">{formatted.date}</p>
-                  <p className="text-xs text-gray-700">{formatted.month}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Time rows - shrunk to 30px height */}
-          {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
-            <div key={`hour-${hour}`} className="flex gap-0 border-t border-gray-300" style={{ minHeight: '30px' }}>
-              {/* Time label */}
-              <div className="w-40 flex-shrink-0 bg-gray-100 border-r border-gray-400 px-3 py-1 font-bold text-xs text-gray-800 text-right">
-                {minutesToTime(hour * 60)}
-              </div>
-
-              {/* Day columns */}
-              {allDays.map((day) => {
-                const dateStr = day.toISOString().split('T')[0];
-
+        <div className="relative border-2 border-gray-400 rounded-lg bg-gray-50 overflow-x-auto">
+          <div className="inline-block min-w-full">
+            {/* Day Headers */}
+            <div className="flex gap-0">
+              <div className="w-32 flex-shrink-0 border-r-2 border-gray-400" /> {/* Space for time labels */}
+              {allDays.map((day, idx) => {
+                const formatted = formatDate(day);
                 return (
-                  <div
-                    key={`slot-${dateStr}-${hour}`}
-                    className="flex-1 min-w-24 border border-gray-200 bg-white hover:bg-gray-50 p-0.5 relative"
-                    style={{ minHeight: '30px' }}
-                  />
+                  <div key={`header-${idx}`} className="w-28 flex-shrink-0 border-r border-gray-400 bg-gradient-to-b from-blue-200 to-blue-100 p-2 text-center font-bold text-sm sticky top-0 z-20">
+                    <p className="text-gray-900 text-xs">{formatted.day}</p>
+                    <p className="text-lg font-black text-blue-700">{formatted.date}</p>
+                    <p className="text-xs text-gray-700">{formatted.month}</p>
+                  </div>
                 );
               })}
             </div>
-          ))}
 
-          {/* Tournament blocks - positioned absolutely over the grid */}
-          {scheduleEvents.map((event, idx) => {
-            const startMin = timeToMinutes(event.startTime);
-            const startHour = Math.floor(startMin / 60);
-            const startHourOffset = startMin % 60;
-            const dayIndex = allDays.findIndex(d => d.toISOString().split('T')[0] === event.startDate);
+            {/* Time rows with tournament blocks */}
+            <div className="relative">
+              {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
+                <div key={`hour-${hour}`} className="flex gap-0 border-t border-gray-300 relative" style={{ minHeight: '30px' }}>
+                  {/* Time label - sticky on left */}
+                  <div className="w-32 flex-shrink-0 bg-gray-100 border-r-2 border-gray-400 px-2 py-0.5 font-bold text-xs text-gray-800 text-right sticky left-0 z-10">
+                    {minutesToTime(hour * 60)}
+                  </div>
 
-            if (dayIndex === -1) return null;
+                  {/* Day columns */}
+                  {allDays.map((day, dayIdx) => {
+                    const dateStr = day.toISOString().split('T')[0];
+                    const dayEvent = scheduleEvents.find(e => e.startDate === dateStr && timeToMinutes(e.startTime) >= hour * 60 && timeToMinutes(e.startTime) < (hour + 1) * 60);
 
-            // Calculate position
-            const topOffset = (startHour - 6) * 30 + (startHourOffset / 60) * 30;
-            const height = (event.durationHours / 1) * 30;
-            const leftPercent = (dayIndex / allDays.length) * 100;
-            const widthPercent = (100 / allDays.length);
-
-            return (
-              <button
-                key={`block-${event.tournament.id}`}
-                onClick={() => setSelectedTournamentDetail(event.tournament)}
-                className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl transition cursor-pointer z-10"
-                style={{
-                  top: `${topOffset + 52}px`,
-                  left: `${leftPercent + 10.7}%`,
-                  width: `calc(${widthPercent}% - 2px)`,
-                  height: `${height}px`,
-                  maxWidth: '150px'
-                }}
-                title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
-              >
-                <div className="line-clamp-3 text-xs font-bold leading-tight">
-                  {event.tournament.name}
+                    return (
+                      <div
+                        key={`slot-${dateStr}-${hour}`}
+                        className="w-28 flex-shrink-0 border-r border-gray-200 bg-white hover:bg-gray-50 p-0.5 relative"
+                        style={{ minHeight: '30px' }}
+                      />
+                    );
+                  })}
                 </div>
-              </button>
-            );
-          })}
+              ))}
+
+              {/* Tournament blocks - positioned absolutely over time rows */}
+              {scheduleEvents.map((event) => {
+                const startMin = timeToMinutes(event.startTime);
+                const startHour = Math.floor(startMin / 60);
+                const startHourOffset = startMin % 60;
+                const dayIndex = allDays.findIndex(d => d.toISOString().split('T')[0] === event.startDate);
+
+                if (dayIndex === -1 || startHour < 6 || startHour > 24) return null;
+
+                // Calculate position relative to grid
+                const topOffset = (startHour - 6) * 30 + (startHourOffset / 60) * 30;
+                const height = 180; // 6 hours * 30px per hour
+                const leftOffset = 128 + (dayIndex * 112); // 128px for time column + 112px per day column (28 * 4)
+
+                return (
+                  <button
+                    key={`block-${event.tournament.id}`}
+                    onClick={() => setSelectedTournamentDetail(event.tournament)}
+                    className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl hover:z-40 transition cursor-pointer z-30"
+                    style={{
+                      top: `${topOffset}px`,
+                      left: `${leftOffset}px`,
+                      width: '110px',
+                      height: `${height}px`
+                    }}
+                    title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
+                  >
+                    <div className="line-clamp-4 text-xs font-bold leading-tight break-words">
+                      {event.tournament.name}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
