@@ -353,22 +353,30 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                   </div>
                 )}
 
-                {/* Sources - Copyable URLs (workaround for Cloudflare firewall) */}
+                {/* Sources - Clickable Links */}
                 {tournament.description && (
                   <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-300 shadow-sm">
-                    <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources (copy & paste URLs):</p>
-                    <div className="space-y-2 text-xs">
+                    <p className="text-sm font-bold text-gray-700 mb-2">📚 Data Sources:</p>
+                    <div className="space-y-2 text-sm">
                       <div>
-                        <span className="text-gray-600">Official WSOP Schedule:</span>
-                        <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
-                          https://www.wsop.com/tournaments/2026-wsop-europe/
-                        </div>
+                        <a 
+                          href="https://www.wsop.com/tournaments/2026-wsop-europe/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-semibold"
+                        >
+                          🌐 Official WSOP Tournament Schedule
+                        </a>
                       </div>
                       <div>
-                        <span className="text-gray-600">Hendon Mob Database (may be blocked):</span>
-                        <div className="bg-white p-2 rounded border-1 border-gray-300 font-mono text-gray-700 break-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition" title="Click to select">
-                          pokerdb.thehendonmob.com/festival.php?a=r&n=65393
-                        </div>
+                        <a 
+                          href="https://pokerdb.thehendonmob.com/festival.php?a=r&n=65393" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-semibold"
+                        >
+                          📊 Hendon Mob Results Database
+                        </a>
                       </div>
                     </div>
                   </div>
