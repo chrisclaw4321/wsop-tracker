@@ -378,6 +378,16 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
                           📊 Hendon Mob Results Database
                         </a>
                       </div>
+                      <div>
+                        <a 
+                          href="https://www.hochgepokert.com/2026/03/25/die-wsope-im-kings-casino-prag-15-bracelets-und-zahlreiche-side-events/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-semibold"
+                        >
+                          🇩🇪 HochGepokert (German Poker Reference)
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )}
