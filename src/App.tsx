@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import TournamentList from './components/TournamentList';
+import MySchedule from './components/MySchedule';
 import { Tournament, User } from './types';
-import { Calendar, Trophy, LogOut } from 'lucide-react';
+import { Calendar, Trophy, LogOut, List } from 'lucide-react';
 import { loadTournamentsFromDatabase } from './utils/databaseLoader';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '152840809437-f5g8e4st3hae8obeafinge3g233os3fb.apps.googleusercontent.com';
@@ -12,6 +13,8 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedTournaments, setSelectedTournaments] = useState<Tournament[]>([]);
+  const [currentTab, setCurrentTab] = useState<'list' | 'schedule'>('list');
 
   useEffect(() => {
     // Load tournaments data from centralized database
@@ -65,6 +68,22 @@ function App() {
     setUser(null);
     // Clear user session from localStorage
     localStorage.removeItem('wsop_user');
+  };
+
+  const handleSelectTournament = (tournament: Tournament) => {
+    if (selectedTournaments.find(t => t.id === tournament.id)) {
+      setSelectedTournaments(selectedTournaments.filter(t => t.id !== tournament.id));
+    } else {
+      setSelectedTournaments([...selectedTournaments, tournament]);
+    }
+  };
+
+  const handleRemoveFromSchedule = (tournamentId: number) => {
+    setSelectedTournaments(selectedTournaments.filter(t => t.id !== tournamentId));
+  };
+
+  const isTournamentSelected = (tournamentId: number): boolean => {
+    return selectedTournaments.some(t => t.id === tournamentId);
   };
 
   if (!user) {
@@ -124,17 +143,64 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-16">
-        <div className="mb-10">
-          <div className="flex items-center space-x-3 text-blue-700 mb-6 text-2xl font-bold">
-            <Calendar className="w-8 h-8" />
-            <span>March 31 - April 12, 2026</span>
-          </div>
-          <p className="text-gray-700 text-2xl mb-6 font-semibold">
-            Explore all {tournaments.length} WSOP tournaments at King's Casino, Prague. Filter, sort, and track your favorite events.
-          </p>
+        {/* Tabs */}
+        <div className="flex gap-4 mb-10 border-b-4 border-gray-300">
+          <button
+            onClick={() => setCurrentTab('list')}
+            className={`px-8 py-4 text-xl font-bold rounded-t-xl border-t-4 border-l-4 border-r-4 transition ${
+              currentTab === 'list'
+                ? 'bg-blue-400 text-white border-blue-500 shadow-lg'
+                : 'bg-gray-200 text-gray-800 border-gray-400 hover:bg-gray-300'
+            }`}
+          >
+            <List className="w-6 h-6 inline mr-2" />
+            All Tournaments
+          </button>
+          <button
+            onClick={() => setCurrentTab('schedule')}
+            className={`px-8 py-4 text-xl font-bold rounded-t-xl border-t-4 border-l-4 border-r-4 transition relative ${
+              currentTab === 'schedule'
+                ? 'bg-green-400 text-white border-green-500 shadow-lg'
+                : 'bg-gray-200 text-gray-800 border-gray-400 hover:bg-gray-300'
+            }`}
+          >
+            <Calendar className="w-6 h-6 inline mr-2" />
+            My Schedule
+            {selectedTournaments.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                {selectedTournaments.length}
+              </span>
+            )}
+          </button>
         </div>
 
-        <TournamentList tournaments={tournaments} />
+        {/* Tab Content */}
+        {currentTab === 'list' && (
+          <>
+            <div className="mb-10">
+              <div className="flex items-center space-x-3 text-blue-700 mb-6 text-2xl font-bold">
+                <Calendar className="w-8 h-8" />
+                <span>March 31 - April 12, 2026</span>
+              </div>
+              <p className="text-gray-700 text-2xl mb-6 font-semibold">
+                Explore all {tournaments.length} WSOP tournaments at King's Casino, Prague. Click the checkbox to add tournaments to your schedule.
+              </p>
+            </div>
+
+            <TournamentList 
+              tournaments={tournaments}
+              onSelectTournament={handleSelectTournament}
+              isSelected={isTournamentSelected}
+            />
+          </>
+        )}
+
+        {currentTab === 'schedule' && (
+          <MySchedule 
+            selectedTournaments={selectedTournaments}
+            onRemove={handleRemoveFromSchedule}
+          />
+        )}
       </main>
 
       {/* Footer */}

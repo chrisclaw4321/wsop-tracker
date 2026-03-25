@@ -4,13 +4,15 @@ import { ChevronDown, Filter, Search } from 'lucide-react';
 
 interface TournamentListProps {
   tournaments: Tournament[];
+  onSelectTournament?: (tournament: Tournament) => void;
+  isSelected?: (tournamentId: number) => boolean;
 }
 
 type FilterFormat = 'all' | 'nlh' | 'plo' | 'mixed' | 'bounty' | 'turbo' | 'highroller';
 type SortBy = 'startTime' | 'buyIn' | 'event' | 'gtd';
 type FilterType = 'all' | 'bracelet' | 'satellite' | 'side';
 
-export default function TournamentList({ tournaments }: TournamentListProps) {
+export default function TournamentList({ tournaments, onSelectTournament, isSelected }: TournamentListProps) {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterFormat, setFilterFormat] = useState<FilterFormat>('all');
@@ -243,6 +245,19 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
               onClick={() => setExpandedId(expandedId === tournament.id ? null : tournament.id)}
               className="w-full p-5 flex items-center justify-between hover:bg-blue-50 transition"
             >
+              {/* Selection Checkbox */}
+              {onSelectTournament && (
+                <input
+                  type="checkbox"
+                  checked={isSelected?.(tournament.id) || false}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    onSelectTournament(tournament);
+                  }}
+                  className="w-6 h-6 mr-4 cursor-pointer accent-green-600 rounded border-2 border-gray-400 shadow-md"
+                  title="Add to my schedule"
+                />
+              )}
               <div className="flex-1 text-left min-w-0">
                 <div className="flex items-center gap-4 mb-3 flex-wrap">
                   {tournament.eventNum && (

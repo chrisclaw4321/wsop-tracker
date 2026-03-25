@@ -34,3 +34,12 @@ export interface User {
   name: string;
   picture?: string;
 }
+
+export interface ScheduleEvent {
+  tournament: Tournament;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  durationHours: number;
+}
