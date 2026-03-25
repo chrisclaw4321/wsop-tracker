@@ -86,10 +86,14 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
       };
     });
     
-    // Debug log
-    console.log(`[Calendar] Schedule events created (${events.length} total):`, 
-      events.map(e => `${e.tournament.name} on ${e.startDate} @ ${e.startTime}`)
-    );
+    // Debug log with full details
+    console.log(`[Calendar] Schedule events created (${events.length} total):`);
+    events.forEach((e, i) => {
+      console.log(`  ${i+1}. ${e.tournament.name}`);
+      console.log(`     Start: ${e.startDate} @ ${e.startTime}`);
+      console.log(`     End: ${e.endDate} @ ${e.endTime}`);
+      console.log(`     ID: ${e.tournament.id}`);
+    });
     
     return events;
   }, [selectedTournaments]);
