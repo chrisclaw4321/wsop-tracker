@@ -65,7 +65,7 @@ export default function TournamentList({ tournaments }: TournamentListProps) {
 
   const formatStack = (stack?: number): string => {
     if (!stack) return '—';
-    return stack.toLocaleString();
+    return `${stack.toLocaleString()} chips`;
   };
 
   const getFormatFilter = (format: string): FilterFormat => {
