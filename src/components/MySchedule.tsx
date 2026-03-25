@@ -24,10 +24,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
 
   const minutesToTime = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    const hour12 = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
-    const period = hours >= 12 ? 'PM' : 'AM';
-    return `${hour12}:${mins.toString().padStart(2, '0')} ${period}`;
+    return hours.toString().padStart(2, '0');
   };
 
   const parseDate = (dateStr: string): string => {
@@ -183,7 +180,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 <div
                   key={`header-${idx}`}
                   style={{
-                    width: '90px',
+                    width: '81px',
                     flexShrink: 0,
                     padding: '8px',
                     textAlign: 'center',
@@ -227,7 +224,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                 <div
                   key={`cell-${dateStr}-${hour}`}
                   style={{
-                    width: '90px',
+                    width: '81px',
                     flexShrink: 0,
                     borderRight: '1px solid #e5e7eb',
                     backgroundColor: '#fff',
