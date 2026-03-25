@@ -9,8 +9,6 @@ interface MyScheduleProps {
 
 export default function MySchedule({ selectedTournaments, onRemove }: MyScheduleProps) {
   const [selectedTournamentDetail, setSelectedTournamentDetail] = useState<Tournament | null>(null);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [headerHeight, setHeaderHeight] = React.useState(0);
 
   // Parse time string "12:00 PM" to minutes since midnight
   const timeToMinutes = (timeStr: string): number => {
@@ -88,9 +86,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     
     console.log(`[Calendar] Schedule events created (${events.length} total):`);
     events.forEach((e, i) => {
-      console.log(`  ${i+1}. ${e.tournament.name}`);
-      console.log(`     Start: ${e.startDate} @ ${e.startTime}`);
-      console.log(`     End: ${e.endDate} @ ${e.endTime}`);
+      console.log(`  ${i+1}. ${e.tournament.name} - ${e.startDate} @ ${e.startTime}`);
     });
     
     return events;
@@ -169,18 +165,6 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
     return `€${amount.toLocaleString()}`;
   };
 
-  // Measure header height on mount
-  React.useEffect(() => {
-    if (containerRef.current) {
-      const headerDiv = containerRef.current.querySelector('.flex.gap-0.relative');
-      if (headerDiv) {
-        const rect = headerDiv.getBoundingClientRect();
-        setHeaderHeight(rect.height);
-        console.log(`[Calendar] Header height measured: ${rect.height}px`);
-      }
-    }
-  }, [allDays.length]);
-
   if (selectedTournaments.length === 0) {
     return (
       <div className="space-y-8">
@@ -210,89 +194,137 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
         </div>
       </div>
 
-      {/* Gantt-style Schedule with absolute positioning */}
-      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto relative" ref={containerRef}>
+      {/* CSS Grid Gantt Calendar */}
+      <div className="bg-white rounded-xl border-4 border-gray-300 shadow-xl p-8 overflow-x-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Tournament Schedule (Gantt Chart)</h2>
         
-        <div className="flex flex-col gap-0 relative">
-          {/* Day Headers */}
-          <div className="flex gap-0 relative z-20">
-            <div className="w-40 flex-shrink-0" /> {/* Space for time labels */}
-            {allDays.map((dateStr, idx) => {
-              const formatted = formatDate(dateStr);
-              return (
-                <div key={`header-${idx}`} className="flex-1 min-w-24 border border-gray-400 bg-gradient-to-b from-blue-200 to-blue-100 p-2 text-center font-bold text-sm">
-                  <p className="text-gray-900">{formatted.day}</p>
-                  <p className="text-lg font-black text-blue-700">{formatted.date}</p>
-                  <p className="text-xs text-gray-700">{formatted.month}</p>
-                </div>
-              );
-            })}
+        {/* Grid Container */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: `60px repeat(${allDays.length}, 1fr)`,
+          gap: '1px',
+          backgroundColor: '#ccc',
+          padding: '1px',
+          borderRadius: '8px',
+          overflow: 'auto'
+        }}>
+          {/* Header Row - Time Label */}
+          <div style={{
+            padding: '8px',
+            backgroundColor: '#f3f4f6',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            fontSize: '12px',
+            borderRight: '1px solid #ccc'
+          }}>
+            Time
           </div>
 
-          {/* Time rows */}
-          <div className="relative">
-            {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
-              <div key={`hour-${hour}`} className="flex gap-0 border-t border-gray-300" style={{ minHeight: '30px' }}>
-                {/* Time label */}
-                <div className="w-40 flex-shrink-0 bg-gray-100 border-r border-gray-400 px-3 py-1 font-bold text-xs text-gray-800 text-right">
-                  {minutesToTime(hour * 60)}
-                </div>
-
-                {/* Day columns */}
-                {allDays.map((dateStr) => {
-                  return (
-                    <div
-                      key={`slot-${dateStr}-${hour}`}
-                      className="flex-1 min-w-24 border border-gray-200 bg-white hover:bg-gray-50 p-0.5 relative"
-                      style={{ minHeight: '30px' }}
-                    />
-                  );
-                })}
+          {/* Header Row - Day Labels */}
+          {allDays.map((dateStr, idx) => {
+            const formatted = formatDate(dateStr);
+            return (
+              <div
+                key={`header-${idx}`}
+                style={{
+                  padding: '8px',
+                  backgroundColor: '#dbeafe',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: '12px',
+                  borderBottom: '2px solid #1e40af'
+                }}
+              >
+                <div style={{ fontSize: '10px', color: '#666' }}>{formatted.day}</div>
+                <div style={{ fontSize: '16px', fontWeight: '900', color: '#1e40af' }}>{formatted.date}</div>
+                <div style={{ fontSize: '10px', color: '#666' }}>{formatted.month}</div>
               </div>
-            ))}
+            );
+          })}
 
-            {/* Tournament blocks - positioned absolutely */}
-            {scheduleEvents.map((event) => {
-              const startMin = timeToMinutes(event.startTime);
-              const startHour = Math.floor(startMin / 60);
-              const startHourOffset = startMin % 60;
-              const dayIndex = allDays.findIndex(d => d === event.startDate);
+          {/* Time Rows with Tournament Blocks */}
+          {Array.from({ length: 19 }, (_, i) => i + 6).map((hour) => (
+            <React.Fragment key={`hour-${hour}`}>
+              {/* Time Label */}
+              <div
+                style={{
+                  padding: '8px',
+                  backgroundColor: '#f3f4f6',
+                  fontWeight: 'bold',
+                  textAlign: 'right',
+                  fontSize: '11px',
+                  borderRight: '1px solid #ccc',
+                  minHeight: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end'
+                }}
+              >
+                {minutesToTime(hour * 60)}
+              </div>
 
-              if (dayIndex === -1) {
-                console.log(`[Calendar] ❌ Date not found: ${event.startDate} for ${event.tournament.name}`);
-                return null;
-              }
+              {/* Day Cells with Tournament Blocks */}
+              {allDays.map((dateStr, dayIdx) => {
+                // Find tournament for this cell
+                const tournament = scheduleEvents.find(event => {
+                  const eventStartHour = Math.floor(timeToMinutes(event.startTime) / 60);
+                  const eventEndHour = Math.floor(timeToMinutes(event.endTime) / 60);
+                  return event.startDate === dateStr && hour >= eventStartHour && hour <= eventEndHour;
+                });
 
-              console.log(`[Calendar] ✅ Rendering ${event.tournament.name} on ${event.startDate} hour ${startHour}`);
+                // Only render block on first hour
+                const isFirstHour = tournament && Math.floor(timeToMinutes(tournament.startTime) / 60) === hour;
 
-              // Calculate position
-              const topOffset = (startHour - 6) * 30 + (startHourOffset / 60) * 30;
-              const height = event.durationHours * 30;
-              const leftPercent = (dayIndex / allDays.length) * 100;
-              const widthPercent = (100 / allDays.length);
-
-              return (
-                <button
-                  key={`block-${event.tournament.id}`}
-                  onClick={() => setSelectedTournamentDetail(event.tournament)}
-                  className="absolute bg-gradient-to-br from-blue-400 to-green-400 border-2 border-blue-600 rounded px-2 py-1 text-xs font-bold text-white shadow-lg hover:shadow-2xl transition cursor-pointer z-10"
-                  style={{
-                    top: `${topOffset + headerHeight}px`,
-                    left: `${leftPercent + 10.7}%`,
-                    width: `calc(${widthPercent}% - 2px)`,
-                    height: `${height}px`,
-                    maxWidth: '150px'
-                  }}
-                  title={`${event.tournament.name} - ${event.startTime} to ${event.endTime}`}
-                >
-                  <div className="line-clamp-3 text-xs font-bold leading-tight">
-                    {event.tournament.name}
+                return (
+                  <div
+                    key={`cell-${dateStr}-${hour}`}
+                    style={{
+                      padding: '4px',
+                      backgroundColor: '#fff',
+                      border: '1px solid #e5e7eb',
+                      minHeight: '40px',
+                      position: 'relative'
+                    }}
+                  >
+                    {isFirstHour && tournament && (
+                      <button
+                        onClick={() => setSelectedTournamentDetail(tournament.tournament)}
+                        style={{
+                          width: '100%',
+                          height: `${tournament.durationHours * 40 - 4}px`,
+                          padding: '6px',
+                          backgroundColor: '#60a5fa',
+                          backgroundImage: 'linear-gradient(to bottom right, #60a5fa, #4ade80)',
+                          border: '2px solid #1e40af',
+                          borderRadius: '6px',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: '11px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                          overflow: 'hidden',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          textAlign: 'center'
+                        }}
+                        title={`${tournament.tournament.name} - ${tournament.startTime} to ${tournament.endTime}`}
+                      >
+                        <span style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}>
+                          {tournament.tournament.name}
+                        </span>
+                      </button>
+                    )}
                   </div>
-                </button>
-              );
-            })}
-          </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
