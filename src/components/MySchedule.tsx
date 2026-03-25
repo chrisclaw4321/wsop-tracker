@@ -272,7 +272,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                   return event.startDate === dateStr && hour >= eventStartHour && hour <= eventEndHour;
                 });
 
-                // Only render block on first hour
+                // Only render block on first hour - use gridRow to span multiple rows
                 const isFirstHour = tournament && Math.floor(timeToMinutes(tournament.startTime) / 60) === hour;
 
                 return (
@@ -283,7 +283,8 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                       backgroundColor: '#fff',
                       border: '1px solid #e5e7eb',
                       minHeight: '40px',
-                      position: 'relative'
+                      position: 'relative',
+                      gridRow: isFirstHour && tournament ? `span ${tournament.durationHours}` : undefined
                     }}
                   >
                     {isFirstHour && tournament && (
@@ -291,7 +292,7 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                         onClick={() => setSelectedTournamentDetail(tournament.tournament)}
                         style={{
                           width: '100%',
-                          height: `${tournament.durationHours * 40 - 4}px`,
+                          height: '100%',
                           padding: '6px',
                           backgroundColor: '#60a5fa',
                           backgroundImage: 'linear-gradient(to bottom right, #60a5fa, #4ade80)',
