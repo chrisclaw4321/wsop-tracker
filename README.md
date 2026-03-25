@@ -139,3 +139,4 @@ wsop-tracker/
 ---
 
 Built with ❤️ for WSOP Europe Prague 2026
+# Redeploy trigger
