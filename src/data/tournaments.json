@@ -5,7 +5,7 @@
     "country": "Czech Republic",
     "startDate": "2026-03-31",
     "endDate": "2026-04-11",
-    "currency": "\u20ac",
+    "currency": "€",
     "timezone": "Europe/Prague",
     "source": "https://pokerdb.thehendonmob.com/festival.php?a=r&n=65393",
     "totalScheduledEvents": 86
@@ -17,7 +17,7 @@
       "format": "NLH Mystery Bounty",
       "buyIn": 1100,
       "rake": 500,
-      "rakeNote": "\u20ac500 to Mystery Bounty pool",
+      "rakeNote": "€500 to Mystery Bounty pool",
       "startingStack": 40000,
       "blindLevels": {
         "duration": 30,
@@ -58,7 +58,7 @@
         "mystery-bounty",
         "multiday"
       ],
-      "description": "Four-flight opening tournament with mystery bounty component. \u20ac500 to Mystery Bounty pool.",
+      "description": "Four-flight opening tournament with mystery bounty component. €500 to Mystery Bounty pool.",
       "sources": [
         "thehendonmob.com"
       ]
@@ -141,7 +141,7 @@
       "format": "PLO Bounty",
       "buyIn": 565,
       "rake": 200,
-      "rakeNote": "\u20ac200 bounties",
+      "rakeNote": "€200 bounties",
       "startingStack": 50000,
       "blindLevels": {
         "duration": 40,
@@ -169,7 +169,7 @@
         "bounty",
         "multiday"
       ],
-      "description": "PLO with \u20ac200 bounties. 50,000 chips, 40-minute levels.",
+      "description": "PLO with €200 bounties. 50,000 chips, 40-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
@@ -230,7 +230,7 @@
       "features": [
         "multiday"
       ],
-      "description": "\u20ac10,000,000 Guaranteed Prize Pool. 60,000 chips, 60/90-minute levels, 1 re-entry/flight, late registration open through Level 12 on Day 2.",
+      "description": "€10,000,000 Guaranteed Prize Pool. 60,000 chips, 60/90-minute levels, 1 re-entry/flight, late registration open through Level 12 on Day 2.",
       "sources": [
         "thehendonmob.com"
       ]
@@ -273,7 +273,7 @@
       "format": "NLH Turbo Bounty",
       "buyIn": 2200,
       "rake": 1000,
-      "rakeNote": "\u20ac1,000 bounties",
+      "rakeNote": "€1,000 bounties",
       "startingStack": 25000,
       "blindLevels": {
         "duration": 20,
@@ -291,7 +291,7 @@
         "turbo",
         "bounty"
       ],
-      "description": "\u20ac1,000 bounties, 25,000 chips, 20-minute levels.",
+      "description": "€1,000 bounties, 25,000 chips, 20-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
@@ -391,7 +391,7 @@
         "date": "2026-04-08",
         "time": "12:00 PM"
       },
-      "flightNotes": "Day 1B listed as \u20ac1,750 on Hendon Mob (may be discounted late entry or data error)",
+      "flightNotes": "Day 1B listed as €1,750 on Hendon Mob (may be discounted late entry or data error)",
       "features": [
         "multiday"
       ],
@@ -481,7 +481,7 @@
       "features": [
         "multiday"
       ],
-      "description": "\u20ac1,500,000 Guaranteed Prize Pool. 50,000 chips, 40-minute levels.",
+      "description": "€1,500,000 Guaranteed Prize Pool. 50,000 chips, 40-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
@@ -559,7 +559,7 @@
       "format": "NLH Turbo Bounty",
       "buyIn": 2750,
       "rake": 1000,
-      "rakeNote": "\u20ac1,000 bounties",
+      "rakeNote": "€1,000 bounties",
       "startingStack": 25000,
       "blindLevels": {
         "duration": 20,
@@ -582,7 +582,7 @@
         "bounty",
         "multiday"
       ],
-      "description": "\u20ac1,000 bounties, 25,000 chips, 20-minute levels.",
+      "description": "€1,000 bounties, 25,000 chips, 20-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
@@ -590,7 +590,7 @@
   ],
   "satellites": [
     {
-      "name": "\u20ac600 Main Event Satellite",
+      "name": "€600 Main Event Satellite",
       "format": "NLH Satellite",
       "buyIn": 600,
       "rake": 0,
@@ -599,7 +599,7 @@
         "duration": 15,
         "startingBlinds": "25/50"
       },
-      "feedsTo": "Event #5 - WSOP Europe Main Event (\u20ac5,300)",
+      "feedsTo": "Event #5 - WSOP Europe Main Event (€5,300)",
       "instances": [
         {
           "date": "2026-03-31",
@@ -657,13 +657,13 @@
           "seatsGtd": 10
         }
       ],
-      "description": "\u20ac600 satellite to Main Event. 15,000 chips, 15-minute levels.",
+      "description": "€600 satellite to Main Event. 15,000 chips, 15-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
     },
     {
-      "name": "\u20ac600 Main Event Last Chance Satellite",
+      "name": "€600 Main Event Last Chance Satellite",
       "format": "NLH Satellite",
       "buyIn": 600,
       "rake": 0,
@@ -672,7 +672,7 @@
         "duration": 15,
         "startingBlinds": "25/50"
       },
-      "feedsTo": "Event #5 - WSOP Europe Main Event (\u20ac5,300)",
+      "feedsTo": "Event #5 - WSOP Europe Main Event (€5,300)",
       "instances": [
         {
           "date": "2026-04-06",
@@ -686,7 +686,7 @@
       ]
     },
     {
-      "name": "\u20ac600 PLO Satellite",
+      "name": "€600 PLO Satellite",
       "format": "PLO Satellite",
       "buyIn": 600,
       "rake": 0,
@@ -695,7 +695,7 @@
         "duration": 15,
         "startingBlinds": "25/50"
       },
-      "feedsTo": "Event #9 - PLO European Championship (\u20ac5,300)",
+      "feedsTo": "Event #9 - PLO European Championship (€5,300)",
       "instances": [
         {
           "date": "2026-04-06",
@@ -714,7 +714,7 @@
       ]
     },
     {
-      "name": "\u20ac2,400 Super High Roller Satellite",
+      "name": "€2,400 Super High Roller Satellite",
       "format": "NLH Satellite",
       "buyIn": 2400,
       "rake": 0,
@@ -723,7 +723,7 @@
         "duration": 20,
         "startingBlinds": "50/100"
       },
-      "feedsTo": "Event #11 - Super High Roller (\u20ac20,800)",
+      "feedsTo": "Event #11 - Super High Roller (€20,800)",
       "instances": [
         {
           "date": "2026-04-07",
@@ -737,7 +737,7 @@
       ]
     },
     {
-      "name": "\u20ac1,000 GGMillion$ Satellite",
+      "name": "€1,000 GGMillion$ Satellite",
       "format": "NLH Satellite",
       "buyIn": 1000,
       "rake": 0,
@@ -746,7 +746,7 @@
         "duration": 20,
         "startingBlinds": "50/100"
       },
-      "feedsTo": "Event #13 - GGMillion$ High Roller (\u20ac8,400)",
+      "feedsTo": "Event #13 - GGMillion$ High Roller (€8,400)",
       "instances": [
         {
           "date": "2026-04-08",
@@ -765,7 +765,7 @@
       ]
     },
     {
-      "name": "\u20ac350 The Closer Satellite",
+      "name": "€350 The Closer Satellite",
       "format": "NLH Satellite",
       "buyIn": 350,
       "rake": 0,
@@ -774,7 +774,7 @@
         "duration": 15,
         "startingBlinds": "25/50"
       },
-      "feedsTo": "Event #15 - The Closer Turbo Bounty (\u20ac2,750)",
+      "feedsTo": "Event #15 - The Closer Turbo Bounty (€2,750)",
       "instances": [
         {
           "date": "2026-04-10",
@@ -814,7 +814,7 @@
       ]
     },
     {
-      "name": "\u20ac5,000 NLH High Roller",
+      "name": "€5,000 NLH High Roller",
       "format": "NLH High Roller",
       "buyIn": 5000,
       "rake": 0,
@@ -846,7 +846,7 @@
       ]
     },
     {
-      "name": "\u20ac600 PLO Turbo",
+      "name": "€600 PLO Turbo",
       "format": "PLO Turbo",
       "buyIn": 600,
       "rake": 0,
@@ -870,7 +870,7 @@
       ]
     },
     {
-      "name": "\u20ac800 PLO Turbo",
+      "name": "€800 PLO Turbo",
       "format": "PLO Turbo",
       "buyIn": 800,
       "rake": 0,
@@ -894,7 +894,7 @@
       ]
     },
     {
-      "name": "\u20ac1,500 NLH 8-Handed",
+      "name": "€1,500 NLH 8-Handed",
       "format": "NLH 8-Handed",
       "buyIn": 1500,
       "rake": 0,
@@ -916,11 +916,11 @@
       ]
     },
     {
-      "name": "\u20ac300 + \u20ac200 NLH Bounty Hyper Turbo",
+      "name": "€300 + €200 NLH Bounty Hyper Turbo",
       "format": "NLH Bounty Hyper Turbo",
       "buyIn": 300,
       "rake": 200,
-      "rakeNote": "\u20ac200 bounties",
+      "rakeNote": "€200 bounties",
       "startingStack": 10000,
       "blindLevels": {
         "duration": 15,
@@ -936,13 +936,13 @@
         "bounty",
         "hyper-turbo"
       ],
-      "description": "\u20ac200 bounties, 10,000 chips, 15-minute levels.",
+      "description": "€200 bounties, 10,000 chips, 15-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
     },
     {
-      "name": "\u20ac300 NLH Classic",
+      "name": "€300 NLH Classic",
       "format": "NLH",
       "buyIn": 300,
       "rake": 0,
@@ -964,7 +964,7 @@
       ]
     },
     {
-      "name": "\u20ac10,000 PLO High Roller",
+      "name": "€10,000 PLO High Roller",
       "format": "PLO High Roller",
       "buyIn": 10000,
       "rake": 0,
@@ -996,7 +996,7 @@
       ]
     },
     {
-      "name": "\u20ac1,000 NLH Deepstack Hyper Turbo",
+      "name": "€1,000 NLH Deepstack Hyper Turbo",
       "format": "NLH Deepstack Hyper Turbo",
       "buyIn": 1000,
       "rake": 0,
@@ -1021,7 +1021,7 @@
       ]
     },
     {
-      "name": "\u20ac500 NLH Turbo",
+      "name": "€500 NLH Turbo",
       "format": "NLH Turbo",
       "buyIn": 500,
       "rake": 0,
@@ -1045,11 +1045,11 @@
       ]
     },
     {
-      "name": "\u20ac600 + \u20ac200 NLH Bounty",
+      "name": "€600 + €200 NLH Bounty",
       "format": "NLH Bounty",
       "buyIn": 600,
       "rake": 200,
-      "rakeNote": "\u20ac200 bounties",
+      "rakeNote": "€200 bounties",
       "startingStack": 25000,
       "blindLevels": {
         "duration": 30,
@@ -1064,13 +1064,13 @@
       "features": [
         "bounty"
       ],
-      "description": "\u20ac200 bounties, 25,000 chips, 30-minute levels.",
+      "description": "€200 bounties, 25,000 chips, 30-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
     },
     {
-      "name": "\u20ac300 PLO Turbo",
+      "name": "€300 PLO Turbo",
       "format": "PLO Turbo",
       "buyIn": 300,
       "rake": 0,
@@ -1094,7 +1094,7 @@
       ]
     },
     {
-      "name": "\u20ac1,500 PLO Deepstack",
+      "name": "€1,500 PLO Deepstack",
       "format": "PLO Deepstack",
       "buyIn": 1500,
       "rake": 0,
@@ -1118,7 +1118,7 @@
       ]
     },
     {
-      "name": "\u20ac250 NLH Hyper Turbo",
+      "name": "€250 NLH Hyper Turbo",
       "format": "NLH Hyper Turbo",
       "buyIn": 250,
       "rake": 0,
@@ -1142,7 +1142,7 @@
       ]
     },
     {
-      "name": "\u20ac1,000 NLH Classic",
+      "name": "€1,000 NLH Classic",
       "format": "NLH",
       "buyIn": 1000,
       "rake": 0,
@@ -1164,11 +1164,11 @@
       ]
     },
     {
-      "name": "\u20ac300 + \u20ac100 NLH Hyper Turbo Bounty",
+      "name": "€300 + €100 NLH Hyper Turbo Bounty",
       "format": "NLH Hyper Turbo Bounty",
       "buyIn": 300,
       "rake": 100,
-      "rakeNote": "\u20ac100 bounties",
+      "rakeNote": "€100 bounties",
       "startingStack": 10000,
       "blindLevels": {
         "duration": 15,
@@ -1184,17 +1184,17 @@
         "bounty",
         "hyper-turbo"
       ],
-      "description": "\u20ac100 bounties, 10,000 chips, 15-minute levels.",
+      "description": "€100 bounties, 10,000 chips, 15-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
     },
     {
-      "name": "\u20ac300 + \u20ac200 PLO Bounty",
+      "name": "€300 + €200 PLO Bounty",
       "format": "PLO Bounty",
       "buyIn": 300,
       "rake": 200,
-      "rakeNote": "\u20ac200 bounties",
+      "rakeNote": "€200 bounties",
       "startingStack": 20000,
       "blindLevels": {
         "duration": 20,
@@ -1209,13 +1209,13 @@
       "features": [
         "bounty"
       ],
-      "description": "\u20ac200 bounties, 20,000 chips, 20-minute levels.",
+      "description": "€200 bounties, 20,000 chips, 20-minute levels.",
       "sources": [
         "thehendonmob.com"
       ]
     },
     {
-      "name": "\u20ac5,000 NLH High Roller Turbo",
+      "name": "€5,000 NLH High Roller Turbo",
       "format": "NLH High Roller Turbo",
       "buyIn": 5000,
       "rake": 0,
@@ -1240,7 +1240,7 @@
       ]
     },
     {
-      "name": "\u20ac300 NLH 6-Handed",
+      "name": "€300 NLH 6-Handed",
       "format": "NLH 6-Handed",
       "buyIn": 300,
       "rake": 0,
@@ -1262,7 +1262,7 @@
       ]
     },
     {
-      "name": "\u20ac1,500 NLH Deepstack Turbo",
+      "name": "€1,500 NLH Deepstack Turbo",
       "format": "NLH Deepstack Turbo",
       "buyIn": 1500,
       "rake": 0,
@@ -1287,7 +1287,7 @@
       ]
     },
     {
-      "name": "\u20ac800 NLH Farewell Hyper Turbo",
+      "name": "€800 NLH Farewell Hyper Turbo",
       "format": "NLH Hyper Turbo",
       "buyIn": 800,
       "rake": 0,
