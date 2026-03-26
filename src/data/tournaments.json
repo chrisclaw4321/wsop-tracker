@@ -13,9 +13,9 @@
   "braceletEvents": [
     {
       "eventNum": "1",
-      "name": "The Opener - Mystery Bounty",
+      "name": "The Opener Mystery Bounty",
       "format": "NLH Mystery Bounty",
-      "buyIn": 600,
+      "buyIn": 1100,
       "rake": 500,
       "rakeNote": "€500 to Mystery Bounty pool",
       "startingStack": 40000,
@@ -32,9 +32,9 @@
         },
         {
           "num": 2,
-          "label": "1A",
+          "label": "1B",
           "date": "2026-03-31",
-          "time": "4:00 PM"
+          "time": "6:00 PM"
         },
         {
           "num": 3,
@@ -471,19 +471,25 @@
       "flights": [
         {
           "num": 1,
+          "label": "1A",
+          "date": "2026-04-08",
+          "time": "12:00 PM"
+        },
+        {
+          "num": 2,
           "label": "1B",
           "date": "2026-04-08",
           "time": "6:00 PM"
         },
         {
-          "num": 2,
-          "label": "1A",
+          "num": 3,
+          "label": "1C",
           "date": "2026-04-09",
           "time": "12:00 PM"
         },
         {
-          "num": 3,
-          "label": "1A",
+          "num": 4,
+          "label": "1D",
           "date": "2026-04-09",
           "time": "6:00 PM"
         }
