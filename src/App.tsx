@@ -15,6 +15,26 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [selectedTournaments, setSelectedTournaments] = useState<Tournament[]>([]);
   const [currentTab, setCurrentTab] = useState<'list' | 'schedule'>('list');
+  const [scrollPositions, setScrollPositions] = useState<Record<string, number>>({ list: 0, schedule: 0 });
+
+  // Handle tab switching with scroll persistence
+  const switchTab = (newTab: 'list' | 'schedule') => {
+    // Save current scroll position before switching
+    setScrollPositions(prev => ({ ...prev, [currentTab]: window.scrollY }));
+    setCurrentTab(newTab);
+  };
+
+  // Restore scroll position when tab changes
+  useEffect(() => {
+    // Small delay to ensure the content is rendered and has its natural height
+    const timer = setTimeout(() => {
+      window.scrollTo({
+        top: scrollPositions[currentTab],
+        behavior: 'instant'
+      });
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [currentTab, scrollPositions]);
 
   useEffect(() => {
     // Clear service worker cache on page load to ensure fresh code
@@ -264,7 +284,7 @@ function App() {
           {/* Tabs in Header */}
           <div className="flex gap-2">
             <button
-              onClick={() => setCurrentTab('list')}
+              onClick={() => switchTab('list')}
               className={`px-6 py-2 rounded-lg font-bold text-sm transition ${
                 currentTab === 'list'
                   ? 'bg-white text-blue-700 border-2 border-blue-600 shadow-lg'
@@ -275,7 +295,7 @@ function App() {
               Tournaments
             </button>
             <button
-              onClick={() => setCurrentTab('schedule')}
+              onClick={() => switchTab('schedule')}
               className={`px-6 py-2 rounded-lg font-bold text-sm transition relative ${
                 currentTab === 'schedule'
                   ? 'bg-white text-green-700 border-2 border-green-600 shadow-lg'
@@ -311,35 +331,33 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-16">
-        {/* Tab Content */}
-        {currentTab === 'list' && (
-          <>
-            <div className="mb-10">
-              <div className="flex items-center space-x-3 text-blue-700 mb-6 text-2xl font-bold">
-                <Calendar className="w-8 h-8" />
-                <span>March 31 - April 12, 2026</span>
-              </div>
-              <p className="text-gray-700 text-2xl mb-6 font-semibold">
-                Explore all {tournaments.length} WSOP tournaments at King's Casino, Prague. Click the checkbox to add tournaments to your schedule.
-              </p>
+        {/* Tab Content - Using display:none instead of conditional rendering to preserve scroll position */}
+        <div className={currentTab === 'list' ? 'block' : 'hidden'}>
+          <div className="mb-10">
+            <div className="flex items-center space-x-3 text-blue-700 mb-6 text-2xl font-bold">
+              <Calendar className="w-8 h-8" />
+              <span>March 31 - April 12, 2026</span>
             </div>
+            <p className="text-gray-700 text-2xl mb-6 font-semibold">
+              Explore all {tournaments.length} WSOP tournaments at King's Casino, Prague. Click the checkbox to add tournaments to your schedule.
+            </p>
+          </div>
 
-            <TournamentList 
-              tournaments={tournaments}
-              onSelectTournament={handleSelectTournament}
-              onClearAll={handleClearAllSelections}
-              isSelected={isTournamentSelected}
-              selectedCount={selectedTournaments.length}
-            />
-          </>
-        )}
+          <TournamentList 
+            tournaments={tournaments}
+            onSelectTournament={handleSelectTournament}
+            onClearAll={handleClearAllSelections}
+            isSelected={isTournamentSelected}
+            selectedCount={selectedTournaments.length}
+          />
+        </div>
 
-        {currentTab === 'schedule' && (
+        <div className={currentTab === 'schedule' ? 'block' : 'hidden'}>
           <MySchedule 
             selectedTournaments={selectedTournaments}
             onRemove={handleRemoveFromSchedule}
           />
-        )}
+        </div>
       </main>
 
       {/* Footer */}

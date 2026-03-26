@@ -11,6 +11,7 @@ interface TournamentListProps {
 }
 
 type FilterFormat = 'all' | 'nlh' | 'plo' | 'mixed' | 'bounty' | 'turbo' | 'highroller';
+type FilterBuyIn = 'all' | 'under-400' | '400-1000' | '1000-2000' | '3000-plus';
 type SortBy = 'startTime' | 'buyIn' | 'event' | 'gtd';
 type FilterType = 'all' | 'bracelet' | 'satellite' | 'side';
 
@@ -18,6 +19,7 @@ export default function TournamentList({ tournaments, onSelectTournament, onClea
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterFormat, setFilterFormat] = useState<FilterFormat>('all');
+  const [filterBuyIn, setFilterBuyIn] = useState<FilterBuyIn>('all');
   const [filterType, setFilterType] = useState<FilterType>('all');
   const [sortBy, setSortBy] = useState<SortBy>('startTime');
 
@@ -122,10 +124,19 @@ export default function TournamentList({ tournaments, onSelectTournament, onClea
       if (filterFormat !== 'all') {
         matchesFormat = getFormatFilter(t.format) === filterFormat;
       }
+
+      let matchesBuyIn = true;
+      if (filterBuyIn !== 'all') {
+        const totalBuyIn = t.buyIn + (t.rakeFee || 0);
+        if (filterBuyIn === 'under-400') matchesBuyIn = totalBuyIn < 400;
+        else if (filterBuyIn === '400-1000') matchesBuyIn = totalBuyIn >= 400 && totalBuyIn <= 1000;
+        else if (filterBuyIn === '1000-2000') matchesBuyIn = totalBuyIn >= 1000 && totalBuyIn <= 2000;
+        else if (filterBuyIn === '3000-plus') matchesBuyIn = totalBuyIn >= 3000;
+      }
       
-      return matchesSearch && matchesType && matchesFormat;
+      return matchesSearch && matchesType && matchesFormat && matchesBuyIn;
     });
-  }, [searchTerm, filterType, filterFormat, tournaments]);
+  }, [searchTerm, filterType, filterFormat, filterBuyIn, tournaments]);
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
@@ -215,6 +226,19 @@ export default function TournamentList({ tournaments, onSelectTournament, onClea
             <option value="bounty">Bounty Events</option>
             <option value="turbo">Turbo Events</option>
             <option value="highroller">High Rollers</option>
+          </select>
+
+          {/* Buy-in Filter */}
+          <select
+            value={filterBuyIn}
+            onChange={(e) => setFilterBuyIn(e.target.value as FilterBuyIn)}
+            className="px-4 py-2 bg-white border-3 border-emerald-400 rounded-lg text-base font-bold text-emerald-900 focus:outline-none focus:border-green-500 shadow-md cursor-pointer"
+          >
+            <option value="all">All Buy-ins</option>
+            <option value="under-400">Up to €400</option>
+            <option value="400-1000">€400 - €1,000</option>
+            <option value="1000-2000">€1,000 - €2,000</option>
+            <option value="3000-plus">€3,000+</option>
           </select>
 
           {/* Sort By */}
