@@ -96,7 +96,7 @@
     },
     {
       "eventNum": "3",
-      "name": "Colossus",
+      "name": "COLOSSUS NLH",
       "format": "NLH",
       "buyIn": 565,
       "rake": 0,
@@ -137,9 +137,9 @@
     },
     {
       "eventNum": "4",
-      "name": "PLOssus Bounty",
+      "name": "PLOSSUS Bounty",
       "format": "PLO Bounty",
-      "buyIn": 365,
+      "buyIn": 565,
       "rake": 200,
       "rakeNote": "€200 bounties",
       "startingStack": 50000,
@@ -269,9 +269,9 @@
     },
     {
       "eventNum": "7",
-      "name": "Turbo Bounty",
+      "name": "Turbo Bounty NLH",
       "format": "NLH Turbo Bounty",
-      "buyIn": 1200,
+      "buyIn": 2200,
       "rake": 1000,
       "rakeNote": "€1,000 bounties",
       "startingStack": 25000,
@@ -298,7 +298,7 @@
     },
     {
       "eventNum": "8",
-      "name": "Monster Stack",
+      "name": "MONSTER STACK NLH",
       "format": "NLH",
       "buyIn": 1650,
       "rake": 0,
@@ -364,7 +364,7 @@
     },
     {
       "eventNum": "10",
-      "name": "Rounder Cup (EU v Rest of World)",
+      "name": "Rounder Cup NLH (EU vs. World)",
       "format": "NLH",
       "buyIn": 2750,
       "rake": 0,
@@ -426,7 +426,7 @@
     },
     {
       "eventNum": "11",
-      "name": "Super High Roller 8-Max",
+      "name": "Super High Roller NLH",
       "format": "NLH 8-Max",
       "buyIn": 20800,
       "rake": 0,
@@ -512,7 +512,7 @@
     },
     {
       "eventNum": "13",
-      "name": "GGMillion$ High Roller",
+      "name": "GGMillion$ High Roller NLH",
       "format": "NLH",
       "buyIn": 8400,
       "rake": 0,
@@ -581,7 +581,7 @@
       "eventNum": "15",
       "name": "The Closer Turbo Bounty",
       "format": "NLH Turbo Bounty",
-      "buyIn": 1750,
+      "buyIn": 2750,
       "rake": 1000,
       "rakeNote": "€1,000 bounties",
       "startingStack": 25000,
