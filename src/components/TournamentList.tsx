@@ -1,18 +1,20 @@
 import React, { useState, useMemo } from 'react';
 import { Tournament } from '../types';
-import { ChevronDown, Filter, Search } from 'lucide-react';
+import { ChevronDown, Filter, Search, Trash2 } from 'lucide-react';
 
 interface TournamentListProps {
   tournaments: Tournament[];
   onSelectTournament?: (tournament: Tournament) => void;
+  onClearAll?: () => void;
   isSelected?: (tournamentId: number) => boolean;
+  selectedCount?: number;
 }
 
 type FilterFormat = 'all' | 'nlh' | 'plo' | 'mixed' | 'bounty' | 'turbo' | 'highroller';
 type SortBy = 'startTime' | 'buyIn' | 'event' | 'gtd';
 type FilterType = 'all' | 'bracelet' | 'satellite' | 'side';
 
-export default function TournamentList({ tournaments, onSelectTournament, isSelected }: TournamentListProps) {
+export default function TournamentList({ tournaments, onSelectTournament, onClearAll, isSelected, selectedCount }: TournamentListProps) {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterFormat, setFilterFormat] = useState<FilterFormat>('all');
@@ -228,9 +230,20 @@ export default function TournamentList({ tournaments, onSelectTournament, isSele
           </select>
         </div>
 
-        <p className="text-base text-gray-800 font-bold bg-yellow-100 p-4 rounded-lg border-3 border-yellow-400 shadow-md">
-          Showing {sorted.length} of {tournaments.length} tournaments
-        </p>
+        <div className="flex justify-between items-center bg-yellow-100 p-4 rounded-lg border-3 border-yellow-400 shadow-md">
+          <p className="text-base text-gray-800 font-bold">
+            Showing {sorted.length} of {tournaments.length} tournaments
+          </p>
+          {onClearAll && (selectedCount || 0) > 0 && (
+            <button
+              onClick={onClearAll}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-bold shadow-md transition"
+            >
+              <Trash2 className="w-4 h-4" />
+              Clear All Selected ({selectedCount})
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Tournament List */}

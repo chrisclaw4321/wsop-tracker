@@ -406,6 +406,18 @@ export default function MySchedule({ selectedTournaments, onRemove }: MySchedule
                   <p className="text-xs text-gray-800 leading-relaxed">{selectedTournamentDetail.description}</p>
                 </div>
               )}
+
+              {/* Remove Button */}
+              <button
+                onClick={() => {
+                  onRemove(selectedTournamentDetail.id);
+                  setSelectedTournamentDetail(null);
+                }}
+                className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-500 text-red-700 hover:text-white rounded-lg text-xs font-bold border-2 border-red-300 transition shadow-sm"
+              >
+                <Trash2 className="w-4 h-4" />
+                Remove from Schedule
+              </button>
             </div>
           </div>
         </div>

@@ -209,6 +209,16 @@ function App() {
     }
   };
 
+  const handleClearAllSelections = () => {
+    if (selectedTournaments.length === 0) return;
+    if (window.confirm(`Are you sure you want to remove all ${selectedTournaments.length} tournaments from your schedule?`)) {
+      setSelectedTournaments([]);
+      if (user) {
+        saveSelectionsToServer([], user.email);
+      }
+    }
+  };
+
   const isTournamentSelected = (tournamentId: number): boolean => {
     return selectedTournaments.some(t => t.id === tournamentId);
   };
@@ -317,7 +327,9 @@ function App() {
             <TournamentList 
               tournaments={tournaments}
               onSelectTournament={handleSelectTournament}
+              onClearAll={handleClearAllSelections}
               isSelected={isTournamentSelected}
+              selectedCount={selectedTournaments.length}
             />
           </>
         )}
